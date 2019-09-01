@@ -15,10 +15,8 @@ public class ExtInfParsedParam {
     //These are the parameters of this class, with default values.
     static enum SourceType {EnParserV1, EnParserV2, EnParserV2WithSentenceCounts};
     static SourceType sourceType = SourceType.EnParserV2;
-    static enum WordType {WordsInWn, AllWords};
-    static WordType wordType=WordType.WordsInWn;
     static boolean extractInformaionJustForInputWords = true;
-    static String location="/data/corpora/Wikipedia/WikipediaParsed";
+    static String corpusLocation="/data/corpora/Wikipedia/WikipediaParsed";
     static String outputFileName="extractedInformationFromEnWikiWordsInWN.txt";
 
     //These variables are used to store the information extracted from the corpus.

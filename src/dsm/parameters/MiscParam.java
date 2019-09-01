@@ -23,10 +23,6 @@ public class MiscParam {
     public static Integer minimumFeatureSimpleFrequency=null;
     
     public static Integer minimumWordSimpleFrequency=null;
-    public static enum Method {Lin, Num};
-    public static Method method=Method.Num;
-    public static enum WordType {WordsInWN, AllWords};
-    public static WordType wordType=WordType.AllWords;
     public static boolean readExtractedInformationJustForInputWords = true;
     
     //These variables are used to store the information extracted from the corpus.

@@ -133,9 +133,9 @@ public class Evaluation {
                          * The similarity score of word1 and wors2 is computed. The pearson and spearman similarty of the numerical method is calculated 
                          * differently than all the other similarities.
                          */
-                        if(method==Method.Num && similarityMeasure==SimilarityMeasure.Pears){
+                        if(similarityMeasure==SimilarityMeasure.Pears){
                             d=pearsonCorrelationForHashMaps(word1Map1, word1Map2, word1Map3, word1Map4, word2Map1, word2Map2, word2Map3, word2Map4, featureMap1, featureMap2, featureMap3, featureMap4, vectorMean1, vectorMean2, true);
-                        }else if(method==Method.Num && similarityMeasure==SimilarityMeasure.Spearm){
+                        }else if(similarityMeasure==SimilarityMeasure.Spearm){
                             V[] featureList1 = (V[]) featureMap1.keySet().toArray();
                             X[] featureList2 = (X[]) featureMap2.keySet().toArray();
                             Y[] featureList3 = (Y[]) featureMap3.keySet().toArray();
@@ -143,16 +143,16 @@ public class Evaluation {
                             double[] rankMap1 = rankMapForSpearmanCorrelationFromArray(buildConcatenatedFeatureVector(word1Map1, word1Map2, word1Map3, word1Map4, featureList1, featureList2, featureList3, featureList4));
                             double[] rankMap2 = rankMapForSpearmanCorrelationFromArray(buildConcatenatedFeatureVector(word2Map1, word2Map2, word2Map3, word2Map4, featureList1, featureList2, featureList3, featureList4));
                             d=pearsonCorrelationForArrays(rankMap1, rankMap2, ((double) rankMap1.length+1d)/2d, ((double) rankMap2.length+1d)/2d);
-                        }else if(method==Method.Num && similarityMeasure==SimilarityMeasure.CorrKiela){
+                        }else if(similarityMeasure==SimilarityMeasure.CorrKiela){
                             d=pearsonCorrelationForHashMaps(word1Map1, word1Map2, word1Map3, word1Map4, word2Map1, word2Map2, word2Map3, word2Map4, featureMap1, featureMap2, featureMap3, featureMap4, vectorMean1, vectorMean2, false)/(Math.sqrt(vectorLengthSquares.get(word1))*Math.sqrt(vectorLengthSquares.get(word2)));
-                        }else if(method==Method.Num && similarityMeasure==SimilarityMeasure.Covariance){
+                        }else if(similarityMeasure==SimilarityMeasure.Covariance){
                             d=pearsonCorrelationForHashMaps(word1Map1, word1Map2, word1Map3, word1Map4, word2Map1, word2Map2, word2Map3, word2Map4, featureMap1, featureMap2, featureMap3, featureMap4, vectorMean1, vectorMean2, false);
-                        }else if(method==Method.Num && similarityMeasure==SimilarityMeasure.Rbo){
+                        }else if(similarityMeasure==SimilarityMeasure.Rbo){
                             d=rbo(word1Map1, word1Map2, word1Map3, word1Map4, word2Map1, word2Map2, word2Map3, word2Map4);
-                        }else if(method==Method.Num && (similarityMeasure==SimilarityMeasure.Dfvmb || 
+                        }else if(similarityMeasure==SimilarityMeasure.Dfvmb || 
                                 pearsModPattern.matcher(similarityMeasureString).matches() || similarityMeasureString.matches("PenroseShape(Mod_.*)?") || 
                                 pearsCombPattern.matcher(similarityMeasureString).matches() || pearsMbAdjCosModPattern.matcher(similarityMeasureString).matches() || 
-                                pearsMbModPattern.matcher(similarityMeasureString).matches() || pearsMbAdjCosPfModPattern.matcher(similarityMeasureString).matches())){
+                                pearsMbModPattern.matcher(similarityMeasureString).matches() || pearsMbAdjCosPfModPattern.matcher(similarityMeasureString).matches()){
                             //The numerical similarity of the feature vectors of word1 and word2 are calculated for each type of features separately (without normalization).
                             SimilarityScoreParts similarityScoreParts1 = calculateSimilarityByRelationForDoubleZeroValuesToo(word1Map1, word2Map1, featureMap1, vectorMean1, vectorMean2, numberOfAllFeatures, informationMap1);
                             SimilarityScoreParts similarityScoreParts2 = calculateSimilarityByRelationForDoubleZeroValuesToo(word1Map2, word2Map2, featureMap2, vectorMean1, vectorMean2, numberOfAllFeatures, informationMap2);

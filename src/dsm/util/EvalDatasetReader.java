@@ -297,14 +297,10 @@ public class EvalDatasetReader {
                     wordIsInWordNet=true;                      
                 }
             }
-            if(wordIsInWordNet || wordType==WordType.AllWords){
-                allWordSet.add(parts[i]);
-                if(i>0){
-                    answersList.add(parts[i]);
-                }
-            }else{
-                System.out.println(parts[i]);
-                System.exit(1);
+            
+            allWordSet.add(parts[i]);
+            if(i>0){
+                answersList.add(parts[i]);
             }
 
         }
@@ -415,12 +411,9 @@ public class EvalDatasetReader {
                     wordIsInWordNet=true;                      
                 }
             }
-            if(wordIsInWordNet || wordType==WordType.AllWords){
-                allWordSet.add(parts[i]);
-            }else{
-                System.out.println(parts[i]);
-                System.exit(1);
-            }
+            
+            allWordSet.add(parts[i]);
+            
         }
 
         ArrayList<ArrayList<String>> list1 = allQuestionsWithAllAnswersMap.get(parts[0]);

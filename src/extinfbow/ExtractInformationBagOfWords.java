@@ -16,9 +16,7 @@ import static extinfbow.ExtInfBowInitializer.initialize;
  * <br><br><br>
  * Usage:
  * <br><br>
- * java -cp DSM.jar extinfbow.ExtractInformationBagOfWords SOURCETYPE windowSize WeightingScheme extractInformaionJustForInputWords outputFileName location
- * <br><br>
- * SOURCETYPE = "HuParser" | "EsTagger" | (("EnParserV1" | "EnParserV2" | "EnParserV2WithSentenceCounts") WordType)
+ * java -cp DSM.jar extinfbow.ExtractInformationBagOfWords SourceType windowSize WeightingScheme extractInformaionJustForInputWords corpusLocation outputFileName
  * 
  * @author Andras
  */

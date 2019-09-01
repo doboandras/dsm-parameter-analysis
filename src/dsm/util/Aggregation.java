@@ -64,7 +64,7 @@ public class Aggregation {
                 similarityMeasure == SimilarityMeasure.MbPFMod || similarityMeasure == SimilarityMeasure.MbAdjCosPFMod || similarityMeasure == SimilarityMeasure.AdjCosPFMod || 
                 mbModPattern.matcher(similarityMeasureString).matches() || adjCosModPattern.matcher(similarityMeasureString).matches() || 
                 pfModPattern.matcher(similarityMeasureString).matches())) {
-            System.out.println("It is not defined which version of vector normalization should be used for this version: " + method + " " + similarityMeasure);
+            System.out.println("It is not defined which version of vector normalization should be used for this version: " + similarityMeasure);
             System.exit(1);
         }
     }

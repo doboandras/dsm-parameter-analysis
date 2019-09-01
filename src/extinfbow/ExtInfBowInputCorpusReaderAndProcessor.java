@@ -25,7 +25,7 @@ public class ExtInfBowInputCorpusReaderAndProcessor {
      */
     public static void readFilesEnNewParser(){
         try{
-            File dir = new File(location);
+            File dir = new File(corpusLocation);
             int i=0;
             for(String filename : dir.list()){
                 readFileEnParser(dir.getAbsolutePath()+"/"+filename);
@@ -43,7 +43,7 @@ public class ExtInfBowInputCorpusReaderAndProcessor {
      */
     public static void readFilesEnOldParser(){
         try{
-            File maindir = new File(location);
+            File maindir = new File(corpusLocation);
             int i=0;
             for(String dirname : maindir.list()){
                 File dir = new File(maindir.getAbsolutePath()+"/"+dirname);
@@ -189,18 +189,16 @@ public class ExtInfBowInputCorpusReaderAndProcessor {
         int startPosition = (i-windowSize>0) ? (i-windowSize) : 1;
         int endPosition = (i+windowSize+1<=words.length) ? (i+windowSize+1) : words.length;
         
-        boolean wordIsInWordNet=false;
         if(word.split("-").length<4 && word.matches("[a-zA-Z-]*")){
             IndexWord iw = dict.lookupIndexWord(pos, word);
             if (iw != null) {
                 word = iw.getLemma();
-                wordIsInWordNet=true;
             }
         }
         
         saveStringLong(word, numberOfSentences, simpleFrequencyMap3);
 
-        if((wordIsInWordNet || wordType==WordType.AllWords) && (allInputWords.contains(word) || !extractInformaionJustForInputWords)){
+        if(allInputWords.contains(word) || !extractInformaionJustForInputWords){
             
             for(int j=startPosition;j<i;j++){
                 long weight;
@@ -275,7 +273,7 @@ public class ExtInfBowInputCorpusReaderAndProcessor {
      */
     public static void readFilesHuParser(){
         try{
-            File dir = new File(location);
+            File dir = new File(corpusLocation);
             int i=0;
             for(String filename : dir.list()){
                 readFileHuParser(dir.getAbsolutePath()+"/"+filename);
@@ -480,7 +478,7 @@ public class ExtInfBowInputCorpusReaderAndProcessor {
      */
     public static void readFilesEsTagger(){
         try{
-            File dir = new File(location);
+            File dir = new File(corpusLocation);
             int i=0;
             for(String filename : dir.list()){
                 readFileEsTagger(dir.getAbsolutePath()+"/"+filename);

@@ -18,11 +18,9 @@ DSM - it implements numerous distributional semantic models based on information
 
 Usage:
 
-java -cp DSM.jar dsm.DSM EvaluationDataset InputDataType INPUTDATA METHOD
+java -cp DSM.jar dsm.DSM EvaluationDataset INPUTDATA VectorNormalization SimilarityMeasure WeightingScheme minimumWordSimpleFrequency minimumFeatureSimpleFrequency minimumWordFeatureTupleSimpleFrequency filterStopWords MINIMUMWEIGHT SMOOTH FEATTRANSF DIMRED
 
-INPUTDATA = ("Corpus" bagOfWords WordType corpusStringSuffix) | ("Vectors" WordVectors wordVectorsDimension)
-
-METHOD = "Lin" | ("Num" VectorNormalization SimilarityMeasure WeightingScheme minimumWordSimpleFrequency minimumFeatureSimpleFrequency minimumWordFeatureTupleSimpleFrequency filterStopWords MINIMUMWEIGHT SMOOTH FEATTRANSF DIMRED
+INPUTDATA = ("Corpus" Corpus bagOfWords corpusStringSuffix) | ("Vectors" WordVectors wordVectorsDimension)
 
 MINIMUMWEIGHT = "null" | (Limit minimumWordFeatureTupleWeightParameter) | (Zero minimumWordFeatureTupleWeightParameter)
 
@@ -41,9 +39,7 @@ ExtractInformationBagOfWords - it extracts information from an English, Spanish 
 
 Usage:
 
-java -cp DSM.jar extinfbow.ExtractInformationBagOfWords SOURCETYPE windowSize WeightingScheme extractInformaionJustForInputWords outputFileName location
-
-SOURCETYPE = "HuParser" | "EsTagger" | (("EnParserV1" | "EnParserV2" | "EnParserV2WithSentenceCounts") WordType)
+java -cp DSM.jar extinfbow.ExtractInformationBagOfWords SourceType windowSize WeightingScheme extractInformaionJustForInputWords corpusLocation outputFileName
 
 
 <br><br><br>
@@ -54,10 +50,30 @@ ExtractInformationFromParsedText - it extracts information from a parsed English
 
 Usage:
 
-java -cp DSM.jar extinfparsed.ExtractInformationFromParsedText SourceType WordType extractInformaionJustForInputWords outputFileName location
+java -cp DSM.jar extinfparsed.ExtractInformationFromParsedText SourceType extractInformaionJustForInputWords corpusLocation outputFileName
 
 
-<br><br><br>
+<br><br><br><br>
+
+
+General usage:
+
+First, information should be extracted from a corpus, if a corpus is used as input data, using either ExtractInformationBagOfWords or ExtractInformationFromParsedText. Then, this extracted information or word vectors should be used as input for DSM to test a given configuration (combination of parameter settings) on a standard test dataset.
+
+
+<br><br><br><br>
+
+
+Required libraries:
+<ul>
+<li>Java WordNet Library (JWNL) (version 1.4-rc2)</li>
+<li>ParallelColt (version 0.9.4)</li>
+<li>Ahmet Aker Spanish Lemmatizer</li>
+<li>Magyar lánc (HunPOSChain) (version 2.0)</li>
+</ul>
+
+
+<br><br><br><br>
 
 
 For more information please see the below publications:

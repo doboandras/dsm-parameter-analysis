@@ -20,11 +20,9 @@ import static dsm.util.OtherInputFilesReader.*;
  * <br><br><br>
  * Usage:
  * <br><br>
- * java -cp DSM.jar dsm.DSM EvaluationDataset InputDataType INPUTDATA METHOD
+ * java -cp DSM.jar dsm.DSM EvaluationDataset INPUTDATA VectorNormalization SimilarityMeasure WeightingScheme minimumWordSimpleFrequency minimumFeatureSimpleFrequency minimumWordFeatureTupleSimpleFrequency filterStopWords MINIMUMWEIGHT SMOOTH FEATTRANSF DIMRED
  * <br><br>
- * INPUTDATA = ("Corpus" bagOfWords WordType corpusStringSuffix) | ("Vectors" WordVectors wordVectorsDimension)
- * <br><br>
- * METHOD = "Lin" | ("Num" VectorNormalization SimilarityMeasure WeightingScheme minimumWordSimpleFrequency minimumFeatureSimpleFrequency minimumWordFeatureTupleSimpleFrequency filterStopWords MINIMUMWEIGHT SMOOTH FEATTRANSF DIMRED
+ * INPUTDATA = ("Corpus" Corpus bagOfWords corpusStringSuffix) | ("Vectors" WordVectors wordVectorsDimension)
  * <br><br>
  * MINIMUMWEIGHT = "null" | (Limit minimumWordFeatureTupleWeightParameter) | (Zero minimumWordFeatureTupleWeightParameter)
  * <br><br>
@@ -75,7 +73,7 @@ public class DSM {
 
         if(inputDataType==InputDataType.Corpus){
 
-            if(method==Method.Num && similarityMeasure==SimilarityMeasure.Lin && dimensionalityReductionType==DimensionalityReductionType.SVD){
+            if(similarityMeasure==SimilarityMeasure.Lin && dimensionalityReductionType==DimensionalityReductionType.SVD){
                 System.out.println("In case of the LIN similarity measure the SVD dimensionlality reduction cannot be used, because the feature information values cannot be calculated");
                 System.exit(1);
             }
@@ -84,9 +82,9 @@ public class DSM {
                 
             }else{
                 
-            if(method!=Method.Num || similarityMeasure==SimilarityMeasure.Lin || weightingScheme!=WeightingScheme.Freq){
+            if(similarityMeasure==SimilarityMeasure.Lin || weightingScheme!=WeightingScheme.Freq){
                 System.out.println("Wrong method, similarityMeasure or weightingScheme (in case of WORDVECTORS only NUM FREQ weightingScheme is available, "
-                        + "and the LIN1 similarity measure cannot be used): " + method + " " + similarityMeasure + " " + weightingScheme);
+                        + "and the LIN1 similarity measure cannot be used): " + similarityMeasure + " " + weightingScheme);
                 System.exit(1); 
             }else if(smoothingType==SmoothingType.FreqKNS || smoothingType==SmoothingType.FreqMKNS || smoothingType==SmoothingType.FreqMDKNSPOMD || 
                     featureTransformationType==FeatureTransformationType.FreqAftSmooth || featureTransformationType==FeatureTransformationType.Freq || 
@@ -101,114 +99,106 @@ public class DSM {
 
         }
 
-        if(method==Method.Num){
+        if(featureTransformationType==FeatureTransformationType.Freq){
+            applyFeatureTransformation(featureTransformationType, featureTransformationFunction);
+        }
 
-            if(featureTransformationType==FeatureTransformationType.Freq){
-                applyFeatureTransformation(featureTransformationType, featureTransformationFunction);
-            }
+        if(smoothingType==SmoothingType.FreqKNS || smoothingType==SmoothingType.FreqMKNS || smoothingType==SmoothingType.FreqMDKNSPOMD){
+            applySmoothing();
+        }
 
-            if(smoothingType==SmoothingType.FreqKNS || smoothingType==SmoothingType.FreqMKNS || smoothingType==SmoothingType.FreqMDKNSPOMD){
-                applySmoothing();
-            }
-
-            if(featureTransformationType==FeatureTransformationType.FreqAftSmooth){
-                applyFeatureTransformation(featureTransformationType, featureTransformationFunction);
-            }
-
+        if(featureTransformationType==FeatureTransformationType.FreqAftSmooth){
+            applyFeatureTransformation(featureTransformationType, featureTransformationFunction);
         }
 
 
-        if(method==Method.Lin || (method==Method.Num && (similarityMeasure==SimilarityMeasure.Lin || weightingScheme==WeightingScheme.Plffi))){
+        if(similarityMeasure==SimilarityMeasure.Lin || weightingScheme==WeightingScheme.Plffi){
             computeInformationForFeatures();
         }
         
-        
-        if(method==Method.Num){
 
-            if(weightingScheme.toString().matches("(PmiX)?Rapp_.")){
-                computeEntropyForFeatures();
-            }
+        if(weightingScheme.toString().matches("(PmiX)?Rapp_.")){
+            computeEntropyForFeatures();
+        }
 
-            if(weightingScheme==WeightingScheme.Gref_2){
-                computeGrefFeatureWeightForFeatures();
-            }
+        if(weightingScheme==WeightingScheme.Gref_2){
+            computeGrefFeatureWeightForFeatures();
+        }
 
-            if(weightingScheme.toString().matches("Okapi_.") || weightingScheme==WeightingScheme.Ltu || 
-                    weightingScheme==WeightingScheme.PmiXOkapi_1 || weightingScheme==WeightingScheme.PmiXLtu){
-                aggregateVectorElements(AggregationMethod.Sum);
-                computeAvgWordVectorElementSums();
-            }
+        if(weightingScheme.toString().matches("Okapi_.") || weightingScheme==WeightingScheme.Ltu || 
+                weightingScheme==WeightingScheme.PmiXOkapi_1 || weightingScheme==WeightingScheme.PmiXLtu){
+            aggregateVectorElements(AggregationMethod.Sum);
+            computeAvgWordVectorElementSums();
+        }
 
-            if(weightingScheme==WeightingScheme.Atc){
-                computeMaxWordFeaturePairFrequencies();
-                computeAtcFeatureWeightForFeatures();
-            }
+        if(weightingScheme==WeightingScheme.Atc){
+            computeMaxWordFeaturePairFrequencies();
+            computeAtcFeatureWeightForFeatures();
+        }
 
-            if(weightingScheme.toString().matches(".*((PmiAl)|(_.*Tc1)).*") || weightingScheme==WeightingScheme.Cca){
-                computeAllRelationCountOfGivenTypeAlphas();
-            }
+        if(weightingScheme.toString().matches(".*((PmiAl)|(_.*Tc1)).*") || weightingScheme==WeightingScheme.Cca){
+            computeAllRelationCountOfGivenTypeAlphas();
+        }
 
-            if(weightingScheme==WeightingScheme.TfIdf_9){
-                aggregateVectorElements(AggregationMethod.Sum);
-                computeAllFeatureDocFreqCounts();
-            }
+        if(weightingScheme==WeightingScheme.TfIdf_9){
+            aggregateVectorElements(AggregationMethod.Sum);
+            computeAllFeatureDocFreqCounts();
+        }
 
 
-            applyWeightingScheme();
+        applyWeightingScheme();
 
-            if(featureTransformationType==FeatureTransformationType.WeightBefNorm){
-                applyFeatureTransformation(featureTransformationType, featureTransformationFunction);
-            }
+        if(featureTransformationType==FeatureTransformationType.WeightBefNorm){
+            applyFeatureTransformation(featureTransformationType, featureTransformationFunction);
+        }
 
-            if(smoothingType==SmoothingType.WeightKNS){
-                applySmoothing();
-            }
+        if(smoothingType==SmoothingType.WeightKNS){
+            applySmoothing();
+        }
 
-            if(featureTransformationType==FeatureTransformationType.WeightAftSmooth){
-                applyFeatureTransformation(featureTransformationType, featureTransformationFunction);
-            }
+        if(featureTransformationType==FeatureTransformationType.WeightAftSmooth){
+            applyFeatureTransformation(featureTransformationType, featureTransformationFunction);
+        }
 
-            if(dimensionalityReductionType==DimensionalityReductionType.TopNFeat || 
-                    dimensionalityReductionType==DimensionalityReductionType.IslamInkpen){
+        if(dimensionalityReductionType==DimensionalityReductionType.TopNFeat || 
+                dimensionalityReductionType==DimensionalityReductionType.IslamInkpen){
 
-                dimRedTopFeatures(dimensionalityReductionType, dimensionalityReductionParameter, true);
+            dimRedTopFeatures(dimensionalityReductionType, dimensionalityReductionParameter, true);
 
-            }else if(dimensionalityReductionType==DimensionalityReductionType.SVD){
-                
-                normalizeVectors(true);
-                
-                dimRedSVD(dimensionalityReductionParameter);
+        }else if(dimensionalityReductionType==DimensionalityReductionType.SVD){
 
-            }
+            normalizeVectors(true);
 
-            normalizeVectors();
+            dimRedSVD(dimensionalityReductionParameter);
+
+        }
+
+        normalizeVectors();
 
 
-            if(featureTransformationType==FeatureTransformationType.WeightAftNorm){
+        if(featureTransformationType==FeatureTransformationType.WeightAftNorm){
 
-                applyFeatureTransformation(featureTransformationType, featureTransformationFunction);
+            applyFeatureTransformation(featureTransformationType, featureTransformationFunction);
 
-            }
-            
-            if(similarityMeasure==SimilarityMeasure.ApSyn){
+        }
 
-                dimRedTopFeatures(DimensionalityReductionType.TopNFeat, apSynN, false);
+        if(similarityMeasure==SimilarityMeasure.ApSyn){
 
-            }else if(similarityMeasureString.matches("(NormMod)?SocPmiMod")){
-                
-                double dimRedParam = similarityMeasure==SimilarityMeasure.SocPmiMod ? SocPmiMu : normModSocPmiDelta;
-                
-                dimRedTopFeatures(DimensionalityReductionType.IslamInkpen, dimRedParam, true);
-                
-            }
+            dimRedTopFeatures(DimensionalityReductionType.TopNFeat, apSynN, false);
 
-            if(similarityMeasure==SimilarityMeasure.ApSyn || similarityMeasure==SimilarityMeasure.ApSynP || 
-                    similarityMeasure==SimilarityMeasure.Wo || similarityMeasure==SimilarityMeasure.Rbo){
+        }else if(similarityMeasureString.matches("(NormMod)?SocPmiMod")){
 
-                applyFeatureTransformation(null, FeatureTransformationFunction.Rank);
+            double dimRedParam = similarityMeasure==SimilarityMeasure.SocPmiMod ? SocPmiMu : normModSocPmiDelta;
 
-            }
-            
+            dimRedTopFeatures(DimensionalityReductionType.IslamInkpen, dimRedParam, true);
+
+        }
+
+        if(similarityMeasure==SimilarityMeasure.ApSyn || similarityMeasure==SimilarityMeasure.ApSynP || 
+                similarityMeasure==SimilarityMeasure.Wo || similarityMeasure==SimilarityMeasure.Rbo){
+
+            applyFeatureTransformation(null, FeatureTransformationFunction.Rank);
+
         }
         
 

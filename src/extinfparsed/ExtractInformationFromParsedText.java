@@ -14,7 +14,7 @@ import static extinfparsed.ExtInfParsedInitializer.initialize;
  * <br><br><br>
  * Usage:
  * <br><br>
- * java -cp DSM.jar extinfparsed.ExtractInformationFromParsedText SourceType WordType extractInformaionJustForInputWords outputFileName location
+ * java -cp DSM.jar extinfparsed.ExtractInformationFromParsedText SourceType extractInformaionJustForInputWords corpusLocation outputFileName
  * 
  * @author Andras
  */

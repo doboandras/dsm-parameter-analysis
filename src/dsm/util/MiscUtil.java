@@ -1,16 +1,11 @@
 package dsm.util;
 
-import static dsm.parameters.MiscParam.*;
 import java.io.PrintWriter;
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Set;
 import net.didion.jwnl.dictionary.Dictionary;
 import util.ComparablePair;
-import util.Paraphrase;
 
 /**
  *
@@ -20,7 +15,7 @@ public class MiscUtil {
     
     public static boolean createOutputFile = false;
     
-    public static String location;
+    public static String inputLocation;
     public static String outputFileName;
     public static PrintWriter out;
     public static Dictionary dict;

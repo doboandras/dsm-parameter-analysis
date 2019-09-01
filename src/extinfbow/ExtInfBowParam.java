@@ -12,14 +12,12 @@ public class ExtInfBowParam {
     //These are the parameters of this class, with default values.
     static enum SourceType {EnParserV1, EnParserV2, EnParserV2WithSentenceCounts, HuParser, EsTagger};
     static SourceType sourceType = SourceType.HuParser;
-    static enum WordType {WordsInWn, AllWords};
-    static WordType wordType=WordType.AllWords;
     static int windowSize=3;
     static enum WeightingScheme {Uniform, Linear, Quadratic};
     static WeightingScheme weightingScheme = WeightingScheme.Uniform;
     static boolean extractInformaionJustForInputWords = true;
-   static String location="1";
-    static String outputFileName="extractedInformationFromHuWikiBagOfWordsAllWordsWeightedSquareWindow3.txt";
+    static String corpusLocation="1";
+    static String outputFileName="extractedInformationFromHuWikiBagOfWordsWeightedSquareWindow3.txt";
 
     /*
      * These variables are used to store the information extracted from the corpus. Although their names suggest differently, they all simply store bag-of-words type information. The names are

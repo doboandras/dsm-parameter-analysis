@@ -30,15 +30,12 @@ public class ExtInfParsedInitializer {
 
                 sourceType=SourceType.valueOf(args[index++]);
                 
-                String wordTypeString = args[index++];
-                
-                wordType=WordType.valueOf(wordTypeString);
-                
                 extractInformaionJustForInputWords = Boolean.parseBoolean(args[index++]);
 
+                corpusLocation=args[index++];
+                
                 outputFileName=args[index++];
 
-                location=args[index];
             }
 
             out = new PrintWriter(new FileWriter(outputFileName));

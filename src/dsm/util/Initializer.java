@@ -9,9 +9,6 @@ import dsm.parameters.FeatTransf.FeatureTransformationFunction;
 import dsm.parameters.FeatTransf.FeatureTransformationType;
 import static dsm.parameters.FeatTransf.featureTransformationFunction;
 import static dsm.parameters.FeatTransf.featureTransformationType;
-import dsm.parameters.MiscParam.Method;
-import dsm.parameters.MiscParam.MinimumWordFeatureTupleWeightType;
-import dsm.parameters.MiscParam.WordType;
 import static dsm.parameters.MiscParam.*;
 import static dsm.parameters.Smooth.KNSParameters;
 import static dsm.parameters.Smooth.MKNSAlsoJustForInputWords;
@@ -63,7 +60,6 @@ public class Initializer {
             String inputDataTypeString=null;
             String wordVectorsString=null;
             String corpusString=null;
-            String wordTypeString=null;
             String normalizationString=null;
             String weightingSchemeString=null;
             String minimumWordSimpleFrequencyString=null;
@@ -100,10 +96,6 @@ public class Initializer {
 
                     bagOfWords=Boolean.parseBoolean(args[index++]);
 
-                    wordTypeString = args[index++];
-                    
-                    wordType=WordType.valueOf(wordTypeString);
-
                     corpusStringSuffix = args[index++];
                     
                 }else if(inputDataType == InputDataType.Vectors){
@@ -119,126 +111,117 @@ public class Initializer {
                     System.exit(1);
                 }
                 
-                
-                methodString=args[index++];
-                
-                method=Method.valueOf(methodString);
-                
-                if(method==Method.Num){
                     
-                    normalizationString=args[index++];
+                normalizationString=args[index++];
 
-                    vectorNormalization=VectorNormalization.valueOf(normalizationString);
-                    
-                    similarityMeasureString=args[index++];
-                    
-                    similarityMeasure=SimilarityMeasure.valueOf(similarityMeasureString);
+                vectorNormalization=VectorNormalization.valueOf(normalizationString);
 
-                    weightingSchemeString=args[index++];
-                    
-                    weightingScheme=WeightingScheme.valueOf(weightingSchemeString);
-                    
-                    minimumWordSimpleFrequencyString=args[index++];
-                    
-                    if(!minimumWordSimpleFrequencyString.equals("null")){
-                        minimumWordSimpleFrequency=Integer.parseInt(minimumWordSimpleFrequencyString);
-                    }else{
-                        minimumWordSimpleFrequency=null;
-                    }
-                    
-                    minimumFeatureSimpleFrequencyString=args[index++];
-                    
-                    if(!minimumFeatureSimpleFrequencyString.equals("null")){
-                        minimumFeatureSimpleFrequency=Integer.parseInt(minimumFeatureSimpleFrequencyString);
-                    }else{
-                        minimumFeatureSimpleFrequency=null;
-                    }
-                    
-                    minimumWordFeaturePairSimpleFrequencyString=args[index++];
-                    
-                    if(!minimumWordFeaturePairSimpleFrequencyString.equals("null")){
-                        minimumWordFeatureTupleSimpleFrequency=Integer.parseInt(minimumWordFeaturePairSimpleFrequencyString);
-                    }else{
-                        minimumWordFeatureTupleSimpleFrequency=null;
-                    }
-                    
-                    filterStopWordsString=args[index++];
-                    
-                    filterStopWords=Boolean.parseBoolean(filterStopWordsString);
-                    
-                    minimumWeightTypeString=args[index++];
-                    
-                    if(!minimumWeightTypeString.equals("null")){
-                        
-                        if(minimumWeightTypeString.equals("Limit")){
-                            minimumWordFeatureTupleWeightType=MinimumWordFeatureTupleWeightType.Limit;
-                        }else if(minimumWeightTypeString.equals("Zero")){
-                            minimumWordFeatureTupleWeightType=MinimumWordFeatureTupleWeightType.Zero;
-                        }else{
-                            System.out.println("Wrong minimumWeightTypeString: " + minimumWeightTypeString);
-                            System.exit(1);
-                        }
-                        
-                        minimumWeightParameterString=args[index++];
-                        minimumWordFeatureTupleWeightParameter=Double.parseDouble(minimumWeightParameterString);
-                        
-                    }else{
-                        minimumWordFeatureTupleWeightType=MinimumWordFeatureTupleWeightType.NoLimit;
-                        minimumWordFeatureTupleWeightParameter=null;
-                    }
-                    
-                    smoothingTypeString=args[index++];
-                    
-                    smoothingType=SmoothingType.valueOf(smoothingTypeString);
-                    
-                    if(smoothingType==SmoothingType.FreqKNS || smoothingType==SmoothingType.WeightKNS){
-                    
-                        KNSParametersString=args[index++];
+                similarityMeasureString=args[index++];
 
-                        KNSParameters[0]=Double.parseDouble(KNSParametersString);
-                        
-                    }else if(smoothingType==SmoothingType.FreqMKNS || smoothingType==SmoothingType.FreqMDKNSPOMD){
-                        
-                        for(int i=1;i<4;i++){
-                            
-                            if(i==1){
-                                KNSParametersString=args[index];
-                            }else{
-                                KNSParametersString+=" " + args[index];
-                            }
-                            
-                            KNSParameters[i]=Double.parseDouble(args[index++]);
-                            
-                        }
-                        
-                    }
-                    
-                    featureTransformationTypeString=args[index++];
-                    
-                    featureTransformationType=FeatureTransformationType.valueOf(featureTransformationTypeString);
-                    
-                    if(featureTransformationType!=FeatureTransformationType.NoTransf){
-                    
-                        featureTransformationFunctionString=args[index++];
+                similarityMeasure=SimilarityMeasure.valueOf(similarityMeasureString);
 
-                        featureTransformationFunction=FeatureTransformationFunction.valueOf(featureTransformationFunctionString);
-                        
-                    }
-                    
-                    dimensionalityReductionTypeString=args[index++];
-                    
-                    dimensionalityReductionType=DimensionalityReductionType.valueOf(dimensionalityReductionTypeString);
-                    
-                    if(dimensionalityReductionType!=DimensionalityReductionType.NoDimRed){
-                    
-                        dimensionalityReductionParameterString=args[index++];
+                weightingSchemeString=args[index++];
 
-                        dimensionalityReductionParameter=Double.parseDouble(dimensionalityReductionParameterString);
-                        
-                    }
-                    
+                weightingScheme=WeightingScheme.valueOf(weightingSchemeString);
+
+                minimumWordSimpleFrequencyString=args[index++];
+
+                if(!minimumWordSimpleFrequencyString.equals("null")){
+                    minimumWordSimpleFrequency=Integer.parseInt(minimumWordSimpleFrequencyString);
+                }else{
+                    minimumWordSimpleFrequency=null;
                 }
-                
+
+                minimumFeatureSimpleFrequencyString=args[index++];
+
+                if(!minimumFeatureSimpleFrequencyString.equals("null")){
+                    minimumFeatureSimpleFrequency=Integer.parseInt(minimumFeatureSimpleFrequencyString);
+                }else{
+                    minimumFeatureSimpleFrequency=null;
+                }
+
+                minimumWordFeaturePairSimpleFrequencyString=args[index++];
+
+                if(!minimumWordFeaturePairSimpleFrequencyString.equals("null")){
+                    minimumWordFeatureTupleSimpleFrequency=Integer.parseInt(minimumWordFeaturePairSimpleFrequencyString);
+                }else{
+                    minimumWordFeatureTupleSimpleFrequency=null;
+                }
+
+                filterStopWordsString=args[index++];
+
+                filterStopWords=Boolean.parseBoolean(filterStopWordsString);
+
+                minimumWeightTypeString=args[index++];
+
+                if(!minimumWeightTypeString.equals("null")){
+
+                    if(minimumWeightTypeString.equals("Limit")){
+                        minimumWordFeatureTupleWeightType=MinimumWordFeatureTupleWeightType.Limit;
+                    }else if(minimumWeightTypeString.equals("Zero")){
+                        minimumWordFeatureTupleWeightType=MinimumWordFeatureTupleWeightType.Zero;
+                    }else{
+                        System.out.println("Wrong minimumWeightTypeString: " + minimumWeightTypeString);
+                        System.exit(1);
+                    }
+
+                    minimumWeightParameterString=args[index++];
+                    minimumWordFeatureTupleWeightParameter=Double.parseDouble(minimumWeightParameterString);
+
+                }else{
+                    minimumWordFeatureTupleWeightType=MinimumWordFeatureTupleWeightType.NoLimit;
+                    minimumWordFeatureTupleWeightParameter=null;
+                }
+
+                smoothingTypeString=args[index++];
+
+                smoothingType=SmoothingType.valueOf(smoothingTypeString);
+
+                if(smoothingType==SmoothingType.FreqKNS || smoothingType==SmoothingType.WeightKNS){
+
+                    KNSParametersString=args[index++];
+
+                    KNSParameters[0]=Double.parseDouble(KNSParametersString);
+
+                }else if(smoothingType==SmoothingType.FreqMKNS || smoothingType==SmoothingType.FreqMDKNSPOMD){
+
+                    for(int i=1;i<4;i++){
+
+                        if(i==1){
+                            KNSParametersString=args[index];
+                        }else{
+                            KNSParametersString+=" " + args[index];
+                        }
+
+                        KNSParameters[i]=Double.parseDouble(args[index++]);
+
+                    }
+
+                }
+
+                featureTransformationTypeString=args[index++];
+
+                featureTransformationType=FeatureTransformationType.valueOf(featureTransformationTypeString);
+
+                if(featureTransformationType!=FeatureTransformationType.NoTransf){
+
+                    featureTransformationFunctionString=args[index++];
+
+                    featureTransformationFunction=FeatureTransformationFunction.valueOf(featureTransformationFunctionString);
+
+                }
+
+                dimensionalityReductionTypeString=args[index++];
+
+                dimensionalityReductionType=DimensionalityReductionType.valueOf(dimensionalityReductionTypeString);
+
+                if(dimensionalityReductionType!=DimensionalityReductionType.NoDimRed){
+
+                    dimensionalityReductionParameterString=args[index++];
+
+                    dimensionalityReductionParameter=Double.parseDouble(dimensionalityReductionParameterString);
+
+                }
                 
 
             }else{
@@ -252,8 +235,6 @@ public class Initializer {
                     
                     corpusString=corpus.toString();
                     
-                    wordTypeString=wordType.toString();
-                    
                 }else{
                     
                     wordVectorsString=wordVectors.toString();
@@ -261,59 +242,52 @@ public class Initializer {
                 }
                 
                 
-                methodString=method.toString();
-                
-                
-                if(method==Method.Num){
-                
-                    normalizationString=vectorNormalization.toString();
-                    
-                    similarityMeasureString=similarityMeasure.toString();
-                    
-                    weightingSchemeString=weightingScheme.toString();
-                    
-                    minimumWordSimpleFrequencyString=String.valueOf(minimumWordSimpleFrequency);
-                    
-                    minimumFeatureSimpleFrequencyString=String.valueOf(minimumFeatureSimpleFrequency);
-                    
-                    minimumWordFeaturePairSimpleFrequencyString=String.valueOf(minimumWordFeatureTupleSimpleFrequency);
-                    
-                    filterStopWordsString=String.valueOf(filterStopWords);
-                    
-                    minimumWeightTypeString = minimumWordFeatureTupleWeightType==MinimumWordFeatureTupleWeightType.NoLimit ? "null" : minimumWordFeatureTupleWeightType.toString();
-                    
-                    minimumWeightParameterString=String.valueOf(minimumWordFeatureTupleWeightParameter);
-                    
-                    smoothingTypeString=String.valueOf(smoothingType);
-                    
-                    if(smoothingType==SmoothingType.FreqKNS || smoothingType==SmoothingType.WeightKNS){
-                    
-                        KNSParametersString=KNSParameters[0].toString();
-                        
-                    }else if(smoothingType==SmoothingType.FreqMKNS || smoothingType==SmoothingType.FreqMDKNSPOMD){
-                        
-                        KNSParametersString=KNSParameters[1].toString() + " " + KNSParameters[2].toString() + " " + KNSParameters[3].toString();
-                        
-                    }else{
-                        KNSParametersString=null;
-                    }
-                    
-                    featureTransformationTypeString=String.valueOf(featureTransformationType);
-                    
-                    if(featureTransformationType!=FeatureTransformationType.NoTransf){
-                        featureTransformationFunctionString=String.valueOf(featureTransformationFunction);
-                    }else{
-                        featureTransformationFunctionString=null;
-                    }
-                    
-                    dimensionalityReductionTypeString=String.valueOf(dimensionalityReductionType);
-                    
-                    if(dimensionalityReductionType!=DimensionalityReductionType.NoDimRed){
-                        dimensionalityReductionParameterString=String.valueOf(dimensionalityReductionParameter);
-                    }else{
-                        dimensionalityReductionParameterString=null;
-                    }
-                    
+                normalizationString=vectorNormalization.toString();
+
+                similarityMeasureString=similarityMeasure.toString();
+
+                weightingSchemeString=weightingScheme.toString();
+
+                minimumWordSimpleFrequencyString=String.valueOf(minimumWordSimpleFrequency);
+
+                minimumFeatureSimpleFrequencyString=String.valueOf(minimumFeatureSimpleFrequency);
+
+                minimumWordFeaturePairSimpleFrequencyString=String.valueOf(minimumWordFeatureTupleSimpleFrequency);
+
+                filterStopWordsString=String.valueOf(filterStopWords);
+
+                minimumWeightTypeString = minimumWordFeatureTupleWeightType==MinimumWordFeatureTupleWeightType.NoLimit ? "null" : minimumWordFeatureTupleWeightType.toString();
+
+                minimumWeightParameterString=String.valueOf(minimumWordFeatureTupleWeightParameter);
+
+                smoothingTypeString=String.valueOf(smoothingType);
+
+                if(smoothingType==SmoothingType.FreqKNS || smoothingType==SmoothingType.WeightKNS){
+
+                    KNSParametersString=KNSParameters[0].toString();
+
+                }else if(smoothingType==SmoothingType.FreqMKNS || smoothingType==SmoothingType.FreqMDKNSPOMD){
+
+                    KNSParametersString=KNSParameters[1].toString() + " " + KNSParameters[2].toString() + " " + KNSParameters[3].toString();
+
+                }else{
+                    KNSParametersString=null;
+                }
+
+                featureTransformationTypeString=String.valueOf(featureTransformationType);
+
+                if(featureTransformationType!=FeatureTransformationType.NoTransf){
+                    featureTransformationFunctionString=String.valueOf(featureTransformationFunction);
+                }else{
+                    featureTransformationFunctionString=null;
+                }
+
+                dimensionalityReductionTypeString=String.valueOf(dimensionalityReductionType);
+
+                if(dimensionalityReductionType!=DimensionalityReductionType.NoDimRed){
+                    dimensionalityReductionParameterString=String.valueOf(dimensionalityReductionParameter);
+                }else{
+                    dimensionalityReductionParameterString=null;
                 }
                 
             }
@@ -343,11 +317,11 @@ public class Initializer {
                 
                 if(corpusStringSuffix.contains("Levy2015Counts") || corpusStringSuffix.contains("Salle2016Counts")){
                     
-                    location="ExtractedInformation/extractedInformationFrom"+corpusString+corpusStringSuffix+".txt";
+                    inputLocation="ExtractedInformation/extractedInformationFrom"+corpusString+corpusStringSuffix+".txt";
                     
                 }else{
                 
-                    location="ExtractedInformation/extractedInformationFrom"+corpusString+bagOfWordsString+wordTypeString+corpusStringSuffix+
+                    inputLocation="ExtractedInformation/extractedInformationFrom"+corpusString+bagOfWordsString+corpusStringSuffix+
                             (readExtractedInformationJustForInputWords ? "" : "ForAllWords")
                             +".txt";
                 
@@ -358,31 +332,31 @@ public class Initializer {
                 
                 if(wordVectors==WordVectors.GoogleNews){
 
-                    location="/home/doboandras/corpora/GoogleNews-vectors-negative300/word vectors/extracted (txt)/GoogleNews-vectors-negative300.txt";
+                    inputLocation="/home/doboandras/corpora/GoogleNews-vectors-negative300/word vectors/extracted (txt)/GoogleNews-vectors-negative300.txt";
 
                 }else if(wordVectors==WordVectors.Baroni2014){
 
-                    location="/home/doboandras/corpora/Baroni2014Vectors/" + wordVectorsFileName;
+                    inputLocation="/home/doboandras/corpora/Baroni2014Vectors/" + wordVectorsFileName;
 
                 }else if(wordVectors==WordVectors.Levy2015){
 
-                    location="/home/doboandras/corpora/Levy2015Vectors/" + wordVectorsFileName;
+                    inputLocation="/home/doboandras/corpora/Levy2015Vectors/" + wordVectorsFileName;
 
                 }else if(wordVectors==WordVectors.Pennington2014){
 
-                    location="/home/doboandras/corpora/Pennington2014Vectors/" + wordVectorsFileName;
+                    inputLocation="/home/doboandras/corpora/Pennington2014Vectors/" + wordVectorsFileName;
 
                 }else if(wordVectors==WordVectors.Salle2016){
 
-                    location="/home/doboandras/corpora/Salle2016Vectors/" + wordVectorsFileName;
+                    inputLocation="/home/doboandras/corpora/Salle2016Vectors/" + wordVectorsFileName;
 
                 }else if(wordVectors==WordVectors.Speer2017){
 
-                    location="/home/doboandras/corpora/Speer2017Vectors/" + wordVectorsFileName;
+                    inputLocation="/home/doboandras/corpora/Speer2017Vectors/" + wordVectorsFileName;
 
                 }else if(wordVectors==WordVectors.Yin2016){
 
-                    location="/home/doboandras/corpora/Yin2016Vectors/" + wordVectorsFileName;
+                    inputLocation="/home/doboandras/corpora/Yin2016Vectors/" + wordVectorsFileName;
 
                 }
                 
@@ -398,7 +372,7 @@ public class Initializer {
                 if(corpusStringSuffix.contains("Levy2015Counts") || corpusStringSuffix.contains("Salle2016Counts")){
                     completeInputDataString = corpusString + corpusStringSuffix;
                 }else{
-                    completeInputDataString = corpusString + bagOfWordsString + wordTypeString + corpusStringSuffix;
+                    completeInputDataString = corpusString + bagOfWordsString + corpusStringSuffix;
                 }
             }else if(wordVectors==WordVectors.GoogleNews){
                 completeInputDataString = wordVectorsString;
@@ -418,15 +392,11 @@ public class Initializer {
             String completeMinimumWeightString = (minimumWordFeatureTupleWeightType==MinimumWordFeatureTupleWeightType.NoLimit ? 
                     "null" : minimumWeightTypeString + " " + minimumWeightParameterString);
                         
-            if(method==Method.Lin){
-                outputFileName="DSM " + evaluationDatasetString + " " + completeInputDataString + " " + methodString + ".txt";
-            }else if(method==Method.Num){
-                outputFileName="DSM " + evaluationDatasetString + " " + completeInputDataString + " " + methodString + " " + 
-                        normalizationString + " " + similarityMeasureString + " " + weightingSchemeString + " " + 
-                        minimumWordSimpleFrequencyString + " " + minimumFeatureSimpleFrequencyString + " " + minimumWordFeaturePairSimpleFrequencyString + " " + 
-                        filterStopWordsString + " " + completeMinimumWeightString + " " + completeSmoothingString + " " + 
-                        completeFeatureTransformationString + " " + completeDimensionalityReductionString + ".txt";
-            }
+            outputFileName="DSM " + evaluationDatasetString + " " + completeInputDataString + " " + methodString + " " + 
+                    normalizationString + " " + similarityMeasureString + " " + weightingSchemeString + " " + 
+                    minimumWordSimpleFrequencyString + " " + minimumFeatureSimpleFrequencyString + " " + minimumWordFeaturePairSimpleFrequencyString + " " + 
+                    filterStopWordsString + " " + completeMinimumWeightString + " " + completeSmoothingString + " " + 
+                    completeFeatureTransformationString + " " + completeDimensionalityReductionString + ".txt";
             
             if(createOutputFile) out = new PrintWriter(new FileWriter(outputFileName));
             
@@ -444,14 +414,10 @@ public class Initializer {
                 
             }
             
-            if(method==Method.Lin){
-                System.out.print(evaluationDatasetString + " " + completeInputDataString + " " + methodString + "\t");
-            }else if(method==Method.Num){
-                System.out.print(evaluationDatasetString + " " + completeInputDataString + " " + methodString + " " + normalizationString + " " + similarityMeasureString + " " + 
-                        weightingSchemeString + " " + minimumWordSimpleFrequencyString + " " + minimumFeatureSimpleFrequencyString + " " + 
-                        minimumWordFeaturePairSimpleFrequencyString + " " + filterStopWordsString + " " + completeMinimumWeightString + " " + 
-                        completeSmoothingString + " " + completeFeatureTransformationString + " " + completeDimensionalityReductionString + "\t");
-            }
+            System.out.print(evaluationDatasetString + " " + completeInputDataString + " " + methodString + " " + normalizationString + " " + similarityMeasureString + " " + 
+                    weightingSchemeString + " " + minimumWordSimpleFrequencyString + " " + minimumFeatureSimpleFrequencyString + " " + 
+                    minimumWordFeaturePairSimpleFrequencyString + " " + filterStopWordsString + " " + completeMinimumWeightString + " " + 
+                    completeSmoothingString + " " + completeFeatureTransformationString + " " + completeDimensionalityReductionString + "\t");
 
             
         } catch (Exception ex) {

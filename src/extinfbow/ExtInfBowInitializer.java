@@ -31,28 +31,16 @@ public class ExtInfBowInitializer {
                 
                 sourceType=SourceType.valueOf(args[index++]);
 
-                if(sourceType.toString().startsWith("En")){
-                
-                    String wordTypeString = args[index++];
-                    
-                    wordType=WordType.valueOf(wordTypeString);
-                    
-                }else{
-                    
-                    wordType=WordType.AllWords;
-                    
-                }
-                    
-                
                 windowSize=Integer.parseInt(args[index++]);
                 
                 weightingScheme=WeightingScheme.valueOf(args[index++]);
 
                 extractInformaionJustForInputWords = Boolean.parseBoolean(args[index++]);
+                
+                corpusLocation=args[index++];
 
                 outputFileName=args[index++];
 
-                location=args[index];
             }
 
             out = new PrintWriter(new FileWriter(outputFileName));

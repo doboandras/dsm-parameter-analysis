@@ -29,7 +29,7 @@ public class ExtInfParsedInputCorpusReaderAndProcessor {
      */
     public static void readFilesNewParser(){
         try{
-            File dir = new File(location);
+            File dir = new File(corpusLocation);
             int i=0;
             for(String filename : dir.list()){
                 readFile(dir.getAbsolutePath()+"/"+filename);
@@ -48,7 +48,7 @@ public class ExtInfParsedInputCorpusReaderAndProcessor {
      */
     public static void readFilesOldParser(){
         try{
-            File maindir = new File(location);
+            File maindir = new File(corpusLocation);
             int i=0;
             for(String dirname : maindir.list()){
                 File dir = new File(maindir.getAbsolutePath()+"/"+dirname);
@@ -202,20 +202,14 @@ public class ExtInfParsedInputCorpusReaderAndProcessor {
          * When determining the lemma for a word, first it is checked whether the word is composed of only English letters and hypens and whether it has at most two hypens in it.
          * This is needed, because if a word with more hypens is passed to the jwnl library to look up a word in WordNet, it freezes for an unknown reason.
          */
-        boolean wordIsInWordNet=false;
         if(word.split("-").length<4 && word.matches("[a-zA-Z-]*")){
             IndexWord iw = dict.lookupIndexWord(pos, word);
             if (iw != null) {
                 word = iw.getLemma();
-                wordIsInWordNet=true;
             }
         }
         
-        if(wordIsInWordNet || wordType==WordType.AllWords){
-            
-            saveStringLong(word, numberOfSentences, frequencyMap);
-
-        }
+        saveStringLong(word, numberOfSentences, frequencyMap);
 
         
     }
@@ -248,16 +242,14 @@ public class ExtInfParsedInputCorpusReaderAndProcessor {
 
                     String verb = words[1].substring(0, words[1].lastIndexOf("_"));
 
-                    boolean wordIsInWordNet=false;
                     if(verb.split("-").length<4 && verb.matches("[a-zA-Z-]*")){
                         IndexWord iw = dict.lookupIndexWord(POS.VERB, verb);
                         if(iw!=null){
                             verb=iw.getLemma();
-                            wordIsInWordNet=true;
                         }
                     }
                     
-                    if((wordIsInWordNet || wordType==WordType.AllWords) && (allInputWords.contains(verb) || !extractInformaionJustForInputWords)){
+                    if(allInputWords.contains(verb) || !extractInformaionJustForInputWords){
                         
                         saveStringLong(verb, numberOfSentences, verbWithPrepFrequencies);
                         saveStringStringLong(verb, words[2], numberOfSentences, verbPrepTuples);
@@ -305,15 +297,13 @@ public class ExtInfParsedInputCorpusReaderAndProcessor {
 
                     String verb = words[2].substring(0, words[2].lastIndexOf("_"));
 
-                    boolean wordIsInWordNet=false;
                     if(verb.split("-").length<4 && verb.matches("[a-zA-Z-]*")){
                         IndexWord iw = dict.lookupIndexWord(POS.VERB, verb);
                         if(iw!=null){
                             verb=iw.getLemma();
-                            wordIsInWordNet=true;
                         }
                     }
-                    if((wordIsInWordNet || wordType==WordType.AllWords) && (allInputWords.contains(verb) || !extractInformaionJustForInputWords)){
+                    if(allInputWords.contains(verb) || !extractInformaionJustForInputWords){
                         
                         saveStringLong(verb, numberOfSentences, verbWithPrepFrequencies);
                         saveStringStringLong(verb, ncmod, numberOfSentences, verbPrepTuples);
@@ -347,15 +337,13 @@ public class ExtInfParsedInputCorpusReaderAndProcessor {
             if(commonNounsInTheSentence.contains(position)){
                 String noun=words[2].substring(0, words[2].lastIndexOf("_"));
 
-                boolean wordIsInWordNet=false;
                 if(noun.split("-").length<4 && noun.matches("[a-zA-Z-]*")){
                     IndexWord iw = dict.lookupIndexWord(POS.NOUN, noun);
                     if(iw!=null){
                         noun=iw.getLemma();
-                        wordIsInWordNet=true;
                     }
                 }
-                if((wordIsInWordNet || wordType==WordType.AllWords) && (allInputWords.contains(noun) || !extractInformaionJustForInputWords)){
+                if(allInputWords.contains(noun) || !extractInformaionJustForInputWords){
                     
                     saveStringLong(noun, numberOfSentences, nounWithNcmodFrequencies);
                     saveStringStringLong(noun, ncmod, numberOfSentences, nounNcmodTuples);
@@ -370,15 +358,13 @@ public class ExtInfParsedInputCorpusReaderAndProcessor {
                 //It is an ncmod relation between a common noun and an adjective.
                 if(adjectivesInTheSentence.contains(position2)){
                     
-                    wordIsInWordNet=false;
                     if(ncmod.split("-").length<4 && ncmod.matches("[a-zA-Z-]*")){
                         IndexWord iw = dict.lookupIndexWord(POS.ADJECTIVE, ncmod);
                         if(iw!=null){
                             ncmod=iw.getLemma();
-                            wordIsInWordNet=true;
                         }
                     }
-                    if((wordIsInWordNet || wordType==WordType.AllWords) && (allInputWords.contains(ncmod) || !extractInformaionJustForInputWords)){
+                    if(allInputWords.contains(ncmod) || !extractInformaionJustForInputWords){
                         
                         saveStringLong(ncmod, numberOfSentences, adjWithNounFrequencies);
                         saveStringStringLong(ncmod, noun, numberOfSentences, adjNounTuples);
@@ -411,15 +397,13 @@ public class ExtInfParsedInputCorpusReaderAndProcessor {
                     }
                 }
                 
-                boolean wordIsInWordNet=false;
                 if(ncmod.split("-").length<4 && ncmod.matches("[a-zA-Z-]*")){
                     IndexWord iw = dict.lookupIndexWord(POS.ADVERB, ncmod);
                     if(iw!=null){
                         ncmod=iw.getLemma();
-                        wordIsInWordNet=true;
                     }
                 }
-                if((wordIsInWordNet || wordType==WordType.AllWords) && (allInputWords.contains(ncmod) || !extractInformaionJustForInputWords)){
+                if(allInputWords.contains(ncmod) || !extractInformaionJustForInputWords){
                                         
                     saveStringLong(ncmod, numberOfSentences, advWithWordFrequencies);
                     saveStringStringLong(ncmod, word, numberOfSentences, advWordTuples);
@@ -515,16 +499,14 @@ public class ExtInfParsedInputCorpusReaderAndProcessor {
 
                 String verb = words[1].substring(0, words[1].lastIndexOf("_"));
 
-                boolean wordIsInWordNet=false;
                 if(verb.split("-").length<4 && verb.matches("[a-zA-Z-]*")){
                     IndexWord iw = dict.lookupIndexWord(POS.VERB, verb);
                     if(iw!=null){
                         verb=iw.getLemma();
-                        wordIsInWordNet=true;
                     }
                 }
                 
-                if((wordIsInWordNet || wordType==WordType.AllWords) && (allInputWords.contains(verb) || !extractInformaionJustForInputWords)){
+                if(allInputWords.contains(verb) || !extractInformaionJustForInputWords){
                    
                     saveStringLong(verb, numberOfSentences, verbWithObj2Frequencies);
                     saveStringStringLong(verb, noun, numberOfSentences, verbObj2Tuples);
@@ -791,16 +773,14 @@ public class ExtInfParsedInputCorpusReaderAndProcessor {
      */
     public static void saveCountsUsingPairs(boolean isSubject, String noun, Paraphrase paraphrase, long numberOfSentences) throws JWNLException{
 
-        boolean wordIsInWordNet=false;
         if(noun.split("-").length<4 && noun.matches("[a-zA-Z-]*")){
             IndexWord iw = dict.lookupIndexWord(POS.NOUN, noun);
             if(iw!=null){
                 noun=iw.getLemma();
-                wordIsInWordNet=true;
             }
         }
         
-        if((wordIsInWordNet || wordType==WordType.AllWords) && (allInputWords.contains(noun) || !extractInformaionJustForInputWords)){
+        if(allInputWords.contains(noun) || !extractInformaionJustForInputWords){
             
             if(isSubject){
                 saveStringLong(noun, numberOfSentences, subjectFrequencies);
@@ -842,12 +822,10 @@ public class ExtInfParsedInputCorpusReaderAndProcessor {
 
             //The position of the verb, included at the end of its string is trimed, after which the lemma of the verb is determined. Then it is checked whether the verb is passive.
             String verb = p.second.substring(0, p.second.lastIndexOf("_"));
-            boolean wordIsInWordNet=false;
             if(verb.split("-").length<4 && verb.matches("[a-zA-Z-]*")){
                 IndexWord iw = dict.lookupIndexWord(POS.VERB, verb);
                 if(iw!=null){
                     verb=iw.getLemma();
-                    wordIsInWordNet=true;
                 }
             }
             boolean passive = isPassive(p.second);
@@ -871,9 +849,9 @@ public class ExtInfParsedInputCorpusReaderAndProcessor {
              * parsing error a passive verb is encountered, then that verb is skipped with "continue" a couple of lines before.)
              */
             if(passive){
-                saveNcsubjDobjCounts(!isSubject, verb, p.first, numberOfSentences, wordIsInWordNet);
+                saveNcsubjDobjCounts(!isSubject, verb, p.first, numberOfSentences);
             }else{
-                saveNcsubjDobjCounts(isSubject, verb, p.first, numberOfSentences, wordIsInWordNet);
+                saveNcsubjDobjCounts(isSubject, verb, p.first, numberOfSentences);
             }
 
 
@@ -888,10 +866,9 @@ public class ExtInfParsedInputCorpusReaderAndProcessor {
      * @param verb the verb
      * @param noun the noun
      * @param numberOfSentences the frequency of the sentence
-     * @param wordIsInWordNet indicates whether the verb is included in the wordnet or not
      * @throws JWNLException 
      */
-    public static void saveNcsubjDobjCounts(boolean isSubject, String verb, String noun, long numberOfSentences, boolean wordIsInWordNet) throws JWNLException{
+    public static void saveNcsubjDobjCounts(boolean isSubject, String verb, String noun, long numberOfSentences) throws JWNLException{
 
 
         if(noun.split("-").length<4 && noun.matches("[a-zA-Z-]*")){
@@ -901,7 +878,7 @@ public class ExtInfParsedInputCorpusReaderAndProcessor {
             }
         }
 
-        if((wordIsInWordNet || wordType==WordType.AllWords) && (allInputWords.contains(verb) || !extractInformaionJustForInputWords)){
+        if(allInputWords.contains(verb) || !extractInformaionJustForInputWords){
                     
             if(isSubject){
                 saveStringLong(verb, numberOfSentences, verbWithNcsubjFrequencies);

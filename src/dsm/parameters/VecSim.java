@@ -260,11 +260,7 @@ public class VecSim {
         Double scoreLin1=null;
         Double scoreLin2=null;
         
-        if(method==Method.Lin){
-            scoreLinIntersect=0d;
-            scoreLin1=0d;
-            scoreLin2=0d;
-        }else if(similarityMeasureString.matches("Multiplicative.*")){
+        if(similarityMeasureString.matches("Multiplicative.*")){
             scoreNumerator=1d;
         }else{
             scoreNumerator=0d;
@@ -292,88 +288,80 @@ public class VecSim {
                 V feature = featureValuePair.getKey();
                 d1 = featureValuePair.getValue();
 
-                if(method==Method.Num){
-                    if(word2Map!=null && (d2 = word2Map.get(feature))!=null){
-                        d=calculateSimilarityNumaratorByRelationSubscore(d1, d2, vectorMean1, vectorMean2, numberOfAllFeatures);
-                        if(similarityMeasure==SimilarityMeasure.LInf || similarityMeasure==SimilarityMeasure.RenyiDivModInf){
-                            scoreNumerator=Math.max(scoreNumerator, d);
-                        }else if(similarityMeasureString.matches("Multiplicative.*")){
-                            scoreNumerator*=d;
-                        }else{
-                            scoreNumerator+=d;
-                            if(similarityMeasure==SimilarityMeasure.Jaccard_3 || similarityMeasure==SimilarityMeasure.Tanimoto_1 || 
-                                    similarityMeasure==SimilarityMeasure.Tanimoto_1Mod || 
-                                    similarityMeasure==SimilarityMeasure.Rsssn || similarityMeasure==SimilarityMeasure.MaxSymChiSqMod || 
-                                    similarityMeasure==SimilarityMeasure.Kulczynski || similarityMeasureString.matches("(NormMod)?SocPmiMod") || 
-                                    similarityMeasure==SimilarityMeasure.Wo){
-                                scoreDenominator1+=calculateSimilarityDenominator1ByRelationSubscore(d1, d2, vectorMean1, vectorMean2);
-                            }else if(similarityMeasure==SimilarityMeasure.Simpson_2Mod || 
-                                    similarityMeasure==SimilarityMeasure.NormCosMod || similarityMeasure==SimilarityMeasure.NcdMod_2 || 
-                                    similarityMeasureString.matches("(((Adj)?Cos)|(Mb)|(PF))Mod_(2|3|5|6)_.") || 
-                                    similarityMeasureString.matches("LMod_(4|5|6|7|(10)|(11)|(12)|(13)|(14)|(15)).*") || 
-                                    similarityMeasureString.matches("Dtv_(2|3|4|5|9|(10)|(11)|(12)).*") || similarityMeasureString.matches("Lin(HindleR)?Mod_(2|3|4|5|8|9)_(1|2).*")){
-                                scoreDenominator1+=calculateSimilarityDenominator1ByRelationSubscore(d1, d2, vectorMean1, vectorMean2);
-                                scoreDenominator2+=calculateSimilarityDenominator2ByRelationSubscore(d1, d2, vectorMean1, vectorMean2);
-                            }else if(similarityMeasure==SimilarityMeasure.AvgL1LInf){
-                                scoreDenominator1=Math.max(scoreDenominator1, d);
-                            }
-                        }
-                    }else if(similarityMeasure==SimilarityMeasure.Dice_1 || similarityMeasure==SimilarityMeasure.Dice_1Mod || 
-                            similarityMeasure==SimilarityMeasure.ZklMod || similarityMeasure==SimilarityMeasure.ZklModSym || 
-                            similarityMeasure==SimilarityMeasure.L05 || similarityMeasure==SimilarityMeasure.L1 || 
-                            similarityMeasure==SimilarityMeasure.L2 || similarityMeasure==SimilarityMeasure.L3 || 
-                            similarityMeasure==SimilarityMeasure.Canberra || similarityMeasure==SimilarityMeasure.Lorentzian || 
-                            similarityMeasure==SimilarityMeasure.Jaccard_3 || similarityMeasure==SimilarityMeasure.ASkewMod || 
-                            similarityMeasure==SimilarityMeasure.ASkewModSym || 
-                            similarityMeasure==SimilarityMeasure.JensenShannonMod || similarityMeasure==SimilarityMeasure.JensenMod || 
-                            similarityMeasure==SimilarityMeasure.LinKiela || similarityMeasure==SimilarityMeasure.Tanimoto_1 || 
-                            similarityMeasure==SimilarityMeasure.Tanimoto_1Mod || 
-                            similarityMeasure==SimilarityMeasure.HellingerMod || similarityMeasure==SimilarityMeasure.ChiSquareMod || 
-                            similarityMeasure==SimilarityMeasure.PsChiSquareMod || similarityMeasure==SimilarityMeasure.ClarkMod || 
-                            similarityMeasure==SimilarityMeasure.RenyiDivMod2 || similarityMeasure==SimilarityMeasure.Srsn || 
-                            similarityMeasure==SimilarityMeasure.Rsssn || similarityMeasure==SimilarityMeasure.Sdsn || 
-                            similarityMeasure==SimilarityMeasure.Srsmv || similarityMeasure==SimilarityMeasure.Srsm || 
-                            similarityMeasure==SimilarityMeasure.Overlap || similarityMeasure==SimilarityMeasure.AvgL1LInf || 
-                            similarityMeasure==SimilarityMeasure.VicWhMod || similarityMeasure==SimilarityMeasure.VicSymChiSqMod1 || 
-                            similarityMeasure==SimilarityMeasure.VicSymChiSqMod2 || similarityMeasure==SimilarityMeasure.VicSymChiSqMod3 || 
-                            similarityMeasure==SimilarityMeasure.MaxSymChiSqMod || similarityMeasure==SimilarityMeasure.Rms || 
-                            similarityMeasure==SimilarityMeasure.ContraHMeanMod || similarityMeasure==SimilarityMeasure.Spline || 
-                            similarityMeasure==SimilarityMeasure.Kulczynski || similarityMeasure==SimilarityMeasure.SorensenMod || 
-                            similarityMeasure==SimilarityMeasure.Simpson_2Mod || similarityMeasure==SimilarityMeasure.NormCosMod || 
-                            similarityMeasure==SimilarityMeasure.NcdMod_2 || similarityMeasure==SimilarityMeasure.MahalanobisMod || 
-                            similarityMeasure==SimilarityMeasure.NgdMod || similarityMeasure==SimilarityMeasure.Lsmq || 
-                            lModPattern.matcher(similarityMeasureString).matches() || lWPattern.matcher(similarityMeasureString).matches() || 
-                            dtvPattern.matcher(similarityMeasureString).matches() || dtvWPattern.matcher(similarityMeasureString).matches() || 
-                            similarityMeasureString.matches("(((Adj)?Cos)|(Mb)|(PF))Mod_(2|3|5|6)_.") || 
-                            similarityMeasureString.matches("StdLike_.") || similarityMeasureString.matches("(NormMod)?SocPmiMod") || 
-                            similarityMeasureString.matches("Lin(HindleR)?Mod_(2|3|4|5|8|9)_(1|2).*")){
-                        scoreNumerator+=calculateSimilarityNumaratorByRelationSubscore(d1, 0d, vectorMean1, vectorMean2, numberOfAllFeatures);
+                if(word2Map!=null && (d2 = word2Map.get(feature))!=null){
+                    d=calculateSimilarityNumaratorByRelationSubscore(d1, d2, vectorMean1, vectorMean2, numberOfAllFeatures);
+                    if(similarityMeasure==SimilarityMeasure.LInf || similarityMeasure==SimilarityMeasure.RenyiDivModInf){
+                        scoreNumerator=Math.max(scoreNumerator, d);
+                    }else if(similarityMeasureString.matches("Multiplicative.*")){
+                        scoreNumerator*=d;
+                    }else{
+                        scoreNumerator+=d;
                         if(similarityMeasure==SimilarityMeasure.Jaccard_3 || similarityMeasure==SimilarityMeasure.Tanimoto_1 || 
                                 similarityMeasure==SimilarityMeasure.Tanimoto_1Mod || 
                                 similarityMeasure==SimilarityMeasure.Rsssn || similarityMeasure==SimilarityMeasure.MaxSymChiSqMod || 
-                                similarityMeasure==SimilarityMeasure.Kulczynski || similarityMeasureString.matches("(NormMod)?SocPmiMod")){
-                            scoreDenominator1+=calculateSimilarityDenominator1ByRelationSubscore(d1, 0d, vectorMean1, vectorMean2);
+                                similarityMeasure==SimilarityMeasure.Kulczynski || similarityMeasureString.matches("(NormMod)?SocPmiMod") || 
+                                similarityMeasure==SimilarityMeasure.Wo){
+                            scoreDenominator1+=calculateSimilarityDenominator1ByRelationSubscore(d1, d2, vectorMean1, vectorMean2);
                         }else if(similarityMeasure==SimilarityMeasure.Simpson_2Mod || 
                                 similarityMeasure==SimilarityMeasure.NormCosMod || similarityMeasure==SimilarityMeasure.NcdMod_2 || 
                                 similarityMeasureString.matches("(((Adj)?Cos)|(Mb)|(PF))Mod_(2|3|5|6)_.") || 
                                 similarityMeasureString.matches("LMod_(4|5|6|7|(10)|(11)|(12)|(13)|(14)|(15)).*") || 
                                 similarityMeasureString.matches("Dtv_(2|3|4|5|9|(10)|(11)|(12)).*") || similarityMeasureString.matches("Lin(HindleR)?Mod_(2|3|4|5|8|9)_(1|2).*")){
-                            scoreDenominator1+=calculateSimilarityDenominator1ByRelationSubscore(d1, 0d, vectorMean1, vectorMean2);
-                            scoreDenominator2+=calculateSimilarityDenominator2ByRelationSubscore(d1, 0d, vectorMean1, vectorMean2);
+                            scoreDenominator1+=calculateSimilarityDenominator1ByRelationSubscore(d1, d2, vectorMean1, vectorMean2);
+                            scoreDenominator2+=calculateSimilarityDenominator2ByRelationSubscore(d1, d2, vectorMean1, vectorMean2);
                         }else if(similarityMeasure==SimilarityMeasure.AvgL1LInf){
-                            scoreDenominator1=Math.max(scoreDenominator1, calculateSimilarityNumaratorByRelationSubscore(d1, 0d, vectorMean1, vectorMean2, numberOfAllFeatures));
+                            scoreDenominator1=Math.max(scoreDenominator1, d);
                         }
-                    }else if(similarityMeasure==SimilarityMeasure.LInf || similarityMeasure==SimilarityMeasure.RenyiDivModInf){
-                        scoreNumerator=Math.max(scoreNumerator, calculateSimilarityNumaratorByRelationSubscore(d1, 0d, vectorMean1, vectorMean2, numberOfAllFeatures));
-                    }else if(similarityMeasureString.matches("Multiplicative.*")){
-                        scoreNumerator*=calculateSimilarityNumaratorByRelationSubscore(d1, 0d, vectorMean1, vectorMean2, numberOfAllFeatures);
                     }
-                }else if(method==Method.Lin){
-                    d=informationMap.get(feature);
-                    if(word2Map!=null && word2Map.containsKey(feature)){
-                        scoreLinIntersect+=d;
+                }else if(similarityMeasure==SimilarityMeasure.Dice_1 || similarityMeasure==SimilarityMeasure.Dice_1Mod || 
+                        similarityMeasure==SimilarityMeasure.ZklMod || similarityMeasure==SimilarityMeasure.ZklModSym || 
+                        similarityMeasure==SimilarityMeasure.L05 || similarityMeasure==SimilarityMeasure.L1 || 
+                        similarityMeasure==SimilarityMeasure.L2 || similarityMeasure==SimilarityMeasure.L3 || 
+                        similarityMeasure==SimilarityMeasure.Canberra || similarityMeasure==SimilarityMeasure.Lorentzian || 
+                        similarityMeasure==SimilarityMeasure.Jaccard_3 || similarityMeasure==SimilarityMeasure.ASkewMod || 
+                        similarityMeasure==SimilarityMeasure.ASkewModSym || 
+                        similarityMeasure==SimilarityMeasure.JensenShannonMod || similarityMeasure==SimilarityMeasure.JensenMod || 
+                        similarityMeasure==SimilarityMeasure.LinKiela || similarityMeasure==SimilarityMeasure.Tanimoto_1 || 
+                        similarityMeasure==SimilarityMeasure.Tanimoto_1Mod || 
+                        similarityMeasure==SimilarityMeasure.HellingerMod || similarityMeasure==SimilarityMeasure.ChiSquareMod || 
+                        similarityMeasure==SimilarityMeasure.PsChiSquareMod || similarityMeasure==SimilarityMeasure.ClarkMod || 
+                        similarityMeasure==SimilarityMeasure.RenyiDivMod2 || similarityMeasure==SimilarityMeasure.Srsn || 
+                        similarityMeasure==SimilarityMeasure.Rsssn || similarityMeasure==SimilarityMeasure.Sdsn || 
+                        similarityMeasure==SimilarityMeasure.Srsmv || similarityMeasure==SimilarityMeasure.Srsm || 
+                        similarityMeasure==SimilarityMeasure.Overlap || similarityMeasure==SimilarityMeasure.AvgL1LInf || 
+                        similarityMeasure==SimilarityMeasure.VicWhMod || similarityMeasure==SimilarityMeasure.VicSymChiSqMod1 || 
+                        similarityMeasure==SimilarityMeasure.VicSymChiSqMod2 || similarityMeasure==SimilarityMeasure.VicSymChiSqMod3 || 
+                        similarityMeasure==SimilarityMeasure.MaxSymChiSqMod || similarityMeasure==SimilarityMeasure.Rms || 
+                        similarityMeasure==SimilarityMeasure.ContraHMeanMod || similarityMeasure==SimilarityMeasure.Spline || 
+                        similarityMeasure==SimilarityMeasure.Kulczynski || similarityMeasure==SimilarityMeasure.SorensenMod || 
+                        similarityMeasure==SimilarityMeasure.Simpson_2Mod || similarityMeasure==SimilarityMeasure.NormCosMod || 
+                        similarityMeasure==SimilarityMeasure.NcdMod_2 || similarityMeasure==SimilarityMeasure.MahalanobisMod || 
+                        similarityMeasure==SimilarityMeasure.NgdMod || similarityMeasure==SimilarityMeasure.Lsmq || 
+                        lModPattern.matcher(similarityMeasureString).matches() || lWPattern.matcher(similarityMeasureString).matches() || 
+                        dtvPattern.matcher(similarityMeasureString).matches() || dtvWPattern.matcher(similarityMeasureString).matches() || 
+                        similarityMeasureString.matches("(((Adj)?Cos)|(Mb)|(PF))Mod_(2|3|5|6)_.") || 
+                        similarityMeasureString.matches("StdLike_.") || similarityMeasureString.matches("(NormMod)?SocPmiMod") || 
+                        similarityMeasureString.matches("Lin(HindleR)?Mod_(2|3|4|5|8|9)_(1|2).*")){
+                    scoreNumerator+=calculateSimilarityNumaratorByRelationSubscore(d1, 0d, vectorMean1, vectorMean2, numberOfAllFeatures);
+                    if(similarityMeasure==SimilarityMeasure.Jaccard_3 || similarityMeasure==SimilarityMeasure.Tanimoto_1 || 
+                            similarityMeasure==SimilarityMeasure.Tanimoto_1Mod || 
+                            similarityMeasure==SimilarityMeasure.Rsssn || similarityMeasure==SimilarityMeasure.MaxSymChiSqMod || 
+                            similarityMeasure==SimilarityMeasure.Kulczynski || similarityMeasureString.matches("(NormMod)?SocPmiMod")){
+                        scoreDenominator1+=calculateSimilarityDenominator1ByRelationSubscore(d1, 0d, vectorMean1, vectorMean2);
+                    }else if(similarityMeasure==SimilarityMeasure.Simpson_2Mod || 
+                            similarityMeasure==SimilarityMeasure.NormCosMod || similarityMeasure==SimilarityMeasure.NcdMod_2 || 
+                            similarityMeasureString.matches("(((Adj)?Cos)|(Mb)|(PF))Mod_(2|3|5|6)_.") || 
+                            similarityMeasureString.matches("LMod_(4|5|6|7|(10)|(11)|(12)|(13)|(14)|(15)).*") || 
+                            similarityMeasureString.matches("Dtv_(2|3|4|5|9|(10)|(11)|(12)).*") || similarityMeasureString.matches("Lin(HindleR)?Mod_(2|3|4|5|8|9)_(1|2).*")){
+                        scoreDenominator1+=calculateSimilarityDenominator1ByRelationSubscore(d1, 0d, vectorMean1, vectorMean2);
+                        scoreDenominator2+=calculateSimilarityDenominator2ByRelationSubscore(d1, 0d, vectorMean1, vectorMean2);
+                    }else if(similarityMeasure==SimilarityMeasure.AvgL1LInf){
+                        scoreDenominator1=Math.max(scoreDenominator1, calculateSimilarityNumaratorByRelationSubscore(d1, 0d, vectorMean1, vectorMean2, numberOfAllFeatures));
                     }
-                    scoreLin1+=d;
+                }else if(similarityMeasure==SimilarityMeasure.LInf || similarityMeasure==SimilarityMeasure.RenyiDivModInf){
+                    scoreNumerator=Math.max(scoreNumerator, calculateSimilarityNumaratorByRelationSubscore(d1, 0d, vectorMean1, vectorMean2, numberOfAllFeatures));
+                }else if(similarityMeasureString.matches("Multiplicative.*")){
+                    scoreNumerator*=calculateSimilarityNumaratorByRelationSubscore(d1, 0d, vectorMean1, vectorMean2, numberOfAllFeatures);
                 }
                 
             }
@@ -381,7 +369,7 @@ public class VecSim {
         }
 
         //If word2Map!=null, then the relevant scores are calculated from word2Map.
-        if(word2Map!=null && (method==Method.Lin || (method==Method.Num && (similarityMeasure==SimilarityMeasure.Dice_1 || 
+        if(word2Map!=null && (similarityMeasure==SimilarityMeasure.Dice_1 || 
                 similarityMeasure==SimilarityMeasure.Dice_1Mod || similarityMeasure==SimilarityMeasure.ZklModSym || 
                 similarityMeasure==SimilarityMeasure.L05 || similarityMeasure==SimilarityMeasure.L1 || 
                 similarityMeasure==SimilarityMeasure.L2 || similarityMeasure==SimilarityMeasure.L3 || 
@@ -409,14 +397,14 @@ public class VecSim {
                 dtvPattern.matcher(similarityMeasureString).matches() || dtvWPattern.matcher(similarityMeasureString).matches() || 
                 similarityMeasureString.matches("(((Adj)?Cos)|(Mb)|(PF))Mod_(2|3|5|6)_.") || similarityMeasureString.matches("Multiplicative.*") || 
                 similarityMeasureString.matches("(NormMod)?SocPmiMod") || similarityMeasureString.matches("StdLike_.") || 
-                similarityMeasureString.matches("Lin(HindleR)?Mod_(2|3|4|5|8|9)_(1|2).*"))))){
+                similarityMeasureString.matches("Lin(HindleR)?Mod_(2|3|4|5|8|9)_(1|2).*"))){
             
             for(Map.Entry<V, Double> featureValuePair: word2Map.entrySet()){
                 
                 V feature = featureValuePair.getKey();
                 d2 = featureValuePair.getValue();
                 
-                if(method==Method.Num && (word1Map==null || !word1Map.containsKey(feature))){
+                if(word1Map==null || !word1Map.containsKey(feature)){
                     d=calculateSimilarityNumaratorByRelationSubscore(0d, d2, vectorMean1, vectorMean2, numberOfAllFeatures);
                     if(similarityMeasure==SimilarityMeasure.LInf || similarityMeasure==SimilarityMeasure.RenyiDivModInf){
                         scoreNumerator=Math.max(scoreNumerator, d);
@@ -440,9 +428,8 @@ public class VecSim {
                             scoreDenominator1=Math.max(scoreDenominator1, d);
                         }
                     }
-                }else if(method==Method.Lin){
-                    scoreLin2+=informationMap.get(feature);
                 }
+                
             }
             
         }
@@ -477,17 +464,13 @@ public class VecSim {
         Double scoreNumerator=null;
         Double scoreDenominator1=null;
         Double scoreDenominator2=null;
-        if(method==Method.Lin){
-            System.out.println("The calculateSimilarityByRelationForDoubleZeroValuesToo function should only be called in case of numerical similarity measures!");
-            System.exit(1);
-        }else{
-            scoreNumerator=0d;
-            if(pearsModPattern.matcher(similarityMeasureString).matches() || pearsCombPattern.matcher(similarityMeasureString).matches() || 
-                    pearsMbAdjCosModPattern.matcher(similarityMeasureString).matches() || pearsMbAdjCosPfModPattern.matcher(similarityMeasureString).matches() || 
-                    pearsMbModPattern.matcher(similarityMeasureString).matches()){
-                scoreDenominator1=0d;
-                scoreDenominator2=0d;
-            }
+        
+        scoreNumerator=0d;
+        if(pearsModPattern.matcher(similarityMeasureString).matches() || pearsCombPattern.matcher(similarityMeasureString).matches() || 
+                pearsMbAdjCosModPattern.matcher(similarityMeasureString).matches() || pearsMbAdjCosPfModPattern.matcher(similarityMeasureString).matches() || 
+                pearsMbModPattern.matcher(similarityMeasureString).matches()){
+            scoreDenominator1=0d;
+            scoreDenominator2=0d;
         }
         
         //If neither of the feature vectors are null, then a loop iterates through each feature in @param word1Map, and computes the relevant scores.
@@ -737,439 +720,433 @@ public class VecSim {
     public static double calculateSimilarityNumaratorByRelationSubscore(double d1, double d2, Double vectorMean1, Double vectorMean2, long numberOfAllFeatures){
         
         double d;
-        
-        if(method==Method.Num){
             
-            if(similarityMeasure==SimilarityMeasure.Cos || similarityMeasure==SimilarityMeasure.Dice_2 || 
-                    similarityMeasure==SimilarityMeasure.Jaccard_1 || similarityMeasure==SimilarityMeasure.Jaccard_1Mod || 
-                    similarityMeasure==SimilarityMeasure.Jaccard_2 || 
-                    similarityMeasure==SimilarityMeasure.Tanimoto_2 || similarityMeasure==SimilarityMeasure.InnerProd || 
-                    similarityMeasure.toString().matches("PseudoCos.*") || 
-                    similarityMeasure==SimilarityMeasure.Mb || 
-                    similarityMeasure==SimilarityMeasure.Simpson_1 || similarityMeasure==SimilarityMeasure.SmoothCos || 
-                    similarityMeasure==SimilarityMeasure.AdjCos || 
-                    similarityMeasure==SimilarityMeasure.NcdMod_2 || similarityMeasure==SimilarityMeasure.MbAdjCos || 
-                    similarityMeasure==SimilarityMeasure.MbPFMod || similarityMeasure==SimilarityMeasure.MbAdjCosPFMod || 
-                    similarityMeasure==SimilarityMeasure.AdjCosPFMod || similarityMeasureString.matches("Mb(Adj)?Cos((Am)|(Gm)|(Hm)|(Prod)|(LogProd))")){
-                return d1*d2;
-            }else if(similarityMeasure==SimilarityMeasure.Dice_1 || similarityMeasure==SimilarityMeasure.Dice_1Mod || 
-                    similarityMeasure==SimilarityMeasure.Jaccard_3 || 
-                    similarityMeasure==SimilarityMeasure.Overlap || similarityMeasure==SimilarityMeasure.Kulczynski){
-                return Math.min(d1, d2);
-            }else if(similarityMeasure==SimilarityMeasure.ZklMod){
-                if(d1*d2>0d){
-                    return d1*Math.log(d1/d2);
-                }else{
-                    return d1*zklGamma;
-                }
-            }else if(similarityMeasure==SimilarityMeasure.ZklModSym){
-                d=0d;
-                if(d1*d2>0d){
-                    d+=d1*Math.log(d1/d2);
-                }else{
-                    d+=d1*zklGamma;
-                }
-                if(d2*d1>0d){
-                    d+=d2*Math.log(d2/d1);
-                }else{
-                    d+=d2*zklGamma;
-                }
-                return d;
-            }else if(similarityMeasure==SimilarityMeasure.L05){
-                return Math.sqrt(Math.abs(d1-d2));
-            }else if(similarityMeasure==SimilarityMeasure.L1 || similarityMeasure==SimilarityMeasure.AvgL1LInf || 
-                    similarityMeasure==SimilarityMeasure.LInf || 
-                    similarityMeasure==SimilarityMeasure.SorensenMod){
-                return Math.abs(d1-d2);
-            }else if(similarityMeasure==SimilarityMeasure.L2){
-                return Math.pow(d1-d2, 2d);
-            }else if(similarityMeasure==SimilarityMeasure.L3){
-                return Math.pow(Math.abs(d1-d2), 3d);
-            }else if(similarityMeasure==SimilarityMeasure.Canberra){
-                d=Math.abs(d1)+Math.abs(d2);
-                if(d!=0d){
-                    return Math.abs(d1-d2)/(d);
-                }else{
-                    return 0d;
-                }
-            }else if(similarityMeasure==SimilarityMeasure.Lorentzian){
-                return Math.log(1d+Math.abs(d1-d2));
-            }else if(similarityMeasure==SimilarityMeasure.ASkewMod){
-                if(d1!=0d && alphaSkewAlpha*d2+(1d-alphaSkewAlpha)*d1!=0d){
-                    return Math.signum(d1-(alphaSkewAlpha*d2+(1d-alphaSkewAlpha)*d1))*Math.abs(d1*Math.log(Math.abs(d1/(alphaSkewAlpha*d2+(1d-alphaSkewAlpha)*d1))));
-                }else{
-                    return 0d;
-                }
-            }else if(similarityMeasure==SimilarityMeasure.ASkewModSym){
-                d=0d;
-                if(d1!=0d && alphaSkewAlpha*d2+(1d-alphaSkewAlpha)*d1!=0d){
-                    d+=Math.signum(d1-(alphaSkewAlpha*d2+(1d-alphaSkewAlpha)*d1))*Math.abs(d1*Math.log(Math.abs(d1/(alphaSkewAlpha*d2+(1d-alphaSkewAlpha)*d1))));
-                }
-                if(d2!=0d && alphaSkewAlpha*d1+(1d-alphaSkewAlpha)*d2!=0d){
-                    d+=Math.signum(d2-(alphaSkewAlpha*d1+(1d-alphaSkewAlpha)*d2))*Math.abs(d2*Math.log(Math.abs(d2/(alphaSkewAlpha*d1+(1d-alphaSkewAlpha)*d2))));
-                }
-                return d;
-            }else if(similarityMeasure==SimilarityMeasure.JensenShannonMod){
-                d=0d;
-                if(d1!=0d && d1+d2!=0d){
-                    d+=Math.signum(2*d1-(d1+d2))*Math.abs(d1*Math.log(Math.abs(2*d1/(d1+d2))));
-                }
-                if(d2!=0d && d1+d2!=0d){
-                    d+=Math.signum(2*d2-(d1+d2))*Math.abs(d2*Math.log(Math.abs(2*d2/(d1+d2))));
-                }
-                return d;
-            }else if(similarityMeasure==SimilarityMeasure.JensenMod){
-                d=0d;
-                if(d1!=0d){
-                    d+=d1/2d*Math.log(Math.abs(d1));
-                }
-                if(d2!=0d){
-                    d+=d2/2d*Math.log(Math.abs(d2));
-                }
-                if(d1+d2!=0d){
-                    d-=((d1+d2)/2d)*Math.log(Math.abs((d1+d2)/2d));
-                }
-                return d;
-            }else if(similarityMeasure==SimilarityMeasure.LinKiela){
-                return d1+d2;
-            }else if(similarityMeasure==SimilarityMeasure.Tanimoto_1 || similarityMeasure==SimilarityMeasure.Tanimoto_1Mod){
-                return Math.max(d1, d2)-Math.min(d1, d2);
-            }else if(similarityMeasure==SimilarityMeasure.HarmMeanMod){
-                d=Math.abs(d1)+Math.abs(d2);
-                if(d!=0d){
-                    return d1*d2/d;
-                }else{
-                    return 0d;
-                }
-            }else if(similarityMeasure==SimilarityMeasure.FidelityMod){
-                return Math.signum(d1*d2)*Math.sqrt(Math.abs(d1*d2));
-            }else if(similarityMeasure==SimilarityMeasure.HellingerMod){
-                return Math.pow(Math.signum(d1)*Math.sqrt(Math.abs(d1))-Math.signum(d2)*Math.sqrt(Math.abs(d2)), 2d);
-            }else if(similarityMeasure==SimilarityMeasure.ChiSquareMod){
-                if(d2!=0d){
-                    return Math.pow(d1-d2, 2d)/Math.abs(d2);
-                }else{
-                    return 0d;
-                }
-            }else if(similarityMeasure==SimilarityMeasure.PsChiSquareMod){
-                d=Math.abs(d1)+Math.abs(d2);
-                if(d!=0d){
-                    return Math.pow(d1-d2,2d)/d;
-                }else{
-                    return 0d;
-                }
-            }else if(similarityMeasure==SimilarityMeasure.ClarkMod){
-                d=Math.abs(d1)+Math.abs(d2);
-                if(d!=0d){
-                    return Math.pow(Math.abs(d1-d2)/d,2d);
-                }else{
-                    return 0d;
-                }
-            }else if(similarityMeasure==SimilarityMeasure.RenyiDivMod2){
-                if(d2!=0d){
-                    return Math.pow(d1,2d)/Math.abs(d2);
-                }else{
-                    return 0d;
-                }
-            }else if(similarityMeasure==SimilarityMeasure.RenyiDivModInf){
-                if(d2!=0d){
-                    return Math.abs(d1/d2);
-                }else{
-                    return 0d;
-                }
-            }else if(similarityMeasure==SimilarityMeasure.StdLike_1){
-                double mean = (d1+d2)/2d;
-                return Math.sqrt(Math.abs(d1-mean))+Math.sqrt(Math.abs(d2-mean));
-            }else if(similarityMeasure==SimilarityMeasure.StdLike_2){
-                double mean = (d1+d2)/2d;
-                return Math.pow(d1-mean,2d)+Math.pow(d2-mean,2d);
-            }else if(similarityMeasure==SimilarityMeasure.StdLike_3){
-                double mean = (d1+d2)/2d;
-                return Math.pow(Math.abs(d1-mean),3d)+Math.pow(Math.abs(d2-mean),3d);
-            }else if(similarityMeasure==SimilarityMeasure.StdLike_4){
-                double mean = (d1+d2)/2d;
-                return lb(Math.abs(d1-mean)+1d)+lb(Math.abs(d2-mean)+1d);
-            }else if(similarityMeasure==SimilarityMeasure.StdLike_5){
-                double mean = (d1+d2)/2d;
-                return 1d/(2d+Math.expm1(-Math.abs(d1-mean)))-0.5d+1d/(2d+Math.expm1(-Math.abs(d2-mean)))-0.5d;
-            }else if(similarityMeasure==SimilarityMeasure.Lsmq){
-                if(d2!=0d){
-                    return Math.abs(d1/d2)-1d;
-                }else{
-                    return 0d-1d;
-                }
-            }else if(similarityMeasure==SimilarityMeasure.Srsn){
-                d = Math.abs(d1-d2);
-                if(d!=0d){
-                    return Math.min(d1, d2)/d;
-                }else{
-                    return 0d;
-                }
-            }else if(similarityMeasure==SimilarityMeasure.Rsssn){
-                return Math.min(d1, d2);
-            }else if(similarityMeasure==SimilarityMeasure.Sdsn){
-                return Math.min(d1, d2)-Math.abs(d1-d2);
-            }else if(similarityMeasure==SimilarityMeasure.Srsmv){
-                d = Math.max(d1, d2);
-                if(d!=0d){
-                    return Math.min(d1, d2)/d;
-                }else{
-                    return 0d;
-                }
-            }else if(similarityMeasure==SimilarityMeasure.Srsm){
-                d = (d1+d2)/2d;
-                if(d!=0d){
-                    return Math.min(d1, d2)/d;
-                }else{
-                    return 0d;
-                }
-            }else if(similarityMeasure==SimilarityMeasure.TanejaMod){
-                if(d1+d2!=0d && d1*d2!=0d){
-                    return (d1+d2)/2d*Math.log(Math.abs((d1+d2)/(2*Math.sqrt(Math.abs(d1*d2)))));
-                }else{
-                    return 0d;
-                }
-            }else if(similarityMeasure==SimilarityMeasure.KumarJohnsonMod){
-                if(d1*d2!=0d){
-                    return Math.pow(Math.signum(d1)*Math.pow(d1, 2d)-Math.signum(d2)*Math.pow(d2, 2d), 2d)/(2*Math.pow(Math.abs(d1*d2), 1.5d));
-                }else{
-                    return 0d;
-                }
-            }else if(similarityMeasure==SimilarityMeasure.VicWhMod){
-                if(Math.min(d1,d2)!=0d){
-                    return Math.abs(d1-d2)/Math.abs(Math.min(d1,d2));
-                }else{
-                    return 0d;
-                }
-            }else if(similarityMeasure==SimilarityMeasure.VicSymChiSqMod1){
-                if(Math.min(d1,d2)!=0d){
-                    return Math.pow((d1-d2)/Math.min(d1,d2),2d);
-                }else{
-                    return 0d;
-                }
-            }else if(similarityMeasure==SimilarityMeasure.VicSymChiSqMod2){
-                if(Math.min(d1,d2)!=0d){
-                    return Math.pow(d1-d2,2d)/Math.abs(Math.min(d1,d2));
-                }else{
-                    return 0d;
-                }
-            }else if(similarityMeasure==SimilarityMeasure.VicSymChiSqMod3){
-                if(Math.max(d1,d2)!=0d){
-                    return Math.pow(d1-d2,2d)/Math.abs(Math.max(d1,d2));
-                }else{
-                    return 0d;
-                }
-            }else if(similarityMeasure==SimilarityMeasure.MaxSymChiSqMod){
-                if(d1!=0d){
-                    return Math.pow(d1-d2,2d)/Math.abs(d1);
-                }else{
-                    return 0d;
-                }
-            }else if(similarityMeasure==SimilarityMeasure.Rms){
-                return Math.sqrt((Math.pow(d1, 2d)+Math.pow(d2, 2d))/2d);
-            }else if(similarityMeasure==SimilarityMeasure.ContraHMeanMod){
-                d=Math.abs(d1)+Math.abs(d2);
-                if(d!=0d){
-                    return (Math.pow(d1, 2d)+Math.pow(d2, 2d))/d;
-                }else{
-                    return 0d;
-                }
-            }else if(similarityMeasure==SimilarityMeasure.Spline){
-                return d1*d2+d1*d2*Math.min(d1,d2)-(d1+d2)/2d*Math.pow(Math.min(d1,d2),2d)+Math.pow(Math.min(d1,d2),3d)/3d;
-            }else if(similarityMeasure==SimilarityMeasure.RobersMod){
-                if(d1!=0d && d2!=0d){
-                    return (d1+d2)*Math.min(d1,d2)/Math.max(d1,d2);
-                }else{
-                    return 0d;
-                }
-            }else if(similarityMeasure==SimilarityMeasure.Simpson_2Mod){
-                return Math.signum(d1*d2)*lb(Math.abs(d1*d2)+1d);
-            }else if(similarityMeasure==SimilarityMeasure.MahalanobisMod){
-                d = Math.abs((d1-vectorMean1)*(d2-vectorMean2));
-                if(d!=0d){
-                    return Math.pow(d1-d2, 2d)/d;
-                }else{
-                    return 0d;
-                }
-            }else if(similarityMeasure==SimilarityMeasure.Multiplicative){
-                return 1d+Math.abs(d1-d2);
-            }else if(similarityMeasure==SimilarityMeasure.MultiplicativeMod1){
-                return Math.pow(1d+Math.abs(d1-d2), 0.1d);
-            }else if(similarityMeasure==SimilarityMeasure.MultiplicativeMod2){
-                return lb(1d+Math.abs(d1-d2));
-            }else if(similarityMeasure==SimilarityMeasure.NormCosMod){
-                return Math.signum(d1*d2)*Math.pow(Math.abs(d1*d2), normCosGamma);
-            }else if(similarityMeasure==SimilarityMeasure.SocPmiMod){
-                if(d1>0d && d2>0d){
-                    return Math.pow(d1, SocPmiGamma);
-                }else{
-                    return 0d;
-                }
-            }else if(similarityMeasure==SimilarityMeasure.NormModSocPmiMod){
-                if(d1>0d && d2>0d){
-                    return Math.pow(d1, normModSocPmiGamma);
-                }else{
-                    return 0d;
-                }
-            }else if(similarityMeasure==SimilarityMeasure.ChenCorr){
-                d = d1+d2-d1*d2;
-                if(d == 0d){
-                    return 0d;
-                }else{
-                    return d1*d2/d;
-                }
-            }else if(similarityMeasure==SimilarityMeasure.NcdMod_1){
-                d = Math.max(d1,d2);
-                if(d == 0d){
-                    return 0d;
-                }else{
-                    return (d1*d2-Math.min(d1,d2))/d;
-                }
-            }else if(similarityMeasure==SimilarityMeasure.NgdMod){
-                return (Math.max(Math.signum(d1)*lb(Math.abs(d1)+1d), Math.signum(d2)*lb(Math.abs(d2)+1d))-Math.signum(d1*d2)*lb(Math.abs(d1*d2)+1d))/(lb(numberOfAllFeatures+1d)-Math.min(Math.signum(d1)*lb(Math.abs(d1)+1d), Math.signum(d2)*lb(Math.abs(d2)+1d)));
-            }else if(similarityMeasure==SimilarityMeasure.ApSyn){
-                if(d1!=0 && d2!=0){
-                    return 2d/(d1+d2);
-                }else{
-                    return 0;
-                }
-            }else if(similarityMeasure==SimilarityMeasure.ApSynP){
-                if(d1!=0 && d2!=0){
-                    return 2d/(Math.pow(d1, apSynPP)+Math.pow(d2, apSynPP));
-                }else{
-                    return 0;
-                }
-            }else if(similarityMeasure==SimilarityMeasure.Wo){
-                if(d1!=0 && d2!=0){
-                    return 1d/(d1+d2);
-                }else{
-                    return 0;
-                }
-            }else if(cosModPattern.matcher(similarityMeasureString).matches()){
+        if(similarityMeasure==SimilarityMeasure.Cos || similarityMeasure==SimilarityMeasure.Dice_2 || 
+                similarityMeasure==SimilarityMeasure.Jaccard_1 || similarityMeasure==SimilarityMeasure.Jaccard_1Mod || 
+                similarityMeasure==SimilarityMeasure.Jaccard_2 || 
+                similarityMeasure==SimilarityMeasure.Tanimoto_2 || similarityMeasure==SimilarityMeasure.InnerProd || 
+                similarityMeasure.toString().matches("PseudoCos.*") || 
+                similarityMeasure==SimilarityMeasure.Mb || 
+                similarityMeasure==SimilarityMeasure.Simpson_1 || similarityMeasure==SimilarityMeasure.SmoothCos || 
+                similarityMeasure==SimilarityMeasure.AdjCos || 
+                similarityMeasure==SimilarityMeasure.NcdMod_2 || similarityMeasure==SimilarityMeasure.MbAdjCos || 
+                similarityMeasure==SimilarityMeasure.MbPFMod || similarityMeasure==SimilarityMeasure.MbAdjCosPFMod || 
+                similarityMeasure==SimilarityMeasure.AdjCosPFMod || similarityMeasureString.matches("Mb(Adj)?Cos((Am)|(Gm)|(Hm)|(Prod)|(LogProd))")){
+            return d1*d2;
+        }else if(similarityMeasure==SimilarityMeasure.Dice_1 || similarityMeasure==SimilarityMeasure.Dice_1Mod || 
+                similarityMeasure==SimilarityMeasure.Jaccard_3 || 
+                similarityMeasure==SimilarityMeasure.Overlap || similarityMeasure==SimilarityMeasure.Kulczynski){
+            return Math.min(d1, d2);
+        }else if(similarityMeasure==SimilarityMeasure.ZklMod){
+            if(d1*d2>0d){
+                return d1*Math.log(d1/d2);
+            }else{
+                return d1*zklGamma;
+            }
+        }else if(similarityMeasure==SimilarityMeasure.ZklModSym){
+            d=0d;
+            if(d1*d2>0d){
+                d+=d1*Math.log(d1/d2);
+            }else{
+                d+=d1*zklGamma;
+            }
+            if(d2*d1>0d){
+                d+=d2*Math.log(d2/d1);
+            }else{
+                d+=d2*zklGamma;
+            }
+            return d;
+        }else if(similarityMeasure==SimilarityMeasure.L05){
+            return Math.sqrt(Math.abs(d1-d2));
+        }else if(similarityMeasure==SimilarityMeasure.L1 || similarityMeasure==SimilarityMeasure.AvgL1LInf || 
+                similarityMeasure==SimilarityMeasure.LInf || 
+                similarityMeasure==SimilarityMeasure.SorensenMod){
+            return Math.abs(d1-d2);
+        }else if(similarityMeasure==SimilarityMeasure.L2){
+            return Math.pow(d1-d2, 2d);
+        }else if(similarityMeasure==SimilarityMeasure.L3){
+            return Math.pow(Math.abs(d1-d2), 3d);
+        }else if(similarityMeasure==SimilarityMeasure.Canberra){
+            d=Math.abs(d1)+Math.abs(d2);
+            if(d!=0d){
+                return Math.abs(d1-d2)/(d);
+            }else{
+                return 0d;
+            }
+        }else if(similarityMeasure==SimilarityMeasure.Lorentzian){
+            return Math.log(1d+Math.abs(d1-d2));
+        }else if(similarityMeasure==SimilarityMeasure.ASkewMod){
+            if(d1!=0d && alphaSkewAlpha*d2+(1d-alphaSkewAlpha)*d1!=0d){
+                return Math.signum(d1-(alphaSkewAlpha*d2+(1d-alphaSkewAlpha)*d1))*Math.abs(d1*Math.log(Math.abs(d1/(alphaSkewAlpha*d2+(1d-alphaSkewAlpha)*d1))));
+            }else{
+                return 0d;
+            }
+        }else if(similarityMeasure==SimilarityMeasure.ASkewModSym){
+            d=0d;
+            if(d1!=0d && alphaSkewAlpha*d2+(1d-alphaSkewAlpha)*d1!=0d){
+                d+=Math.signum(d1-(alphaSkewAlpha*d2+(1d-alphaSkewAlpha)*d1))*Math.abs(d1*Math.log(Math.abs(d1/(alphaSkewAlpha*d2+(1d-alphaSkewAlpha)*d1))));
+            }
+            if(d2!=0d && alphaSkewAlpha*d1+(1d-alphaSkewAlpha)*d2!=0d){
+                d+=Math.signum(d2-(alphaSkewAlpha*d1+(1d-alphaSkewAlpha)*d2))*Math.abs(d2*Math.log(Math.abs(d2/(alphaSkewAlpha*d1+(1d-alphaSkewAlpha)*d2))));
+            }
+            return d;
+        }else if(similarityMeasure==SimilarityMeasure.JensenShannonMod){
+            d=0d;
+            if(d1!=0d && d1+d2!=0d){
+                d+=Math.signum(2*d1-(d1+d2))*Math.abs(d1*Math.log(Math.abs(2*d1/(d1+d2))));
+            }
+            if(d2!=0d && d1+d2!=0d){
+                d+=Math.signum(2*d2-(d1+d2))*Math.abs(d2*Math.log(Math.abs(2*d2/(d1+d2))));
+            }
+            return d;
+        }else if(similarityMeasure==SimilarityMeasure.JensenMod){
+            d=0d;
+            if(d1!=0d){
+                d+=d1/2d*Math.log(Math.abs(d1));
+            }
+            if(d2!=0d){
+                d+=d2/2d*Math.log(Math.abs(d2));
+            }
+            if(d1+d2!=0d){
+                d-=((d1+d2)/2d)*Math.log(Math.abs((d1+d2)/2d));
+            }
+            return d;
+        }else if(similarityMeasure==SimilarityMeasure.LinKiela){
+            return d1+d2;
+        }else if(similarityMeasure==SimilarityMeasure.Tanimoto_1 || similarityMeasure==SimilarityMeasure.Tanimoto_1Mod){
+            return Math.max(d1, d2)-Math.min(d1, d2);
+        }else if(similarityMeasure==SimilarityMeasure.HarmMeanMod){
+            d=Math.abs(d1)+Math.abs(d2);
+            if(d!=0d){
+                return d1*d2/d;
+            }else{
+                return 0d;
+            }
+        }else if(similarityMeasure==SimilarityMeasure.FidelityMod){
+            return Math.signum(d1*d2)*Math.sqrt(Math.abs(d1*d2));
+        }else if(similarityMeasure==SimilarityMeasure.HellingerMod){
+            return Math.pow(Math.signum(d1)*Math.sqrt(Math.abs(d1))-Math.signum(d2)*Math.sqrt(Math.abs(d2)), 2d);
+        }else if(similarityMeasure==SimilarityMeasure.ChiSquareMod){
+            if(d2!=0d){
+                return Math.pow(d1-d2, 2d)/Math.abs(d2);
+            }else{
+                return 0d;
+            }
+        }else if(similarityMeasure==SimilarityMeasure.PsChiSquareMod){
+            d=Math.abs(d1)+Math.abs(d2);
+            if(d!=0d){
+                return Math.pow(d1-d2,2d)/d;
+            }else{
+                return 0d;
+            }
+        }else if(similarityMeasure==SimilarityMeasure.ClarkMod){
+            d=Math.abs(d1)+Math.abs(d2);
+            if(d!=0d){
+                return Math.pow(Math.abs(d1-d2)/d,2d);
+            }else{
+                return 0d;
+            }
+        }else if(similarityMeasure==SimilarityMeasure.RenyiDivMod2){
+            if(d2!=0d){
+                return Math.pow(d1,2d)/Math.abs(d2);
+            }else{
+                return 0d;
+            }
+        }else if(similarityMeasure==SimilarityMeasure.RenyiDivModInf){
+            if(d2!=0d){
+                return Math.abs(d1/d2);
+            }else{
+                return 0d;
+            }
+        }else if(similarityMeasure==SimilarityMeasure.StdLike_1){
+            double mean = (d1+d2)/2d;
+            return Math.sqrt(Math.abs(d1-mean))+Math.sqrt(Math.abs(d2-mean));
+        }else if(similarityMeasure==SimilarityMeasure.StdLike_2){
+            double mean = (d1+d2)/2d;
+            return Math.pow(d1-mean,2d)+Math.pow(d2-mean,2d);
+        }else if(similarityMeasure==SimilarityMeasure.StdLike_3){
+            double mean = (d1+d2)/2d;
+            return Math.pow(Math.abs(d1-mean),3d)+Math.pow(Math.abs(d2-mean),3d);
+        }else if(similarityMeasure==SimilarityMeasure.StdLike_4){
+            double mean = (d1+d2)/2d;
+            return lb(Math.abs(d1-mean)+1d)+lb(Math.abs(d2-mean)+1d);
+        }else if(similarityMeasure==SimilarityMeasure.StdLike_5){
+            double mean = (d1+d2)/2d;
+            return 1d/(2d+Math.expm1(-Math.abs(d1-mean)))-0.5d+1d/(2d+Math.expm1(-Math.abs(d2-mean)))-0.5d;
+        }else if(similarityMeasure==SimilarityMeasure.Lsmq){
+            if(d2!=0d){
+                return Math.abs(d1/d2)-1d;
+            }else{
+                return 0d-1d;
+            }
+        }else if(similarityMeasure==SimilarityMeasure.Srsn){
+            d = Math.abs(d1-d2);
+            if(d!=0d){
+                return Math.min(d1, d2)/d;
+            }else{
+                return 0d;
+            }
+        }else if(similarityMeasure==SimilarityMeasure.Rsssn){
+            return Math.min(d1, d2);
+        }else if(similarityMeasure==SimilarityMeasure.Sdsn){
+            return Math.min(d1, d2)-Math.abs(d1-d2);
+        }else if(similarityMeasure==SimilarityMeasure.Srsmv){
+            d = Math.max(d1, d2);
+            if(d!=0d){
+                return Math.min(d1, d2)/d;
+            }else{
+                return 0d;
+            }
+        }else if(similarityMeasure==SimilarityMeasure.Srsm){
+            d = (d1+d2)/2d;
+            if(d!=0d){
+                return Math.min(d1, d2)/d;
+            }else{
+                return 0d;
+            }
+        }else if(similarityMeasure==SimilarityMeasure.TanejaMod){
+            if(d1+d2!=0d && d1*d2!=0d){
+                return (d1+d2)/2d*Math.log(Math.abs((d1+d2)/(2*Math.sqrt(Math.abs(d1*d2)))));
+            }else{
+                return 0d;
+            }
+        }else if(similarityMeasure==SimilarityMeasure.KumarJohnsonMod){
+            if(d1*d2!=0d){
+                return Math.pow(Math.signum(d1)*Math.pow(d1, 2d)-Math.signum(d2)*Math.pow(d2, 2d), 2d)/(2*Math.pow(Math.abs(d1*d2), 1.5d));
+            }else{
+                return 0d;
+            }
+        }else if(similarityMeasure==SimilarityMeasure.VicWhMod){
+            if(Math.min(d1,d2)!=0d){
+                return Math.abs(d1-d2)/Math.abs(Math.min(d1,d2));
+            }else{
+                return 0d;
+            }
+        }else if(similarityMeasure==SimilarityMeasure.VicSymChiSqMod1){
+            if(Math.min(d1,d2)!=0d){
+                return Math.pow((d1-d2)/Math.min(d1,d2),2d);
+            }else{
+                return 0d;
+            }
+        }else if(similarityMeasure==SimilarityMeasure.VicSymChiSqMod2){
+            if(Math.min(d1,d2)!=0d){
+                return Math.pow(d1-d2,2d)/Math.abs(Math.min(d1,d2));
+            }else{
+                return 0d;
+            }
+        }else if(similarityMeasure==SimilarityMeasure.VicSymChiSqMod3){
+            if(Math.max(d1,d2)!=0d){
+                return Math.pow(d1-d2,2d)/Math.abs(Math.max(d1,d2));
+            }else{
+                return 0d;
+            }
+        }else if(similarityMeasure==SimilarityMeasure.MaxSymChiSqMod){
+            if(d1!=0d){
+                return Math.pow(d1-d2,2d)/Math.abs(d1);
+            }else{
+                return 0d;
+            }
+        }else if(similarityMeasure==SimilarityMeasure.Rms){
+            return Math.sqrt((Math.pow(d1, 2d)+Math.pow(d2, 2d))/2d);
+        }else if(similarityMeasure==SimilarityMeasure.ContraHMeanMod){
+            d=Math.abs(d1)+Math.abs(d2);
+            if(d!=0d){
+                return (Math.pow(d1, 2d)+Math.pow(d2, 2d))/d;
+            }else{
+                return 0d;
+            }
+        }else if(similarityMeasure==SimilarityMeasure.Spline){
+            return d1*d2+d1*d2*Math.min(d1,d2)-(d1+d2)/2d*Math.pow(Math.min(d1,d2),2d)+Math.pow(Math.min(d1,d2),3d)/3d;
+        }else if(similarityMeasure==SimilarityMeasure.RobersMod){
+            if(d1!=0d && d2!=0d){
+                return (d1+d2)*Math.min(d1,d2)/Math.max(d1,d2);
+            }else{
+                return 0d;
+            }
+        }else if(similarityMeasure==SimilarityMeasure.Simpson_2Mod){
+            return Math.signum(d1*d2)*lb(Math.abs(d1*d2)+1d);
+        }else if(similarityMeasure==SimilarityMeasure.MahalanobisMod){
+            d = Math.abs((d1-vectorMean1)*(d2-vectorMean2));
+            if(d!=0d){
+                return Math.pow(d1-d2, 2d)/d;
+            }else{
+                return 0d;
+            }
+        }else if(similarityMeasure==SimilarityMeasure.Multiplicative){
+            return 1d+Math.abs(d1-d2);
+        }else if(similarityMeasure==SimilarityMeasure.MultiplicativeMod1){
+            return Math.pow(1d+Math.abs(d1-d2), 0.1d);
+        }else if(similarityMeasure==SimilarityMeasure.MultiplicativeMod2){
+            return lb(1d+Math.abs(d1-d2));
+        }else if(similarityMeasure==SimilarityMeasure.NormCosMod){
+            return Math.signum(d1*d2)*Math.pow(Math.abs(d1*d2), normCosGamma);
+        }else if(similarityMeasure==SimilarityMeasure.SocPmiMod){
+            if(d1>0d && d2>0d){
+                return Math.pow(d1, SocPmiGamma);
+            }else{
+                return 0d;
+            }
+        }else if(similarityMeasure==SimilarityMeasure.NormModSocPmiMod){
+            if(d1>0d && d2>0d){
+                return Math.pow(d1, normModSocPmiGamma);
+            }else{
+                return 0d;
+            }
+        }else if(similarityMeasure==SimilarityMeasure.ChenCorr){
+            d = d1+d2-d1*d2;
+            if(d == 0d){
+                return 0d;
+            }else{
+                return d1*d2/d;
+            }
+        }else if(similarityMeasure==SimilarityMeasure.NcdMod_1){
+            d = Math.max(d1,d2);
+            if(d == 0d){
+                return 0d;
+            }else{
+                return (d1*d2-Math.min(d1,d2))/d;
+            }
+        }else if(similarityMeasure==SimilarityMeasure.NgdMod){
+            return (Math.max(Math.signum(d1)*lb(Math.abs(d1)+1d), Math.signum(d2)*lb(Math.abs(d2)+1d))-Math.signum(d1*d2)*lb(Math.abs(d1*d2)+1d))/(lb(numberOfAllFeatures+1d)-Math.min(Math.signum(d1)*lb(Math.abs(d1)+1d), Math.signum(d2)*lb(Math.abs(d2)+1d)));
+        }else if(similarityMeasure==SimilarityMeasure.ApSyn){
+            if(d1!=0 && d2!=0){
+                return 2d/(d1+d2);
+            }else{
+                return 0;
+            }
+        }else if(similarityMeasure==SimilarityMeasure.ApSynP){
+            if(d1!=0 && d2!=0){
+                return 2d/(Math.pow(d1, apSynPP)+Math.pow(d2, apSynPP));
+            }else{
+                return 0;
+            }
+        }else if(similarityMeasure==SimilarityMeasure.Wo){
+            if(d1!=0 && d2!=0){
+                return 1d/(d1+d2);
+            }else{
+                return 0;
+            }
+        }else if(cosModPattern.matcher(similarityMeasureString).matches()){
+            int type = Integer.parseInt(similarityMeasureString.substring(similarityMeasureString.length()-1));
+            return similarityMeasureFFunction(type, d1)*similarityMeasureFFunction(type, d2);
+        }else if(mbModPattern.matcher(similarityMeasureString).matches()){
+            int type = Integer.parseInt(similarityMeasureString.substring(similarityMeasureString.length()-1));
+            return similarityMeasureFFunction(type, d1)*similarityMeasureFFunction(type, d2);
+        }else if(adjCosModPattern.matcher(similarityMeasureString).matches()){
+            int type = Integer.parseInt(similarityMeasureString.substring(similarityMeasureString.length()-1));
+            return similarityMeasureFFunction(type, d1)*similarityMeasureFFunction(type, d2);
+        }else if(pfModPattern.matcher(similarityMeasureString).matches()){
+            int type = Integer.parseInt(similarityMeasureString.substring(similarityMeasureString.length()-1));
+            return similarityMeasureFFunction(type, d1)*similarityMeasureFFunction(type, d2);
+        }else if(lModPattern.matcher(similarityMeasureString).matches()){
+            int type = Integer.parseInt(similarityMeasureString.substring(similarityMeasureString.length()-1));
+            return similarityMeasureFFunction(type, Math.abs(d1-d2));
+        }else if(lWPattern.matcher(similarityMeasureString).matches()){
+            if((Math.abs(d1)+Math.abs(d2))!=0d){
                 int type = Integer.parseInt(similarityMeasureString.substring(similarityMeasureString.length()-1));
-                return similarityMeasureFFunction(type, d1)*similarityMeasureFFunction(type, d2);
-            }else if(mbModPattern.matcher(similarityMeasureString).matches()){
-                int type = Integer.parseInt(similarityMeasureString.substring(similarityMeasureString.length()-1));
-                return similarityMeasureFFunction(type, d1)*similarityMeasureFFunction(type, d2);
-            }else if(adjCosModPattern.matcher(similarityMeasureString).matches()){
-                int type = Integer.parseInt(similarityMeasureString.substring(similarityMeasureString.length()-1));
-                return similarityMeasureFFunction(type, d1)*similarityMeasureFFunction(type, d2);
-            }else if(pfModPattern.matcher(similarityMeasureString).matches()){
-                int type = Integer.parseInt(similarityMeasureString.substring(similarityMeasureString.length()-1));
-                return similarityMeasureFFunction(type, d1)*similarityMeasureFFunction(type, d2);
-            }else if(lModPattern.matcher(similarityMeasureString).matches()){
-                int type = Integer.parseInt(similarityMeasureString.substring(similarityMeasureString.length()-1));
-                return similarityMeasureFFunction(type, Math.abs(d1-d2));
-            }else if(lWPattern.matcher(similarityMeasureString).matches()){
-                if((Math.abs(d1)+Math.abs(d2))!=0d){
-                    int type = Integer.parseInt(similarityMeasureString.substring(similarityMeasureString.length()-1));
-                    if(similarityMeasureString.matches("LW_1.*")){
-                        return similarityMeasureFFunction(type, Math.abs(d1-d2))/(Math.abs(d1)+Math.abs(d2));
-                    }else if(similarityMeasureString.matches("LW_2.*")){
-                        return similarityMeasureFFunction(type, Math.abs(d1-d2))/(similarityMeasureFFunction(type, Math.abs(d1))+similarityMeasureFFunction(type, Math.abs(d2)));
-                    }else{
-                        System.out.println("No such SimilarityMeasure: " + similarityMeasure);
-                        throw new RuntimeException();
-                    }
-                }else{
-                    return 0d;
-                }
-            }else if(innerProdWPattern.matcher(similarityMeasureString).matches()){
-                int type = Integer.parseInt(similarityMeasureString.substring(similarityMeasureString.length()-1));
-                if(similarityMeasureString.matches("InnerProdW_(1|3)_.")){
-                    d = (Math.abs(d1)+Math.abs(d2));
-                    if(d == 0d){
-                        return 0d;
-                    }else{
-                        return similarityMeasureFFunction(type, d1)*similarityMeasureFFunction(type, d2)/d;
-                    }
-                }else if(similarityMeasureString.matches("InnerProdW_(2|4)_.")){
-                    double fd1 = similarityMeasureFFunction(type, d1);
-                    double fd2 = similarityMeasureFFunction(type, d2);
-                    d = (Math.abs(fd1)+Math.abs(fd2));
-                    if(d == 0d){
-                        return 0d;
-                    }else{
-                        return fd1*fd2/d;
-                    }
+                if(similarityMeasureString.matches("LW_1.*")){
+                    return similarityMeasureFFunction(type, Math.abs(d1-d2))/(Math.abs(d1)+Math.abs(d2));
+                }else if(similarityMeasureString.matches("LW_2.*")){
+                    return similarityMeasureFFunction(type, Math.abs(d1-d2))/(similarityMeasureFFunction(type, Math.abs(d1))+similarityMeasureFFunction(type, Math.abs(d2)));
                 }else{
                     System.out.println("No such SimilarityMeasure: " + similarityMeasure);
                     throw new RuntimeException();
                 }
-            }else if(dtvPattern.matcher(similarityMeasureString).matches()){
-                if(similarityMeasureString.matches("Dtv_(1|2|3|4|5|6|7).*")){
-                    int type = Integer.parseInt(similarityMeasureString.substring(similarityMeasureString.length()-1));
-                    return Math.abs(similarityMeasureFFunction(type, d1)-similarityMeasureFFunction(type, d2));
-                }else if(similarityMeasureString.matches("Dtv_(8|9|(10)|(11)|(12)|(13)|(14)).*")){
-                    int type = Integer.parseInt(similarityMeasureString.substring(similarityMeasureString.length()-1));
-                    return similarityMeasureFInverseFunction(type, Math.abs(similarityMeasureFFunction(type, d1)-similarityMeasureFFunction(type, d2)), numberOfAllFeatures);
-                }else{
-                    System.out.println("No such SimilarityMeasure: " + similarityMeasure);
-                    throw new RuntimeException();
-                }
-            }else if(dtvWPattern.matcher(similarityMeasureString).matches()){
-                if((Math.abs(d1)+Math.abs(d2))!=0d){
-                    int type = Integer.parseInt(similarityMeasureString.substring(similarityMeasureString.length()-1));
-                    if(similarityMeasureString.matches("DtvW_1.*")){
-                        return Math.abs(similarityMeasureFFunction(type, d1)-similarityMeasureFFunction(type, d2))/
-                                (Math.abs(d1)+Math.abs(d2));
-                    }else if(similarityMeasureString.matches("DtvW_2.*")){
-                        return Math.abs(similarityMeasureFFunction(type, d1)-similarityMeasureFFunction(type, d2))/
-                                (similarityMeasureFFunction(type, Math.abs(d1))+similarityMeasureFFunction(type, Math.abs(d2)));
-                    }else if(similarityMeasureString.matches("DtvW_3.*")){
-                        return similarityMeasureFInverseFunction(type, Math.abs(similarityMeasureFFunction(type, d1)-similarityMeasureFFunction(type, d2)), numberOfAllFeatures)/
-                                (Math.abs(d1)+Math.abs(d2));
-                    }else if(similarityMeasureString.matches("DtvW_4.*")){
-                        return similarityMeasureFInverseFunction(type, Math.abs(similarityMeasureFFunction(type, d1)-similarityMeasureFFunction(type, d2)), numberOfAllFeatures)/
-                                (similarityMeasureFFunction(type, Math.abs(d1))+similarityMeasureFFunction(type, Math.abs(d2)));
-                    }else{
-                        System.out.println("No such SimilarityMeasure: " + similarityMeasure);
-                        throw new RuntimeException();
-                    }
-                }else{
+            }else{
+                return 0d;
+            }
+        }else if(innerProdWPattern.matcher(similarityMeasureString).matches()){
+            int type = Integer.parseInt(similarityMeasureString.substring(similarityMeasureString.length()-1));
+            if(similarityMeasureString.matches("InnerProdW_(1|3)_.")){
+                d = (Math.abs(d1)+Math.abs(d2));
+                if(d == 0d){
                     return 0d;
-                }
-            }else if(similarityMeasure==SimilarityMeasure.Lin){
-                if(d1!=0d && d2!=0d){
-                    return d1+d2;
                 }else{
+                    return similarityMeasureFFunction(type, d1)*similarityMeasureFFunction(type, d2)/d;
+                }
+            }else if(similarityMeasureString.matches("InnerProdW_(2|4)_.")){
+                double fd1 = similarityMeasureFFunction(type, d1);
+                double fd2 = similarityMeasureFFunction(type, d2);
+                d = (Math.abs(fd1)+Math.abs(fd2));
+                if(d == 0d){
                     return 0d;
-                }
-            }else if(linModPattern.matcher(similarityMeasureString).matches()){
-                boolean b;
-                if(similarityMeasureString.substring(similarityMeasureString.length()-5, similarityMeasureString.length()-4).equals("1")){
-                    b = d1!=0d && d2!=0d;
                 }else{
-                    b = d1>0d && d2>0d;
-                }
-                if(b){
-                    int type = Integer.parseInt(similarityMeasureString.substring(similarityMeasureString.length()-1));
-                    return similarityMeasureFFunction(type, d1)+similarityMeasureFFunction(type, d2);
-                }else{
-                    return 0d;
-                }
-            }else if(linHindleRModPattern.matcher(similarityMeasureString).matches()){
-                boolean b;
-                if(similarityMeasureString.substring(similarityMeasureString.length()-5, similarityMeasureString.length()-4).equals("1")){
-                    b = d1!=0d && d2!=0d;
-                }else{
-                    b = d1>0d && d2>0d;
-                }
-                if(b){
-                    int type = Integer.parseInt(similarityMeasureString.substring(similarityMeasureString.length()-1));
-                    return Math.min(similarityMeasureFFunction(type, d1),similarityMeasureFFunction(type, d2));
-                }else{
-                    return 0d;
+                    return fd1*fd2/d;
                 }
             }else{
                 System.out.println("No such SimilarityMeasure: " + similarityMeasure);
                 throw new RuntimeException();
             }
-            
+        }else if(dtvPattern.matcher(similarityMeasureString).matches()){
+            if(similarityMeasureString.matches("Dtv_(1|2|3|4|5|6|7).*")){
+                int type = Integer.parseInt(similarityMeasureString.substring(similarityMeasureString.length()-1));
+                return Math.abs(similarityMeasureFFunction(type, d1)-similarityMeasureFFunction(type, d2));
+            }else if(similarityMeasureString.matches("Dtv_(8|9|(10)|(11)|(12)|(13)|(14)).*")){
+                int type = Integer.parseInt(similarityMeasureString.substring(similarityMeasureString.length()-1));
+                return similarityMeasureFInverseFunction(type, Math.abs(similarityMeasureFFunction(type, d1)-similarityMeasureFFunction(type, d2)), numberOfAllFeatures);
+            }else{
+                System.out.println("No such SimilarityMeasure: " + similarityMeasure);
+                throw new RuntimeException();
+            }
+        }else if(dtvWPattern.matcher(similarityMeasureString).matches()){
+            if((Math.abs(d1)+Math.abs(d2))!=0d){
+                int type = Integer.parseInt(similarityMeasureString.substring(similarityMeasureString.length()-1));
+                if(similarityMeasureString.matches("DtvW_1.*")){
+                    return Math.abs(similarityMeasureFFunction(type, d1)-similarityMeasureFFunction(type, d2))/
+                            (Math.abs(d1)+Math.abs(d2));
+                }else if(similarityMeasureString.matches("DtvW_2.*")){
+                    return Math.abs(similarityMeasureFFunction(type, d1)-similarityMeasureFFunction(type, d2))/
+                            (similarityMeasureFFunction(type, Math.abs(d1))+similarityMeasureFFunction(type, Math.abs(d2)));
+                }else if(similarityMeasureString.matches("DtvW_3.*")){
+                    return similarityMeasureFInverseFunction(type, Math.abs(similarityMeasureFFunction(type, d1)-similarityMeasureFFunction(type, d2)), numberOfAllFeatures)/
+                            (Math.abs(d1)+Math.abs(d2));
+                }else if(similarityMeasureString.matches("DtvW_4.*")){
+                    return similarityMeasureFInverseFunction(type, Math.abs(similarityMeasureFFunction(type, d1)-similarityMeasureFFunction(type, d2)), numberOfAllFeatures)/
+                            (similarityMeasureFFunction(type, Math.abs(d1))+similarityMeasureFFunction(type, Math.abs(d2)));
+                }else{
+                    System.out.println("No such SimilarityMeasure: " + similarityMeasure);
+                    throw new RuntimeException();
+                }
+            }else{
+                return 0d;
+            }
+        }else if(similarityMeasure==SimilarityMeasure.Lin){
+            if(d1!=0d && d2!=0d){
+                return d1+d2;
+            }else{
+                return 0d;
+            }
+        }else if(linModPattern.matcher(similarityMeasureString).matches()){
+            boolean b;
+            if(similarityMeasureString.substring(similarityMeasureString.length()-5, similarityMeasureString.length()-4).equals("1")){
+                b = d1!=0d && d2!=0d;
+            }else{
+                b = d1>0d && d2>0d;
+            }
+            if(b){
+                int type = Integer.parseInt(similarityMeasureString.substring(similarityMeasureString.length()-1));
+                return similarityMeasureFFunction(type, d1)+similarityMeasureFFunction(type, d2);
+            }else{
+                return 0d;
+            }
+        }else if(linHindleRModPattern.matcher(similarityMeasureString).matches()){
+            boolean b;
+            if(similarityMeasureString.substring(similarityMeasureString.length()-5, similarityMeasureString.length()-4).equals("1")){
+                b = d1!=0d && d2!=0d;
+            }else{
+                b = d1>0d && d2>0d;
+            }
+            if(b){
+                int type = Integer.parseInt(similarityMeasureString.substring(similarityMeasureString.length()-1));
+                return Math.min(similarityMeasureFFunction(type, d1),similarityMeasureFFunction(type, d2));
+            }else{
+                return 0d;
+            }
         }else{
-            System.out.println("The function calculateSimilarityNumaratorByRelationSubscore should only be called in case of numerical vectors");
+            System.out.println("No such SimilarityMeasure: " + similarityMeasure);
             throw new RuntimeException();
         }
+
         
     }
     
@@ -1185,113 +1162,107 @@ public class VecSim {
      */
     public static double calculateSimilarityDenominator1ByRelationSubscore(double d1, double d2, Double vectorMean1, Double vectorMean2){
         
-        if(method==Method.Num){
-        
-            if(similarityMeasure==SimilarityMeasure.Jaccard_3 || similarityMeasure==SimilarityMeasure.Tanimoto_1){
+        if(similarityMeasure==SimilarityMeasure.Jaccard_3 || similarityMeasure==SimilarityMeasure.Tanimoto_1){
 
-                return Math.max(d1, d2);
+            return Math.max(d1, d2);
 
-            }else if(similarityMeasure==SimilarityMeasure.Tanimoto_1Mod){
+        }else if(similarityMeasure==SimilarityMeasure.Tanimoto_1Mod){
 
-                return Math.abs(Math.max(d1, d2));
+            return Math.abs(Math.max(d1, d2));
 
-            }else if(similarityMeasure==SimilarityMeasure.AvgL1LInf || similarityMeasure==SimilarityMeasure.Rsssn || 
-                    similarityMeasure==SimilarityMeasure.Kulczynski){
-                return Math.abs(d1-d2);
-            }else if(similarityMeasure==SimilarityMeasure.MaxSymChiSqMod){
-                if(d2!=0d){
-                    return Math.pow(d1-d2,2d)/Math.abs(d2);
-                }else{
-                    return 0d;
-                }
-            }else if(similarityMeasure==SimilarityMeasure.Simpson_2Mod){
-                return lb(Math.abs(d1)+1d);
-            }else if(similarityMeasure==SimilarityMeasure.NormCosMod){
-                return Math.pow(Math.abs(d1), 2d*normCosGamma);
-            }else if(similarityMeasure==SimilarityMeasure.SocPmiMod){
-                if(d1>0d && d2>0d){
-                    return Math.pow(d2, SocPmiGamma);
-                }else{
-                    return 0d;
-                }
-            }else if(similarityMeasure==SimilarityMeasure.NormModSocPmiMod){
-                if(d1>0d && d2>0d){
-                    return Math.pow(d2, normModSocPmiGamma);
-                }else{
-                    return 0d;
-                }
-            }else if(similarityMeasure==SimilarityMeasure.NcdMod_2){
-                return Math.min(d1,d2);
-            }else if(similarityMeasure==SimilarityMeasure.Wo){
-                if(d1!=0 && d2!=0){
-                    return 1d;
-                }else{
-                    return 0;
-                }
-            }else if(cosModPattern.matcher(similarityMeasureString).matches()){
-                int type = Integer.parseInt(similarityMeasureString.substring(similarityMeasureString.length()-1));
-                return Math.pow(similarityMeasureFFunction(type, d1), 2d);
-            }else if(mbModPattern.matcher(similarityMeasureString).matches()){
-                int type = Integer.parseInt(similarityMeasureString.substring(similarityMeasureString.length()-1));
-                return Math.pow(similarityMeasureFFunction(type, d1), 2d);
-            }else if(adjCosModPattern.matcher(similarityMeasureString).matches()){
-                int type = Integer.parseInt(similarityMeasureString.substring(similarityMeasureString.length()-1));
-                return Math.pow(similarityMeasureFFunction(type, d1), 2d);
-            }else if(pfModPattern.matcher(similarityMeasureString).matches()){
-                int type = Integer.parseInt(similarityMeasureString.substring(similarityMeasureString.length()-1));
-                return Math.pow(similarityMeasureFFunction(type, d1), 2d);
-            }else if(dtvPattern.matcher(similarityMeasureString).matches()){
-                if(similarityMeasureString.matches("Dtv_(2|3|9|(10)).*")){
-
-                    int type = Integer.parseInt(similarityMeasureString.substring(similarityMeasureString.length()-1));
-
-                    return similarityMeasureFFunction(type, Math.abs(d1));
-
-                }else if(similarityMeasureString.matches("Dtv_(4|5|(11)|(12)).*")){
-
-                    int type = Integer.parseInt(similarityMeasureString.substring(similarityMeasureString.length()-1));
-
-                    return Math.pow(similarityMeasureFFunction(type, d1), 2d);
-                }else{
-                    System.out.println("No such SimilarityMeasure: " + similarityMeasure);
-                    throw new RuntimeException();
-                }
-            }else if(similarityMeasureString.matches("LMod_(4|5|6|7|(10)|(11)|(12)|(13)|(14)|(15)).*")){
-
-                int type = Integer.parseInt(similarityMeasureString.substring(similarityMeasureString.length()-1));
-                double d = similarityMeasureFFunction(type, d1);
-
-                if(similarityMeasureString.matches("LMod_(4|5|(10)|(11)).*")){
-                    d=Math.pow(d, 2d);
-                }else if(similarityMeasureString.matches("LMod_(6|7|(12)|(13)).*")){
-                    d=Math.abs(d);
-                }
-
-                return d;
-
-            }else if(similarityMeasureString.matches("Lin(HindleR)?Mod_(2|3|4|5|8|9)_(1|2).*")){
-
-                int type = Integer.parseInt(similarityMeasureString.substring(similarityMeasureString.length()-1));
-                
-                double d = similarityMeasureFFunction(type, d1);
-
-                if(similarityMeasureString.matches("Lin(HindleR)?Mod_(2|3)_(1|2).*")){
-                    d=Math.abs(d);
-                }else if(similarityMeasureString.matches("Lin(HindleR)?Mod_(4|5)_(1|2).*")){
-                    d=Math.pow(d, 2d);
-                }
-
-                return d;
-
+        }else if(similarityMeasure==SimilarityMeasure.AvgL1LInf || similarityMeasure==SimilarityMeasure.Rsssn || 
+                similarityMeasure==SimilarityMeasure.Kulczynski){
+            return Math.abs(d1-d2);
+        }else if(similarityMeasure==SimilarityMeasure.MaxSymChiSqMod){
+            if(d2!=0d){
+                return Math.pow(d1-d2,2d)/Math.abs(d2);
             }else{
-                System.out.println("The function calculateSimilarityDenominator1ByRelationSubscore cannot be called for this type of NUM SimilarityMeasure: " + similarityMeasure);
+                return 0d;
+            }
+        }else if(similarityMeasure==SimilarityMeasure.Simpson_2Mod){
+            return lb(Math.abs(d1)+1d);
+        }else if(similarityMeasure==SimilarityMeasure.NormCosMod){
+            return Math.pow(Math.abs(d1), 2d*normCosGamma);
+        }else if(similarityMeasure==SimilarityMeasure.SocPmiMod){
+            if(d1>0d && d2>0d){
+                return Math.pow(d2, SocPmiGamma);
+            }else{
+                return 0d;
+            }
+        }else if(similarityMeasure==SimilarityMeasure.NormModSocPmiMod){
+            if(d1>0d && d2>0d){
+                return Math.pow(d2, normModSocPmiGamma);
+            }else{
+                return 0d;
+            }
+        }else if(similarityMeasure==SimilarityMeasure.NcdMod_2){
+            return Math.min(d1,d2);
+        }else if(similarityMeasure==SimilarityMeasure.Wo){
+            if(d1!=0 && d2!=0){
+                return 1d;
+            }else{
+                return 0;
+            }
+        }else if(cosModPattern.matcher(similarityMeasureString).matches()){
+            int type = Integer.parseInt(similarityMeasureString.substring(similarityMeasureString.length()-1));
+            return Math.pow(similarityMeasureFFunction(type, d1), 2d);
+        }else if(mbModPattern.matcher(similarityMeasureString).matches()){
+            int type = Integer.parseInt(similarityMeasureString.substring(similarityMeasureString.length()-1));
+            return Math.pow(similarityMeasureFFunction(type, d1), 2d);
+        }else if(adjCosModPattern.matcher(similarityMeasureString).matches()){
+            int type = Integer.parseInt(similarityMeasureString.substring(similarityMeasureString.length()-1));
+            return Math.pow(similarityMeasureFFunction(type, d1), 2d);
+        }else if(pfModPattern.matcher(similarityMeasureString).matches()){
+            int type = Integer.parseInt(similarityMeasureString.substring(similarityMeasureString.length()-1));
+            return Math.pow(similarityMeasureFFunction(type, d1), 2d);
+        }else if(dtvPattern.matcher(similarityMeasureString).matches()){
+            if(similarityMeasureString.matches("Dtv_(2|3|9|(10)).*")){
+
+                int type = Integer.parseInt(similarityMeasureString.substring(similarityMeasureString.length()-1));
+
+                return similarityMeasureFFunction(type, Math.abs(d1));
+
+            }else if(similarityMeasureString.matches("Dtv_(4|5|(11)|(12)).*")){
+
+                int type = Integer.parseInt(similarityMeasureString.substring(similarityMeasureString.length()-1));
+
+                return Math.pow(similarityMeasureFFunction(type, d1), 2d);
+            }else{
+                System.out.println("No such SimilarityMeasure: " + similarityMeasure);
                 throw new RuntimeException();
             }
-        
+        }else if(similarityMeasureString.matches("LMod_(4|5|6|7|(10)|(11)|(12)|(13)|(14)|(15)).*")){
+
+            int type = Integer.parseInt(similarityMeasureString.substring(similarityMeasureString.length()-1));
+            double d = similarityMeasureFFunction(type, d1);
+
+            if(similarityMeasureString.matches("LMod_(4|5|(10)|(11)).*")){
+                d=Math.pow(d, 2d);
+            }else if(similarityMeasureString.matches("LMod_(6|7|(12)|(13)).*")){
+                d=Math.abs(d);
+            }
+
+            return d;
+
+        }else if(similarityMeasureString.matches("Lin(HindleR)?Mod_(2|3|4|5|8|9)_(1|2).*")){
+
+            int type = Integer.parseInt(similarityMeasureString.substring(similarityMeasureString.length()-1));
+
+            double d = similarityMeasureFFunction(type, d1);
+
+            if(similarityMeasureString.matches("Lin(HindleR)?Mod_(2|3)_(1|2).*")){
+                d=Math.abs(d);
+            }else if(similarityMeasureString.matches("Lin(HindleR)?Mod_(4|5)_(1|2).*")){
+                d=Math.pow(d, 2d);
+            }
+
+            return d;
+
         }else{
-            System.out.println("The function calculateSimilarityDenominator1ByRelationSubscore should only be called in case of numerical vectors");
+            System.out.println("The function calculateSimilarityDenominator1ByRelationSubscore cannot be called for this type of NUM SimilarityMeasure: " + similarityMeasure);
             throw new RuntimeException();
         }
+ 
         
     }
     
@@ -1309,78 +1280,72 @@ public class VecSim {
      */
     public static double calculateSimilarityDenominator2ByRelationSubscore(double d1, double d2, Double vectorMean1, Double vectorMean2){
         
-        if(method==Method.Num){
-        
-            if(similarityMeasure==SimilarityMeasure.Simpson_2Mod){
-                return lb(Math.abs(d2)+1d);
-            }else if(similarityMeasure==SimilarityMeasure.NormCosMod){
-                return Math.pow(Math.abs(d2), 2d*normCosGamma);
-            }else if(similarityMeasure==SimilarityMeasure.NcdMod_2){
-                return Math.max(d1,d2);
-            }else if(cosModPattern.matcher(similarityMeasureString).matches()){
+        if(similarityMeasure==SimilarityMeasure.Simpson_2Mod){
+            return lb(Math.abs(d2)+1d);
+        }else if(similarityMeasure==SimilarityMeasure.NormCosMod){
+            return Math.pow(Math.abs(d2), 2d*normCosGamma);
+        }else if(similarityMeasure==SimilarityMeasure.NcdMod_2){
+            return Math.max(d1,d2);
+        }else if(cosModPattern.matcher(similarityMeasureString).matches()){
+            int type = Integer.parseInt(similarityMeasureString.substring(similarityMeasureString.length()-1));
+            return Math.pow(similarityMeasureFFunction(type, d2), 2d);
+        }else if(mbModPattern.matcher(similarityMeasureString).matches()){
+            int type = Integer.parseInt(similarityMeasureString.substring(similarityMeasureString.length()-1));
+            return Math.pow(similarityMeasureFFunction(type, d2), 2d);
+        }else if(adjCosModPattern.matcher(similarityMeasureString).matches()){
+            int type = Integer.parseInt(similarityMeasureString.substring(similarityMeasureString.length()-1));
+            return Math.pow(similarityMeasureFFunction(type, d2), 2d);
+        }else if(pfModPattern.matcher(similarityMeasureString).matches()){
+            int type = Integer.parseInt(similarityMeasureString.substring(similarityMeasureString.length()-1));
+            return Math.pow(similarityMeasureFFunction(type, d2), 2d);
+        }else if(dtvPattern.matcher(similarityMeasureString).matches()){
+            if(similarityMeasureString.matches("Dtv_(2|3|9|(10)).*")){
+
                 int type = Integer.parseInt(similarityMeasureString.substring(similarityMeasureString.length()-1));
+
+                return similarityMeasureFFunction(type, Math.abs(d2));
+
+            }else if(similarityMeasureString.matches("Dtv_(4|5|(11)|(12)).*")){
+
+                int type = Integer.parseInt(similarityMeasureString.substring(similarityMeasureString.length()-1));
+
                 return Math.pow(similarityMeasureFFunction(type, d2), 2d);
-            }else if(mbModPattern.matcher(similarityMeasureString).matches()){
-                int type = Integer.parseInt(similarityMeasureString.substring(similarityMeasureString.length()-1));
-                return Math.pow(similarityMeasureFFunction(type, d2), 2d);
-            }else if(adjCosModPattern.matcher(similarityMeasureString).matches()){
-                int type = Integer.parseInt(similarityMeasureString.substring(similarityMeasureString.length()-1));
-                return Math.pow(similarityMeasureFFunction(type, d2), 2d);
-            }else if(pfModPattern.matcher(similarityMeasureString).matches()){
-                int type = Integer.parseInt(similarityMeasureString.substring(similarityMeasureString.length()-1));
-                return Math.pow(similarityMeasureFFunction(type, d2), 2d);
-            }else if(dtvPattern.matcher(similarityMeasureString).matches()){
-                if(similarityMeasureString.matches("Dtv_(2|3|9|(10)).*")){
-
-                    int type = Integer.parseInt(similarityMeasureString.substring(similarityMeasureString.length()-1));
-
-                    return similarityMeasureFFunction(type, Math.abs(d2));
-
-                }else if(similarityMeasureString.matches("Dtv_(4|5|(11)|(12)).*")){
-
-                    int type = Integer.parseInt(similarityMeasureString.substring(similarityMeasureString.length()-1));
-
-                    return Math.pow(similarityMeasureFFunction(type, d2), 2d);
-                }else{
-                    System.out.println("No such SimilarityMeasure: " + similarityMeasure);
-                    throw new RuntimeException();
-                }
-            }else if(similarityMeasureString.matches("LMod_(4|5|6|7|(10)|(11)|(12)|(13)|(14)|(15)).*")){
-
-                int type = Integer.parseInt(similarityMeasureString.substring(similarityMeasureString.length()-1));
-                double d = similarityMeasureFFunction(type, d2);
-
-                if(similarityMeasureString.matches("LMod_(4|5|(10)|(11)).*")){
-                    d=Math.pow(d, 2d);
-                }else if(similarityMeasureString.matches("LMod_(6|7|(12)|(13)).*")){
-                    d=Math.abs(d);
-                }
-
-                return d;
-
-            }else if(similarityMeasureString.matches("Lin(HindleR)?Mod_(2|3|4|5|8|9)_(1|2).*")){
-
-                int type = Integer.parseInt(similarityMeasureString.substring(similarityMeasureString.length()-1));
-                
-                double d = similarityMeasureFFunction(type, d2);
-
-                if(similarityMeasureString.matches("Lin(HindleR)?Mod_(2|3)_(1|2).*")){
-                    d=Math.abs(d);
-                }else if(similarityMeasureString.matches("Lin(HindleR)?Mod_(4|5)_(1|2).*")){
-                    d=Math.pow(d, 2d);
-                }
-
-                return d;
-
             }else{
-                System.out.println("The function calculateSimilarityDenominator2ByRelationSubscore cannot be called for this type of NUM SimilarityMeasure: " + similarityMeasure);
+                System.out.println("No such SimilarityMeasure: " + similarityMeasure);
                 throw new RuntimeException();
             }
-        
+        }else if(similarityMeasureString.matches("LMod_(4|5|6|7|(10)|(11)|(12)|(13)|(14)|(15)).*")){
+
+            int type = Integer.parseInt(similarityMeasureString.substring(similarityMeasureString.length()-1));
+            double d = similarityMeasureFFunction(type, d2);
+
+            if(similarityMeasureString.matches("LMod_(4|5|(10)|(11)).*")){
+                d=Math.pow(d, 2d);
+            }else if(similarityMeasureString.matches("LMod_(6|7|(12)|(13)).*")){
+                d=Math.abs(d);
+            }
+
+            return d;
+
+        }else if(similarityMeasureString.matches("Lin(HindleR)?Mod_(2|3|4|5|8|9)_(1|2).*")){
+
+            int type = Integer.parseInt(similarityMeasureString.substring(similarityMeasureString.length()-1));
+
+            double d = similarityMeasureFFunction(type, d2);
+
+            if(similarityMeasureString.matches("Lin(HindleR)?Mod_(2|3)_(1|2).*")){
+                d=Math.abs(d);
+            }else if(similarityMeasureString.matches("Lin(HindleR)?Mod_(4|5)_(1|2).*")){
+                d=Math.pow(d, 2d);
+            }
+
+            return d;
+
         }else{
-            System.out.println("The function calculateSimilarityDenominator2ByRelationSubscore should only be called in case of numerical vectors");
+            System.out.println("The function calculateSimilarityDenominator2ByRelationSubscore cannot be called for this type of NUM SimilarityMeasure: " + similarityMeasure);
             throw new RuntimeException();
         }
+        
         
     }
     
@@ -1411,724 +1376,707 @@ public class VecSim {
         
         Double d=null;
 
-        //The Lin or the numerical similarity score is normalized.
-        if(method==Method.Lin){
-            
-            double linIntersect = similarityScoreParts1.linIntersect+similarityScoreParts2.linIntersect+similarityScoreParts3.linIntersect+similarityScoreParts4.linIntersect;
-            double lin1 = similarityScoreParts1.lin1+similarityScoreParts2.lin1+similarityScoreParts3.lin1+similarityScoreParts4.lin1;
-            double lin2 = similarityScoreParts1.lin2+similarityScoreParts2.lin2+similarityScoreParts3.lin2+similarityScoreParts4.lin2;
-            
-            double div = lin1+lin2;
+        //The numerical similarity scores are normalized.
 
-            if(div == 0){
+        Double numerator;
+        if(similarityMeasure==SimilarityMeasure.LInf || similarityMeasure==SimilarityMeasure.RenyiDivModInf){
+            numerator = Math.max(Math.max(similarityScoreParts1.numerator,similarityScoreParts2.numerator),Math.max(similarityScoreParts3.numerator,similarityScoreParts4.numerator));
+        }else if(similarityMeasureString.matches("Multiplicative.*")){
+            numerator = similarityScoreParts1.numerator*similarityScoreParts2.numerator*similarityScoreParts3.numerator*similarityScoreParts4.numerator;
+        }else{
+            numerator = similarityScoreParts1.numerator+similarityScoreParts2.numerator+similarityScoreParts3.numerator+similarityScoreParts4.numerator;
+        }
+
+        Double denominator1 = null;
+        Double denominator2 = null;
+        if(similarityMeasure==SimilarityMeasure.Jaccard_3 || similarityMeasure==SimilarityMeasure.Tanimoto_1 || 
+                similarityMeasure==SimilarityMeasure.Tanimoto_1Mod || 
+                similarityMeasure==SimilarityMeasure.Rsssn || similarityMeasure==SimilarityMeasure.MaxSymChiSqMod || 
+                similarityMeasure==SimilarityMeasure.Kulczynski || similarityMeasureString.matches("(NormMod)?SocPmiMod") || 
+                similarityMeasure==SimilarityMeasure.Wo){
+            denominator1 = similarityScoreParts1.denominator1+similarityScoreParts2.denominator1+similarityScoreParts3.denominator1+similarityScoreParts4.denominator1;
+        }else if(similarityMeasure==SimilarityMeasure.Simpson_2Mod || 
+                similarityMeasure==SimilarityMeasure.NormCosMod || similarityMeasure==SimilarityMeasure.NcdMod_2 || pearsModPattern.matcher(similarityMeasureString).matches() || 
+                similarityMeasureString.matches("(((Adj)?Cos)|(Mb)|(PF))Mod_(2|3|5|6)_.") || 
+                similarityMeasureString.matches("LMod_(4|5|6|7|(10)|(11)|(12)|(13)|(14)|(15)).*") || 
+                similarityMeasureString.matches("Dtv_(2|3|4|5|9|(10)|(11)|(12)).*") || similarityMeasureString.matches("Lin(HindleR)?Mod_(2|3|4|5|8|9)_(1|2).*") || 
+                pearsCombPattern.matcher(similarityMeasureString).matches() || pearsMbAdjCosModPattern.matcher(similarityMeasureString).matches() || 
+                pearsMbAdjCosPfModPattern.matcher(similarityMeasureString).matches() || pearsMbModPattern.matcher(similarityMeasureString).matches()){
+            denominator1 = similarityScoreParts1.denominator1+similarityScoreParts2.denominator1+similarityScoreParts3.denominator1+similarityScoreParts4.denominator1;
+            denominator2 = similarityScoreParts1.denominator2+similarityScoreParts2.denominator2+similarityScoreParts3.denominator2+similarityScoreParts4.denominator2;
+        }else if(similarityMeasure==SimilarityMeasure.AvgL1LInf){
+            denominator1 = Math.max(Math.max(similarityScoreParts1.denominator1,similarityScoreParts2.denominator1),Math.max(similarityScoreParts3.denominator1,similarityScoreParts4.denominator1));
+        }
+
+
+        if(similarityMeasure==SimilarityMeasure.Cos){
+            d = numerator/(Math.sqrt(vectorLengthSquares.get(word1))*Math.sqrt(vectorLengthSquares.get(word2)));
+        }else if(similarityMeasure==SimilarityMeasure.Dice_2){
+            d = 2d*numerator/(vectorLengthSquares.get(word1)+vectorLengthSquares.get(word2));
+        }else if(similarityMeasure==SimilarityMeasure.Dice_1){
+            double div = vectorElementSums.get(word1)+vectorElementSums.get(word2);
+            if(div == 0d){
                 d = 0d;
             }else{
-                d = linIntersect*2/div;
+                d = 2d*numerator/div;
+            }
+        }else if(similarityMeasure==SimilarityMeasure.Dice_1Mod){
+            d = 2d*numerator/(vectorElementAbsValueSums.get(word1)+vectorElementAbsValueSums.get(word2));
+        }else if(similarityMeasure==SimilarityMeasure.ZklMod || similarityMeasure==SimilarityMeasure.ZklModSym || similarityMeasure==SimilarityMeasure.LInf || 
+                similarityMeasure==SimilarityMeasure.Canberra || similarityMeasure==SimilarityMeasure.Lorentzian || 
+                similarityMeasure==SimilarityMeasure.ASkewMod || similarityMeasure==SimilarityMeasure.ASkewModSym || similarityMeasure==SimilarityMeasure.JensenMod || 
+                similarityMeasure==SimilarityMeasure.ChiSquareMod || similarityMeasure==SimilarityMeasure.TanejaMod || similarityMeasure==SimilarityMeasure.KumarJohnsonMod || 
+                similarityMeasure==SimilarityMeasure.VicWhMod || similarityMeasure==SimilarityMeasure.VicSymChiSqMod1 || 
+                similarityMeasure==SimilarityMeasure.VicSymChiSqMod2 || similarityMeasure==SimilarityMeasure.VicSymChiSqMod3 || 
+                similarityMeasure==SimilarityMeasure.NcdMod_1 || similarityMeasure==SimilarityMeasure.NgdMod){
+            d = distanceToSimilarity(numerator);
+        }else if(similarityMeasure==SimilarityMeasure.L05 || similarityMeasure==SimilarityMeasure.L1 || 
+                similarityMeasure==SimilarityMeasure.L2 || similarityMeasure==SimilarityMeasure.L3){
+
+            if(similarityMeasure==SimilarityMeasure.L05){
+                numerator=Math.pow(numerator, 2d);
+            }else if(similarityMeasure==SimilarityMeasure.L2){
+                numerator=Math.sqrt(numerator);
+            }else if(similarityMeasure==SimilarityMeasure.L3){
+                numerator=Math.cbrt(numerator);
             }
 
-        }else{
-            
-            Double numerator;
-            if(similarityMeasure==SimilarityMeasure.LInf || similarityMeasure==SimilarityMeasure.RenyiDivModInf){
-                numerator = Math.max(Math.max(similarityScoreParts1.numerator,similarityScoreParts2.numerator),Math.max(similarityScoreParts3.numerator,similarityScoreParts4.numerator));
-            }else if(similarityMeasureString.matches("Multiplicative.*")){
-                numerator = similarityScoreParts1.numerator*similarityScoreParts2.numerator*similarityScoreParts3.numerator*similarityScoreParts4.numerator;
+            d = distanceToSimilarity(numerator);
+
+        }else if(similarityMeasure==SimilarityMeasure.Jaccard_1 || similarityMeasure==SimilarityMeasure.Lin){
+            double div = vectorElementSums.get(word1)+vectorElementSums.get(word2);
+            if(div == 0d){
+                d = 0d;
             }else{
-                numerator = similarityScoreParts1.numerator+similarityScoreParts2.numerator+similarityScoreParts3.numerator+similarityScoreParts4.numerator;
+                d = numerator/div;
             }
-            
-            Double denominator1 = null;
-            Double denominator2 = null;
-            if(similarityMeasure==SimilarityMeasure.Jaccard_3 || similarityMeasure==SimilarityMeasure.Tanimoto_1 || 
-                    similarityMeasure==SimilarityMeasure.Tanimoto_1Mod || 
-                    similarityMeasure==SimilarityMeasure.Rsssn || similarityMeasure==SimilarityMeasure.MaxSymChiSqMod || 
-                    similarityMeasure==SimilarityMeasure.Kulczynski || similarityMeasureString.matches("(NormMod)?SocPmiMod") || 
-                    similarityMeasure==SimilarityMeasure.Wo){
-                denominator1 = similarityScoreParts1.denominator1+similarityScoreParts2.denominator1+similarityScoreParts3.denominator1+similarityScoreParts4.denominator1;
-            }else if(similarityMeasure==SimilarityMeasure.Simpson_2Mod || 
-                    similarityMeasure==SimilarityMeasure.NormCosMod || similarityMeasure==SimilarityMeasure.NcdMod_2 || pearsModPattern.matcher(similarityMeasureString).matches() || 
-                    similarityMeasureString.matches("(((Adj)?Cos)|(Mb)|(PF))Mod_(2|3|5|6)_.") || 
-                    similarityMeasureString.matches("LMod_(4|5|6|7|(10)|(11)|(12)|(13)|(14)|(15)).*") || 
-                    similarityMeasureString.matches("Dtv_(2|3|4|5|9|(10)|(11)|(12)).*") || similarityMeasureString.matches("Lin(HindleR)?Mod_(2|3|4|5|8|9)_(1|2).*") || 
-                    pearsCombPattern.matcher(similarityMeasureString).matches() || pearsMbAdjCosModPattern.matcher(similarityMeasureString).matches() || 
-                    pearsMbAdjCosPfModPattern.matcher(similarityMeasureString).matches() || pearsMbModPattern.matcher(similarityMeasureString).matches()){
-                denominator1 = similarityScoreParts1.denominator1+similarityScoreParts2.denominator1+similarityScoreParts3.denominator1+similarityScoreParts4.denominator1;
-                denominator2 = similarityScoreParts1.denominator2+similarityScoreParts2.denominator2+similarityScoreParts3.denominator2+similarityScoreParts4.denominator2;
-            }else if(similarityMeasure==SimilarityMeasure.AvgL1LInf){
-                denominator1 = Math.max(Math.max(similarityScoreParts1.denominator1,similarityScoreParts2.denominator1),Math.max(similarityScoreParts3.denominator1,similarityScoreParts4.denominator1));
+        }else if(similarityMeasure==SimilarityMeasure.Jaccard_1Mod){
+            d = numerator/(vectorElementAbsValueSums.get(word1)+vectorElementAbsValueSums.get(word2));
+        }else if(similarityMeasure==SimilarityMeasure.Jaccard_2){
+            d = numerator/(vectorLengthSquares.get(word1)+vectorLengthSquares.get(word2)-numerator);
+        }else if(similarityMeasure==SimilarityMeasure.Jaccard_3){
+            d = numerator/denominator1;
+        }else if(similarityMeasure==SimilarityMeasure.Rsssn || similarityMeasure==SimilarityMeasure.Kulczynski){
+            if(denominator1 == 0d){
+                denominator1 = 0.000001d;
+            }
+            d = numerator/denominator1;
+        }else if(similarityMeasure==SimilarityMeasure.JensenShannonMod){
+            d = distanceToSimilarity(numerator/2d);
+        }else if(similarityMeasure==SimilarityMeasure.LinKiela){
+            d = numerator/(Math.sqrt(vectorLengthSquares.get(word1))+Math.sqrt(vectorLengthSquares.get(word2)));
+        }else if(similarityMeasure==SimilarityMeasure.Tanimoto_1 || similarityMeasure==SimilarityMeasure.Tanimoto_1Mod){
+            d = distanceToSimilarity(numerator/denominator1);
+        }else if(similarityMeasure==SimilarityMeasure.Tanimoto_2){
+            d = numerator/(Math.sqrt(vectorLengthSquares.get(word1))+Math.sqrt(vectorLengthSquares.get(word2))-numerator);
+        }else if(similarityMeasure==SimilarityMeasure.HarmMeanMod){
+            d = 2d*numerator;
+        }else if(similarityMeasure==SimilarityMeasure.FidelityMod || similarityMeasure==SimilarityMeasure.InnerProd || 
+                similarityMeasure==SimilarityMeasure.Srsn || 
+                similarityMeasure==SimilarityMeasure.Sdsn || similarityMeasure==SimilarityMeasure.Srsmv || 
+                similarityMeasure==SimilarityMeasure.Srsm || 
+                similarityMeasure==SimilarityMeasure.Rms || similarityMeasure==SimilarityMeasure.ContraHMeanMod || 
+                similarityMeasure==SimilarityMeasure.ApSyn || 
+                similarityMeasure==SimilarityMeasure.ApSynP){
+            d = numerator;
+        }else if(similarityMeasure==SimilarityMeasure.HellingerMod){
+            d = distanceToSimilarity(Math.sqrt(2*numerator));
+        }else if(similarityMeasure==SimilarityMeasure.PsChiSquareMod){
+            d = distanceToSimilarity(2*numerator);
+        }else if(similarityMeasure==SimilarityMeasure.ClarkMod || similarityMeasure==SimilarityMeasure.MahalanobisMod || similarityMeasure==SimilarityMeasure.PenroseShape){
+            d = distanceToSimilarity(Math.sqrt(numerator));
+        }else if(similarityMeasure==SimilarityMeasure.PseudoCos){
+            double div = vectorElementSums.get(word1)*vectorElementSums.get(word2);
+            if(div == 0d){
+                d = 0d;
+            }else{
+                d = numerator/div;
+            }
+        }else if(similarityMeasure==SimilarityMeasure.PseudoCosMod_1){
+            d = numerator/(vectorElementAbsValueSums.get(word1)*vectorElementAbsValueSums.get(word2));
+        }else if(similarityMeasure==SimilarityMeasure.PseudoCosMod_2){
+            if(vectorElementSums.get(word1) > 0d && vectorElementSums.get(word2) > 0d){
+                d = numerator/(Math.sqrt(vectorElementSums.get(word1))*Math.sqrt(vectorElementSums.get(word2)));
+            }else{
+                d = 0d;
+            }
+        }else if(similarityMeasure==SimilarityMeasure.PseudoCosMod_3){
+            d = numerator/(Math.sqrt(vectorElementAbsValueSums.get(word1))*Math.sqrt(vectorElementAbsValueSums.get(word2)));
+        }else if(similarityMeasure==SimilarityMeasure.RenyiDivMod2 || similarityMeasure==SimilarityMeasure.RenyiDivModInf){
+            d = distanceToSimilarity(lb(numerator));
+        }else if(similarityMeasure==SimilarityMeasure.Lsmq){
+            d = distanceToSimilarity(lb((numberOfAllFeatures+numerator)/numberOfAllFeatures));
+        }else if(similarityMeasure==SimilarityMeasure.Spline){
+            d = numberOfAllFeatures+numerator;
+        }else if(similarityMeasure==SimilarityMeasure.Overlap){
+            double min = Math.min(vectorElementSums.get(word1), vectorElementSums.get(word2));
+            if(min!=0d){
+                d = numerator/min;
+            }else{
+                d = 0d;
+            }
+        }else if(similarityMeasure==SimilarityMeasure.AvgL1LInf){
+            d = distanceToSimilarity((numerator+denominator1)/2d);
+        }else if(similarityMeasure==SimilarityMeasure.MaxSymChiSqMod){
+            d = distanceToSimilarity(Math.max(numerator,denominator1));
+        }else if(similarityMeasure==SimilarityMeasure.RobersMod){
+            d = numerator/(vectorElementAbsValueSums.get(word1)+vectorElementAbsValueSums.get(word2));
+        }else if(similarityMeasure==SimilarityMeasure.Mb){
+            d = 0.5d*(numerator/vectorLengthSquares.get(word1)+numerator/vectorLengthSquares.get(word2));
+        }else if(similarityMeasure==SimilarityMeasure.Simpson_1){
+            d = numerator/Math.min(vectorElementAbsValueSums.get(word1), vectorElementAbsValueSums.get(word2));
+        }else if(similarityMeasure==SimilarityMeasure.Simpson_2Mod){
+            d = numerator/Math.min(denominator1, denominator2);
+        }else if(similarityMeasure==SimilarityMeasure.SmoothCos){
+            d = (numerator + Math.pow(smoothCosBeta, 2d))/
+                    (Math.sqrt(vectorLengthSquares.get(word1) + Math.pow(smoothCosBeta, 2d))*Math.sqrt(vectorLengthSquares.get(word2) + Math.pow(smoothCosBeta, 2d)));
+        }else if(similarityMeasure==SimilarityMeasure.AdjCos){
+            d = numerator/(Math.sqrt(vectorLengthSquares.get(word1))*Math.sqrt(vectorLengthSquares.get(word2)));
+            if(d>=adjCosLambda){
+                d=1d;
+            }else{
+                d=d/adjCosLambda;
+            }
+        }else if(similarityMeasure==SimilarityMeasure.NormCosMod){
+            d = numerator/(Math.sqrt(denominator1)*Math.sqrt(denominator2));
+            if(d>=normCosLambda){
+                d=1d;
+            }else{
+                d=d/normCosLambda;
+            }
+        }else if(similarityMeasure==SimilarityMeasure.SocPmiMod){
+            Double wf1 = wordFrequencies.get(word1);
+            Double log1;
+            if(wf1==null || wf1==0l){
+                log1 = 0d;
+            }else{
+                log1 = Math.log10(wf1);
+            }
+            Double wf2 = wordFrequencies.get(word2);
+            Double log2;
+            if(wf2==null || wf2==0l){
+                log2 = 0d;
+            }else{
+                log2 = Math.log10(wf2);
+            }
+            double b1 = Math.pow(log1, 2d)*lb(allWordTypeCount)/SocPmiMu;
+            double b2 = Math.pow(log2, 2d)*lb(allWordTypeCount)/SocPmiMu;
+            d = numerator/b1+denominator1/b2;
+        }else if(similarityMeasure==SimilarityMeasure.NormModSocPmiMod){
+            Double wf1 = wordFrequencies.get(word1);
+            Double log1;
+            if(wf1==null || wf1==0l){
+                log1 = 0d;
+            }else{
+                log1 = Math.log10(wf1);
+            }
+            Double wf2 = wordFrequencies.get(word2);
+            Double log2;
+            if(wf2==null || wf2==0l){
+                log2 = 0d;
+            }else{
+                log2 = Math.log10(wf2);
+            }
+            double b1 = Math.pow(log1, 2d)*lb(allWordTypeCount)/normModSocPmiDelta;
+            double b2 = Math.pow(log2, 2d)*lb(allWordTypeCount)/normModSocPmiDelta;
+            d = Math.log(numerator/b1+denominator1/b2+1d);
+            if(d>=normModSocPmiLambda){
+                d=1d;
+            }else{
+                d=d/normModSocPmiLambda;
+            }
+        }else if(similarityMeasure==SimilarityMeasure.ChenCorr){
+            d=numerator/numberOfAllFeatures;
+        }else if(similarityMeasure==SimilarityMeasure.NcdMod_2){
+            d = distanceToSimilarity((numerator-denominator1)/denominator2);
+        }else if(similarityMeasure==SimilarityMeasure.Wo){
+            if(denominator1!=0){
+                double denSum = 0;
+                for(int i=1;i<=Math.round(denominator1);i++){
+                    denSum+=1d/(2d*i);
+                }
+                d = numerator/denSum;
+            }else{
+                d = 0d;
+            }
+        }else if(lModPattern.matcher(similarityMeasureString).matches() || dtvPattern.matcher(similarityMeasureString).matches() || similarityMeasure==SimilarityMeasure.SorensenMod){
+
+            int type;
+            if(similarityMeasureString.startsWith("L")){
+                type = Integer.parseInt(similarityMeasureString.substring(similarityMeasureString.length()-1));
+            }else if(similarityMeasureString.startsWith("D")){
+                type = Integer.parseInt(similarityMeasureString.substring(similarityMeasureString.length()-1));
+            }else{
+                type = -1;
             }
 
+            boolean withInverseFunction = similarityMeasure!=SimilarityMeasure.SorensenMod && Integer.parseInt(similarityMeasureString.substring(similarityMeasureString.length()-3, similarityMeasureString.length()-2))==2;
 
-            if(similarityMeasure==SimilarityMeasure.Cos){
-                d = numerator/(Math.sqrt(vectorLengthSquares.get(word1))*Math.sqrt(vectorLengthSquares.get(word2)));
-            }else if(similarityMeasure==SimilarityMeasure.Dice_2){
-                d = 2d*numerator/(vectorLengthSquares.get(word1)+vectorLengthSquares.get(word2));
-            }else if(similarityMeasure==SimilarityMeasure.Dice_1){
-                double div = vectorElementSums.get(word1)+vectorElementSums.get(word2);
-                if(div == 0d){
-                    d = 0d;
-                }else{
-                    d = 2d*numerator/div;
-                }
-            }else if(similarityMeasure==SimilarityMeasure.Dice_1Mod){
-                d = 2d*numerator/(vectorElementAbsValueSums.get(word1)+vectorElementAbsValueSums.get(word2));
-            }else if(similarityMeasure==SimilarityMeasure.ZklMod || similarityMeasure==SimilarityMeasure.ZklModSym || similarityMeasure==SimilarityMeasure.LInf || 
-                    similarityMeasure==SimilarityMeasure.Canberra || similarityMeasure==SimilarityMeasure.Lorentzian || 
-                    similarityMeasure==SimilarityMeasure.ASkewMod || similarityMeasure==SimilarityMeasure.ASkewModSym || similarityMeasure==SimilarityMeasure.JensenMod || 
-                    similarityMeasure==SimilarityMeasure.ChiSquareMod || similarityMeasure==SimilarityMeasure.TanejaMod || similarityMeasure==SimilarityMeasure.KumarJohnsonMod || 
-                    similarityMeasure==SimilarityMeasure.VicWhMod || similarityMeasure==SimilarityMeasure.VicSymChiSqMod1 || 
-                    similarityMeasure==SimilarityMeasure.VicSymChiSqMod2 || similarityMeasure==SimilarityMeasure.VicSymChiSqMod3 || 
-                    similarityMeasure==SimilarityMeasure.NcdMod_1 || similarityMeasure==SimilarityMeasure.NgdMod){
-                d = distanceToSimilarity(numerator);
-            }else if(similarityMeasure==SimilarityMeasure.L05 || similarityMeasure==SimilarityMeasure.L1 || 
-                    similarityMeasure==SimilarityMeasure.L2 || similarityMeasure==SimilarityMeasure.L3){
-                
-                if(similarityMeasure==SimilarityMeasure.L05){
-                    numerator=Math.pow(numerator, 2d);
-                }else if(similarityMeasure==SimilarityMeasure.L2){
-                    numerator=Math.sqrt(numerator);
-                }else if(similarityMeasure==SimilarityMeasure.L3){
-                    numerator=Math.cbrt(numerator);
-                }
-                
-                d = distanceToSimilarity(numerator);
-                
-            }else if(similarityMeasure==SimilarityMeasure.Jaccard_1 || similarityMeasure==SimilarityMeasure.Lin){
-                double div = vectorElementSums.get(word1)+vectorElementSums.get(word2);
-                if(div == 0d){
-                    d = 0d;
-                }else{
-                    d = numerator/div;
-                }
-            }else if(similarityMeasure==SimilarityMeasure.Jaccard_1Mod){
-                d = numerator/(vectorElementAbsValueSums.get(word1)+vectorElementAbsValueSums.get(word2));
-            }else if(similarityMeasure==SimilarityMeasure.Jaccard_2){
-                d = numerator/(vectorLengthSquares.get(word1)+vectorLengthSquares.get(word2)-numerator);
-            }else if(similarityMeasure==SimilarityMeasure.Jaccard_3){
-                d = numerator/denominator1;
-            }else if(similarityMeasure==SimilarityMeasure.Rsssn || similarityMeasure==SimilarityMeasure.Kulczynski){
-                if(denominator1 == 0d){
-                    denominator1 = 0.000001d;
-                }
-                d = numerator/denominator1;
-            }else if(similarityMeasure==SimilarityMeasure.JensenShannonMod){
-                d = distanceToSimilarity(numerator/2d);
-            }else if(similarityMeasure==SimilarityMeasure.LinKiela){
-                d = numerator/(Math.sqrt(vectorLengthSquares.get(word1))+Math.sqrt(vectorLengthSquares.get(word2)));
-            }else if(similarityMeasure==SimilarityMeasure.Tanimoto_1 || similarityMeasure==SimilarityMeasure.Tanimoto_1Mod){
-                d = distanceToSimilarity(numerator/denominator1);
-            }else if(similarityMeasure==SimilarityMeasure.Tanimoto_2){
-                d = numerator/(Math.sqrt(vectorLengthSquares.get(word1))+Math.sqrt(vectorLengthSquares.get(word2))-numerator);
-            }else if(similarityMeasure==SimilarityMeasure.HarmMeanMod){
-                d = 2d*numerator;
-            }else if(similarityMeasure==SimilarityMeasure.FidelityMod || similarityMeasure==SimilarityMeasure.InnerProd || 
-                    similarityMeasure==SimilarityMeasure.Srsn || 
-                    similarityMeasure==SimilarityMeasure.Sdsn || similarityMeasure==SimilarityMeasure.Srsmv || 
-                    similarityMeasure==SimilarityMeasure.Srsm || 
-                    similarityMeasure==SimilarityMeasure.Rms || similarityMeasure==SimilarityMeasure.ContraHMeanMod || 
-                    similarityMeasure==SimilarityMeasure.ApSyn || 
-                    similarityMeasure==SimilarityMeasure.ApSynP){
-                d = numerator;
-            }else if(similarityMeasure==SimilarityMeasure.HellingerMod){
-                d = distanceToSimilarity(Math.sqrt(2*numerator));
-            }else if(similarityMeasure==SimilarityMeasure.PsChiSquareMod){
-                d = distanceToSimilarity(2*numerator);
-            }else if(similarityMeasure==SimilarityMeasure.ClarkMod || similarityMeasure==SimilarityMeasure.MahalanobisMod || similarityMeasure==SimilarityMeasure.PenroseShape){
-                d = distanceToSimilarity(Math.sqrt(numerator));
-            }else if(similarityMeasure==SimilarityMeasure.PseudoCos){
-                double div = vectorElementSums.get(word1)*vectorElementSums.get(word2);
-                if(div == 0d){
-                    d = 0d;
-                }else{
-                    d = numerator/div;
-                }
-            }else if(similarityMeasure==SimilarityMeasure.PseudoCosMod_1){
-                d = numerator/(vectorElementAbsValueSums.get(word1)*vectorElementAbsValueSums.get(word2));
-            }else if(similarityMeasure==SimilarityMeasure.PseudoCosMod_2){
-                if(vectorElementSums.get(word1) > 0d && vectorElementSums.get(word2) > 0d){
-                    d = numerator/(Math.sqrt(vectorElementSums.get(word1))*Math.sqrt(vectorElementSums.get(word2)));
-                }else{
-                    d = 0d;
-                }
-            }else if(similarityMeasure==SimilarityMeasure.PseudoCosMod_3){
-                d = numerator/(Math.sqrt(vectorElementAbsValueSums.get(word1))*Math.sqrt(vectorElementAbsValueSums.get(word2)));
-            }else if(similarityMeasure==SimilarityMeasure.RenyiDivMod2 || similarityMeasure==SimilarityMeasure.RenyiDivModInf){
-                d = distanceToSimilarity(lb(numerator));
-            }else if(similarityMeasure==SimilarityMeasure.Lsmq){
-                d = distanceToSimilarity(lb((numberOfAllFeatures+numerator)/numberOfAllFeatures));
-            }else if(similarityMeasure==SimilarityMeasure.Spline){
-                d = numberOfAllFeatures+numerator;
-            }else if(similarityMeasure==SimilarityMeasure.Overlap){
-                double min = Math.min(vectorElementSums.get(word1), vectorElementSums.get(word2));
-                if(min!=0d){
-                    d = numerator/min;
-                }else{
-                    d = 0d;
-                }
-            }else if(similarityMeasure==SimilarityMeasure.AvgL1LInf){
-                d = distanceToSimilarity((numerator+denominator1)/2d);
-            }else if(similarityMeasure==SimilarityMeasure.MaxSymChiSqMod){
-                d = distanceToSimilarity(Math.max(numerator,denominator1));
-            }else if(similarityMeasure==SimilarityMeasure.RobersMod){
-                d = numerator/(vectorElementAbsValueSums.get(word1)+vectorElementAbsValueSums.get(word2));
-            }else if(similarityMeasure==SimilarityMeasure.Mb){
-                d = 0.5d*(numerator/vectorLengthSquares.get(word1)+numerator/vectorLengthSquares.get(word2));
-            }else if(similarityMeasure==SimilarityMeasure.Simpson_1){
-                d = numerator/Math.min(vectorElementAbsValueSums.get(word1), vectorElementAbsValueSums.get(word2));
-            }else if(similarityMeasure==SimilarityMeasure.Simpson_2Mod){
-                d = numerator/Math.min(denominator1, denominator2);
-            }else if(similarityMeasure==SimilarityMeasure.SmoothCos){
-                d = (numerator + Math.pow(smoothCosBeta, 2d))/
-                        (Math.sqrt(vectorLengthSquares.get(word1) + Math.pow(smoothCosBeta, 2d))*Math.sqrt(vectorLengthSquares.get(word2) + Math.pow(smoothCosBeta, 2d)));
-            }else if(similarityMeasure==SimilarityMeasure.AdjCos){
-                d = numerator/(Math.sqrt(vectorLengthSquares.get(word1))*Math.sqrt(vectorLengthSquares.get(word2)));
-                if(d>=adjCosLambda){
-                    d=1d;
-                }else{
-                    d=d/adjCosLambda;
-                }
-            }else if(similarityMeasure==SimilarityMeasure.NormCosMod){
-                d = numerator/(Math.sqrt(denominator1)*Math.sqrt(denominator2));
-                if(d>=normCosLambda){
-                    d=1d;
-                }else{
-                    d=d/normCosLambda;
-                }
-            }else if(similarityMeasure==SimilarityMeasure.SocPmiMod){
-                Double wf1 = wordFrequencies.get(word1);
-                Double log1;
-                if(wf1==null || wf1==0l){
-                    log1 = 0d;
-                }else{
-                    log1 = Math.log10(wf1);
-                }
-                Double wf2 = wordFrequencies.get(word2);
-                Double log2;
-                if(wf2==null || wf2==0l){
-                    log2 = 0d;
-                }else{
-                    log2 = Math.log10(wf2);
-                }
-                double b1 = Math.pow(log1, 2d)*lb(allWordTypeCount)/SocPmiMu;
-                double b2 = Math.pow(log2, 2d)*lb(allWordTypeCount)/SocPmiMu;
-                d = numerator/b1+denominator1/b2;
-            }else if(similarityMeasure==SimilarityMeasure.NormModSocPmiMod){
-                Double wf1 = wordFrequencies.get(word1);
-                Double log1;
-                if(wf1==null || wf1==0l){
-                    log1 = 0d;
-                }else{
-                    log1 = Math.log10(wf1);
-                }
-                Double wf2 = wordFrequencies.get(word2);
-                Double log2;
-                if(wf2==null || wf2==0l){
-                    log2 = 0d;
-                }else{
-                    log2 = Math.log10(wf2);
-                }
-                double b1 = Math.pow(log1, 2d)*lb(allWordTypeCount)/normModSocPmiDelta;
-                double b2 = Math.pow(log2, 2d)*lb(allWordTypeCount)/normModSocPmiDelta;
-                d = Math.log(numerator/b1+denominator1/b2+1d);
-                if(d>=normModSocPmiLambda){
-                    d=1d;
-                }else{
-                    d=d/normModSocPmiLambda;
-                }
-            }else if(similarityMeasure==SimilarityMeasure.ChenCorr){
-                d=numerator/numberOfAllFeatures;
-            }else if(similarityMeasure==SimilarityMeasure.NcdMod_2){
-                d = distanceToSimilarity((numerator-denominator1)/denominator2);
-            }else if(similarityMeasure==SimilarityMeasure.Wo){
-                if(denominator1!=0){
-                    double denSum = 0;
-                    for(int i=1;i<=Math.round(denominator1);i++){
-                        denSum+=1d/(2d*i);
-                    }
-                    d = numerator/denSum;
-                }else{
-                    d = 0d;
-                }
-            }else if(lModPattern.matcher(similarityMeasureString).matches() || dtvPattern.matcher(similarityMeasureString).matches() || similarityMeasure==SimilarityMeasure.SorensenMod){
-                    
-                int type;
-                if(similarityMeasureString.startsWith("L")){
-                    type = Integer.parseInt(similarityMeasureString.substring(similarityMeasureString.length()-1));
-                }else if(similarityMeasureString.startsWith("D")){
-                    type = Integer.parseInt(similarityMeasureString.substring(similarityMeasureString.length()-1));
-                }else{
-                    type = -1;
-                }
-
-                boolean withInverseFunction = similarityMeasure!=SimilarityMeasure.SorensenMod && Integer.parseInt(similarityMeasureString.substring(similarityMeasureString.length()-3, similarityMeasureString.length()-2))==2;
-
-                Double numWWOIF=null;
-                Double denWWOIF1=null;
-                Double denWWOIF2=null;
-                if(withInverseFunction){
-                    if(!similarityMeasureString.matches("Dtv_(8|9|(10)|(11)|(12)|(13)|(14)).*")){
-                        numWWOIF = similarityMeasureFInverseFunction(type, numerator, numberOfAllFeatures);
-                    }else{
-                        numWWOIF = numerator;
-                    }
-                    if(denominator1!=null){
-                        denWWOIF1 = similarityMeasureFInverseFunction(type, denominator1, numberOfAllFeatures);
-                    }
-                    if(denominator2!=null){
-                        denWWOIF2 = similarityMeasureFInverseFunction(type, denominator2, numberOfAllFeatures);
-                    }
-                }else{
-                    numWWOIF = numerator;
-                    denWWOIF1 = denominator1;
-                    denWWOIF2 = denominator2;
-                }
-
-                if(similarityMeasureString.matches("(LMod_1.*)|(Dtv_(1|8)).*")){
-                    d = distanceToSimilarity(numWWOIF);
-                }else if(similarityMeasureString.matches("(LMod_2.*)|(Dtv_(7|(14)).*)")){
-                    d = distanceToSimilarity(numWWOIF/(Math.sqrt(vectorLengthSquares.get(word1))*Math.sqrt(vectorLengthSquares.get(word2))));
-                }else if(similarityMeasureString.matches("(LMod_3.*)|(Dtv_(6|(13)).*)")){
-                    d = distanceToSimilarity(numWWOIF/(Math.sqrt(vectorLengthSquares.get(word1))+Math.sqrt(vectorLengthSquares.get(word2))));
-                }else if(similarityMeasureString.matches("LMod_8.*")){
-                    d = distanceToSimilarity(numWWOIF/(vectorLengthSquares.get(word1)*vectorLengthSquares.get(word2)));
-                }else if(similarityMeasureString.matches("LMod_9.*")){
-                    d = distanceToSimilarity(numWWOIF/(vectorLengthSquares.get(word1)+vectorLengthSquares.get(word2)));
-                }else if(similarityMeasureString.matches("(LMod_(4|6).*)|(Dtv_(5|(12)).*)")){
-                    d = distanceToSimilarity(numWWOIF/(Math.sqrt(denWWOIF1)*Math.sqrt(denWWOIF2)));
-                }else if(similarityMeasureString.matches("(LMod_(5|7).*)|(Dtv_(4|(11)).*)")){
-                    d = distanceToSimilarity(numWWOIF/(Math.sqrt(denWWOIF1)+Math.sqrt(denWWOIF2)));
-                }else if(similarityMeasureString.matches("(LMod_((10)|(12)|(14)).*)|(Dtv_(3|(10)).*)")){
-                    d = distanceToSimilarity(numWWOIF/(denWWOIF1*denWWOIF2));
-                }else if(similarityMeasureString.matches("(LMod_((11)|(13)|(15)).*)|(Dtv_(2|9).*)")){
-                    d = distanceToSimilarity(numWWOIF/(denWWOIF1+denWWOIF2));
-                }else if(similarityMeasure==SimilarityMeasure.SorensenMod){
-                    d = distanceToSimilarity(numerator/(vectorElementAbsValueSums.get(word1)+vectorElementAbsValueSums.get(word2)));
-                }
-
-            }else if(lWPattern.matcher(similarityMeasureString).matches()){
-                    
-                int type = Integer.parseInt(similarityMeasureString.substring(similarityMeasureString.length()-1));
-
-                if(similarityMeasureString.matches("LW_._1_.")){
-                    d = distanceToSimilarity(numerator);
-                }else if(similarityMeasureString.matches("LW_._2_.")){
-                    d = distanceToSimilarity(similarityMeasureFInverseFunction(type, numerator, numberOfAllFeatures));
-                }
-
-            }else if(dtvWPattern.matcher(similarityMeasureString).matches()){
-                    
-                int type = Integer.parseInt(similarityMeasureString.substring(similarityMeasureString.length()-1));
-
-                if(similarityMeasureString.matches("DtvW_._1_.")){
-                    d = distanceToSimilarity(numerator);
-                }else if(similarityMeasureString.matches("DtvW_._2_.")){
-                    d = distanceToSimilarity(similarityMeasureFInverseFunction(type, numerator, numberOfAllFeatures));
-                }
-
-            }else if(linModPattern.matcher(similarityMeasureString).matches() || linHindleRModPattern.matcher(similarityMeasureString).matches()){
-                
-                int type;
-                if(similarityMeasureString.startsWith("LinM")){
-                    type = Integer.parseInt(similarityMeasureString.substring(similarityMeasureString.length()-1));
-                }else{
-                    type = Integer.parseInt(similarityMeasureString.substring(similarityMeasureString.length()-1));
-                }
-
-                boolean withInverseFunction = Integer.parseInt(similarityMeasureString.substring(similarityMeasureString.length()-3, similarityMeasureString.length()-2))==2;
-
-                Double numWWOIF=null;
-                Double denWWOIF1=null;
-                Double denWWOIF2=null;
-                if(withInverseFunction){
+            Double numWWOIF=null;
+            Double denWWOIF1=null;
+            Double denWWOIF2=null;
+            if(withInverseFunction){
+                if(!similarityMeasureString.matches("Dtv_(8|9|(10)|(11)|(12)|(13)|(14)).*")){
                     numWWOIF = similarityMeasureFInverseFunction(type, numerator, numberOfAllFeatures);
-                    if(denominator1!=null){
-                        denWWOIF1 = similarityMeasureFInverseFunction(type, denominator1, numberOfAllFeatures);
-                    }
-                    if(denominator2!=null){
-                        denWWOIF2 = similarityMeasureFInverseFunction(type, denominator2, numberOfAllFeatures);
-                    }
                 }else{
                     numWWOIF = numerator;
-                    denWWOIF1 = denominator1;
-                    denWWOIF2 = denominator2;
                 }
-                
-                if(similarityMeasureString.matches("Lin(HindleR)?Mod_1.*")){
-                    d = numWWOIF;
-                }else if(similarityMeasureString.matches("Lin(HindleR)?Mod_2.*")){
-                    d = numWWOIF/(denWWOIF1+denWWOIF2);
-                }else if(similarityMeasureString.matches("Lin(HindleR)?Mod_8.*")){
-                    double den = denWWOIF1+denWWOIF2;
-                    if(den!=0d){
-                        d = numWWOIF/den;
-                    }else{
-                        d=0d;
-                    }
-                }else if(similarityMeasureString.matches("Lin(HindleR)?Mod_3.*")){
-                    d = numWWOIF/(denWWOIF1*denWWOIF2);
-                }else if(similarityMeasureString.matches("Lin(HindleR)?Mod_9.*")){
-                    double den = denWWOIF1*denWWOIF2;
-                    if(den!=0d){
-                        d = numWWOIF/den;
-                    }else{
-                        d=0d;
-                    }
-                }else if(similarityMeasureString.matches("Lin(HindleR)?Mod_4.*")){
-                    d = numWWOIF/(Math.sqrt(denWWOIF1)+Math.sqrt(denWWOIF2));
-                }else if(similarityMeasureString.matches("Lin(HindleR)?Mod_5.*")){
-                    d = numWWOIF/(Math.sqrt(denWWOIF1)*Math.sqrt(denWWOIF2));
-                }else if(similarityMeasureString.matches("Lin(HindleR)?Mod(_6.*)")){
-                    d = numWWOIF/(Math.sqrt(vectorLengthSquares.get(word1))+Math.sqrt(vectorLengthSquares.get(word2)));
-                }else if(similarityMeasureString.matches("Lin(HindleR)?Mod(_7.*)")){
-                    d = numWWOIF/(Math.sqrt(vectorLengthSquares.get(word1))*Math.sqrt(vectorLengthSquares.get(word2)));
-                }else{
-                    System.out.println("No such SimilarityMeasure: " + similarityMeasure);
-                    throw new RuntimeException();
+                if(denominator1!=null){
+                    denWWOIF1 = similarityMeasureFInverseFunction(type, denominator1, numberOfAllFeatures);
                 }
-            }else if(similarityMeasureString.matches("Mb(Adj)?Cos((Am)|(Gm)|(Hm)|(Prod)|(LogProd))")){
-                
-                double d1 = 0.5d*(numerator/vectorLengthSquares.get(word1)+numerator/vectorLengthSquares.get(word2));
-                double d2;
-                
-                if(similarityMeasureString.startsWith("MbC")){
-                    d2 = numerator/(Math.sqrt(vectorLengthSquares.get(word1))*Math.sqrt(vectorLengthSquares.get(word2)));
-                }else{
-                    d2 = numerator/(Math.sqrt(vectorLengthSquares.get(word1))*Math.sqrt(vectorLengthSquares.get(word2)));
-                    if(d2>=adjCosLambda){
-                        d2=1d;
-                    }else{
-                        d2=d2/adjCosLambda;
-                    }
+                if(denominator2!=null){
+                    denWWOIF2 = similarityMeasureFInverseFunction(type, denominator2, numberOfAllFeatures);
                 }
-                
-                if(similarityMeasureString.endsWith("Am")){
-                    d = (d1+d2)/2;
-                }else if(similarityMeasureString.endsWith("Gm")){
-                    d = Math.signum(d1*d2)*Math.sqrt(Math.abs(d1*d2));
-                }else if(similarityMeasureString.endsWith("Hm")){
-                    double den = Math.abs(d1)+Math.abs(d2);
-                    if(den==0d){
-                        d = 0d;
-                    }else{
-                        d = 2*d1*d2/den;
-                    }
-                }else if(similarityMeasureString.endsWith("LogProd")){
-                    d = Math.signum(d1)*lb(1d+Math.abs(d1))*Math.signum(d2)*lb(1d+Math.abs(d2));
-                }else{
-                    d = d1*d2;
-                }
-                
-            }else if(cosModPattern.matcher(similarityMeasureString).matches() || pearsModPattern.matcher(similarityMeasureString).matches() || 
-                    adjCosModPattern.matcher(similarityMeasureString).matches() || pfModPattern.matcher(similarityMeasureString).matches()){
-                
-                int type;
-                if(similarityMeasureString.startsWith("C")){
-                    type = Integer.parseInt(similarityMeasureString.substring(similarityMeasureString.length()-1));
-                }else if(similarityMeasureString.startsWith("A")){
-                    type = Integer.parseInt(similarityMeasureString.substring(similarityMeasureString.length()-1));
-                }else if(similarityMeasureString.startsWith("Pe")){
-                    type = Integer.parseInt(similarityMeasureString.substring(similarityMeasureString.length()-1));
-                }else{
-                    type = Integer.parseInt(similarityMeasureString.substring(similarityMeasureString.length()-1));
-                }
-                
-                if(similarityMeasureString.matches("((((Adj)?Cos)|(PF))Mod_1.*)")){
-                    d = numerator/(Math.sqrt(vectorLengthSquares.get(word1))*Math.sqrt(vectorLengthSquares.get(word2)));
-                }else if(similarityMeasureString.matches("((((Adj)?Cos)|(PF))Mod_2_.)|(PearsMod_(1|2)_.)")){
-                    d = numerator/(Math.sqrt(denominator1)*Math.sqrt(denominator2));
-                }else if(similarityMeasureString.matches("(((Adj)?Cos)|(Pears)|(PF))Mod_3_.")){
-                    d = numerator/(Math.sqrt(similarityMeasureFInverseFunction(type, denominator1, numberOfAllFeatures))*Math.sqrt(similarityMeasureFInverseFunction(type, denominator2, numberOfAllFeatures)));
-                }else if(similarityMeasureString.matches("(((Adj)?Cos)|(PF))Mod_4_.")){
-                    d = similarityMeasureFInverseFunction(type, numerator, numberOfAllFeatures)/(Math.sqrt(vectorLengthSquares.get(word1))*Math.sqrt(vectorLengthSquares.get(word2)));
-                }else if(similarityMeasureString.matches("((((Adj)?Cos)|(PF))Mod_5_.)|(PearsMod_(4|5)_.)")){
-                    d = similarityMeasureFInverseFunction(type, numerator, numberOfAllFeatures)/(Math.sqrt(denominator1)*Math.sqrt(denominator2));
-               }else if(similarityMeasureString.matches("(((Adj)?Cos)|(Pears)|(PF))Mod_6_.")){
-                    d = similarityMeasureFInverseFunction(type, numerator, numberOfAllFeatures)/(Math.sqrt(similarityMeasureFInverseFunction(type, denominator1, numberOfAllFeatures))*Math.sqrt(similarityMeasureFInverseFunction(type, denominator2, numberOfAllFeatures)));
-                }else{
-                    System.out.println("No such SimilarityMeasure: " + similarityMeasure);
-                    throw new RuntimeException();
-                }
-                
-                if(similarityMeasureString.startsWith("A")){
-                    if(d>=adjCosLambda){
-                        d=1d;
-                    }else{
-                        d=d/adjCosLambda;
-                    }
-                }else if(similarityMeasureString.startsWith("PF")){
-                    Double wf1 = wordFrequencies.get(word1);
-                    Double log1;
-                    if(wf1==null || wf1==0l){
-                        log1 = 0d;
-                    }else{
-                        log1 = lb(allWordCount/wf1);
-                    }
-                    Double wf2 = wordFrequencies.get(word2);
-                    Double log2;
-                    if(wf2==null || wf2==0l){
-                        log2 = 0d;
-                    }else{
-                        log2 = lb(allWordCount/wf2);
-                    }
-                    d = d*(log1+log2)/2;
-                }
-                
-            }else if(mbModPattern.matcher(similarityMeasureString).matches()){
-                if(similarityMeasureString.matches("MbMod_1_.")){
-                    d = 0.5d*(numerator/vectorLengthSquares.get(word1)+numerator/vectorLengthSquares.get(word2));
-                }else if(similarityMeasureString.matches("MbMod_2_.")){
-                    d = 0.5d*(numerator/denominator1+numerator/denominator2);
-                }else if(similarityMeasureString.matches("MbMod_3_.")){
-                    int type = Integer.parseInt(similarityMeasureString.substring(similarityMeasureString.length()-1));
-                    d = 0.5d*(numerator/similarityMeasureFInverseFunction(type, denominator1, numberOfAllFeatures)+numerator/similarityMeasureFInverseFunction(type, denominator2, numberOfAllFeatures));
-                }else if(similarityMeasureString.matches("MbMod_4_.")){
-                    int type = Integer.parseInt(similarityMeasureString.substring(similarityMeasureString.length()-1));
-                    d = 0.5d*(similarityMeasureFInverseFunction(type, numerator, numberOfAllFeatures)/vectorLengthSquares.get(word1)+similarityMeasureFInverseFunction(type, numerator, numberOfAllFeatures)/vectorLengthSquares.get(word2));
-                }else if(similarityMeasureString.matches("MbMod_5_.")){
-                    int type = Integer.parseInt(similarityMeasureString.substring(similarityMeasureString.length()-1));
-                    d = 0.5d*(similarityMeasureFInverseFunction(type, numerator, numberOfAllFeatures)/denominator1+similarityMeasureFInverseFunction(type, numerator, numberOfAllFeatures)/denominator2);
-                }else if(similarityMeasureString.matches("MbMod_6_.")){
-                    int type = Integer.parseInt(similarityMeasureString.substring(similarityMeasureString.length()-1));
-                    d = 0.5d*(similarityMeasureFInverseFunction(type, numerator, numberOfAllFeatures)/similarityMeasureFInverseFunction(type, denominator1, numberOfAllFeatures)+similarityMeasureFInverseFunction(type, numerator, numberOfAllFeatures)/similarityMeasureFInverseFunction(type, denominator2, numberOfAllFeatures));
-                }else{
-                    System.out.println("No such SimilarityMeasure: " + similarityMeasure);
-                    throw new RuntimeException();
-                }
-            }else if(pearsMbAdjCosModPattern.matcher(similarityMeasureString).matches() || pearsMbAdjCosPfModPattern.matcher(similarityMeasureString).matches() || 
-                    pearsMbModPattern.matcher(similarityMeasureString).matches()){
-                
-                int type = Integer.parseInt(similarityMeasureString.substring(similarityMeasureString.length()-1));
-                
-                if(similarityMeasureString.matches("PearsMb(AdjCos(PF)?)?Mod_(1|2)_.")){
-                    d = 0.5d*(numerator/denominator1+numerator/denominator2);
-                }else if(similarityMeasureString.matches("PearsMb(AdjCos(PF)?)?Mod_3_.")){
-                    d = 0.5d*(numerator/similarityMeasureFInverseFunction(type, denominator1, numberOfAllFeatures)+numerator/similarityMeasureFInverseFunction(type, denominator2, numberOfAllFeatures));
-                }else if(similarityMeasureString.matches("PearsMb(AdjCos(PF)?)?Mod_(4|5)_.")){
-                    d = 0.5d*(similarityMeasureFInverseFunction(type, numerator, numberOfAllFeatures)/denominator1+similarityMeasureFInverseFunction(type, numerator, numberOfAllFeatures)/denominator2);
-                }else if(similarityMeasureString.matches("PearsMb(AdjCos(PF)?)?Mod_6_.")){
-                    d = 0.5d*(similarityMeasureFInverseFunction(type, numerator, numberOfAllFeatures)/similarityMeasureFInverseFunction(type, denominator1, numberOfAllFeatures)+similarityMeasureFInverseFunction(type, numerator, numberOfAllFeatures)/similarityMeasureFInverseFunction(type, denominator2, numberOfAllFeatures));
-                }else{
-                    System.out.println("No such SimilarityMeasure: " + similarityMeasure);
-                    throw new RuntimeException();
-                }
-                
-                if(similarityMeasureString.matches("PearsMbAdjCosPFMod.*")){
-                    
-                    Double wf1 = wordFrequencies.get(word1);
-                    Double log1;
-                    if(wf1==null || wf1==0l){
-                        log1 = 0d;
-                    }else{
-                        log1 = lb(allWordCount/wf1);
-                    }
-                    Double wf2 = wordFrequencies.get(word2);
-                    Double log2;
-                    if(wf2==null || wf2==0l){
-                        log2 = 0d;
-                    }else{
-                        log2 = lb(allWordCount/wf2);
-                    }
-                    d = d*(log1+log2)/2;
-                    
-                    if(d>=adjCosPFModLambda){
-                        d=1d;
-                    }else{
-                        d=d/adjCosPFModLambda;
-                    }
-                    
-                }else if(similarityMeasureString.matches("PearsMbAdjCosMod.*")){
-                    
-                    if(d>=adjCosLambda){
-                        d=1d;
-                    }else{
-                        d=d/adjCosLambda;
-                    }
-                    
-                }
-                
-            }else if(innerProdWPattern.matcher(similarityMeasureString).matches()){
-                if(similarityMeasureString.matches("InnerProdW_(1|2)_.")){
-                    d = numerator;
-                }else if(similarityMeasureString.matches("InnerProdW_(3|4)_.")){
-                    int type = Integer.parseInt(similarityMeasureString.substring(similarityMeasureString.length()-1));
-                    d = similarityMeasureFInverseFunction(type, numerator, numberOfAllFeatures);
-                 }else{
-                    System.out.println("No such SimilarityMeasure: " + similarityMeasure);
-                    throw new RuntimeException();
-                }
-            }else if(penroseShapeModPattern.matcher(similarityMeasureString).matches()){
+            }else{
+                numWWOIF = numerator;
+                denWWOIF1 = denominator1;
+                denWWOIF2 = denominator2;
+            }
 
-                if(similarityMeasureString.matches("PenroseShapeMod_(1|2)_.")){
-                    d = distanceToSimilarity(numerator);
-                }else if(similarityMeasureString.matches("PenroseShapeMod_(3|4)_.")){
-                    int type = Integer.parseInt(similarityMeasureString.substring(similarityMeasureString.length()-1));
-                    d = distanceToSimilarity(similarityMeasureFInverseFunction(type, numerator, numberOfAllFeatures));
-                }
+            if(similarityMeasureString.matches("(LMod_1.*)|(Dtv_(1|8)).*")){
+                d = distanceToSimilarity(numWWOIF);
+            }else if(similarityMeasureString.matches("(LMod_2.*)|(Dtv_(7|(14)).*)")){
+                d = distanceToSimilarity(numWWOIF/(Math.sqrt(vectorLengthSquares.get(word1))*Math.sqrt(vectorLengthSquares.get(word2))));
+            }else if(similarityMeasureString.matches("(LMod_3.*)|(Dtv_(6|(13)).*)")){
+                d = distanceToSimilarity(numWWOIF/(Math.sqrt(vectorLengthSquares.get(word1))+Math.sqrt(vectorLengthSquares.get(word2))));
+            }else if(similarityMeasureString.matches("LMod_8.*")){
+                d = distanceToSimilarity(numWWOIF/(vectorLengthSquares.get(word1)*vectorLengthSquares.get(word2)));
+            }else if(similarityMeasureString.matches("LMod_9.*")){
+                d = distanceToSimilarity(numWWOIF/(vectorLengthSquares.get(word1)+vectorLengthSquares.get(word2)));
+            }else if(similarityMeasureString.matches("(LMod_(4|6).*)|(Dtv_(5|(12)).*)")){
+                d = distanceToSimilarity(numWWOIF/(Math.sqrt(denWWOIF1)*Math.sqrt(denWWOIF2)));
+            }else if(similarityMeasureString.matches("(LMod_(5|7).*)|(Dtv_(4|(11)).*)")){
+                d = distanceToSimilarity(numWWOIF/(Math.sqrt(denWWOIF1)+Math.sqrt(denWWOIF2)));
+            }else if(similarityMeasureString.matches("(LMod_((10)|(12)|(14)).*)|(Dtv_(3|(10)).*)")){
+                d = distanceToSimilarity(numWWOIF/(denWWOIF1*denWWOIF2));
+            }else if(similarityMeasureString.matches("(LMod_((11)|(13)|(15)).*)|(Dtv_(2|9).*)")){
+                d = distanceToSimilarity(numWWOIF/(denWWOIF1+denWWOIF2));
+            }else if(similarityMeasure==SimilarityMeasure.SorensenMod){
+                d = distanceToSimilarity(numerator/(vectorElementAbsValueSums.get(word1)+vectorElementAbsValueSums.get(word2)));
+            }
 
-            }else if(similarityMeasureString.matches("Multiplicative.*")){
-                d = distanceToSimilarity(-1+numerator);
-            }else if(similarityMeasureString.matches("StdLike_.") || similarityMeasure==SimilarityMeasure.Dfvmb){
-                d = distanceToSimilarity(Math.sqrt(numerator/(2*numberOfAllFeatures)));
-            }else if(similarityMeasure==SimilarityMeasure.PearsMb){
-                d = 0.5d*(numerator/denominator1+numerator/denominator2);
-            }else if(similarityMeasure==SimilarityMeasure.PearsAdjCos){
+        }else if(lWPattern.matcher(similarityMeasureString).matches()){
+
+            int type = Integer.parseInt(similarityMeasureString.substring(similarityMeasureString.length()-1));
+
+            if(similarityMeasureString.matches("LW_._1_.")){
+                d = distanceToSimilarity(numerator);
+            }else if(similarityMeasureString.matches("LW_._2_.")){
+                d = distanceToSimilarity(similarityMeasureFInverseFunction(type, numerator, numberOfAllFeatures));
+            }
+
+        }else if(dtvWPattern.matcher(similarityMeasureString).matches()){
+
+            int type = Integer.parseInt(similarityMeasureString.substring(similarityMeasureString.length()-1));
+
+            if(similarityMeasureString.matches("DtvW_._1_.")){
+                d = distanceToSimilarity(numerator);
+            }else if(similarityMeasureString.matches("DtvW_._2_.")){
+                d = distanceToSimilarity(similarityMeasureFInverseFunction(type, numerator, numberOfAllFeatures));
+            }
+
+        }else if(linModPattern.matcher(similarityMeasureString).matches() || linHindleRModPattern.matcher(similarityMeasureString).matches()){
+
+            int type;
+            if(similarityMeasureString.startsWith("LinM")){
+                type = Integer.parseInt(similarityMeasureString.substring(similarityMeasureString.length()-1));
+            }else{
+                type = Integer.parseInt(similarityMeasureString.substring(similarityMeasureString.length()-1));
+            }
+
+            boolean withInverseFunction = Integer.parseInt(similarityMeasureString.substring(similarityMeasureString.length()-3, similarityMeasureString.length()-2))==2;
+
+            Double numWWOIF=null;
+            Double denWWOIF1=null;
+            Double denWWOIF2=null;
+            if(withInverseFunction){
+                numWWOIF = similarityMeasureFInverseFunction(type, numerator, numberOfAllFeatures);
+                if(denominator1!=null){
+                    denWWOIF1 = similarityMeasureFInverseFunction(type, denominator1, numberOfAllFeatures);
+                }
+                if(denominator2!=null){
+                    denWWOIF2 = similarityMeasureFInverseFunction(type, denominator2, numberOfAllFeatures);
+                }
+            }else{
+                numWWOIF = numerator;
+                denWWOIF1 = denominator1;
+                denWWOIF2 = denominator2;
+            }
+
+            if(similarityMeasureString.matches("Lin(HindleR)?Mod_1.*")){
+                d = numWWOIF;
+            }else if(similarityMeasureString.matches("Lin(HindleR)?Mod_2.*")){
+                d = numWWOIF/(denWWOIF1+denWWOIF2);
+            }else if(similarityMeasureString.matches("Lin(HindleR)?Mod_8.*")){
+                double den = denWWOIF1+denWWOIF2;
+                if(den!=0d){
+                    d = numWWOIF/den;
+                }else{
+                    d=0d;
+                }
+            }else if(similarityMeasureString.matches("Lin(HindleR)?Mod_3.*")){
+                d = numWWOIF/(denWWOIF1*denWWOIF2);
+            }else if(similarityMeasureString.matches("Lin(HindleR)?Mod_9.*")){
+                double den = denWWOIF1*denWWOIF2;
+                if(den!=0d){
+                    d = numWWOIF/den;
+                }else{
+                    d=0d;
+                }
+            }else if(similarityMeasureString.matches("Lin(HindleR)?Mod_4.*")){
+                d = numWWOIF/(Math.sqrt(denWWOIF1)+Math.sqrt(denWWOIF2));
+            }else if(similarityMeasureString.matches("Lin(HindleR)?Mod_5.*")){
+                d = numWWOIF/(Math.sqrt(denWWOIF1)*Math.sqrt(denWWOIF2));
+            }else if(similarityMeasureString.matches("Lin(HindleR)?Mod(_6.*)")){
+                d = numWWOIF/(Math.sqrt(vectorLengthSquares.get(word1))+Math.sqrt(vectorLengthSquares.get(word2)));
+            }else if(similarityMeasureString.matches("Lin(HindleR)?Mod(_7.*)")){
+                d = numWWOIF/(Math.sqrt(vectorLengthSquares.get(word1))*Math.sqrt(vectorLengthSquares.get(word2)));
+            }else{
+                System.out.println("No such SimilarityMeasure: " + similarityMeasure);
+                throw new RuntimeException();
+            }
+        }else if(similarityMeasureString.matches("Mb(Adj)?Cos((Am)|(Gm)|(Hm)|(Prod)|(LogProd))")){
+
+            double d1 = 0.5d*(numerator/vectorLengthSquares.get(word1)+numerator/vectorLengthSquares.get(word2));
+            double d2;
+
+            if(similarityMeasureString.startsWith("MbC")){
+                d2 = numerator/(Math.sqrt(vectorLengthSquares.get(word1))*Math.sqrt(vectorLengthSquares.get(word2)));
+            }else{
+                d2 = numerator/(Math.sqrt(vectorLengthSquares.get(word1))*Math.sqrt(vectorLengthSquares.get(word2)));
+                if(d2>=adjCosLambda){
+                    d2=1d;
+                }else{
+                    d2=d2/adjCosLambda;
+                }
+            }
+
+            if(similarityMeasureString.endsWith("Am")){
+                d = (d1+d2)/2;
+            }else if(similarityMeasureString.endsWith("Gm")){
+                d = Math.signum(d1*d2)*Math.sqrt(Math.abs(d1*d2));
+            }else if(similarityMeasureString.endsWith("Hm")){
+                double den = Math.abs(d1)+Math.abs(d2);
+                if(den==0d){
+                    d = 0d;
+                }else{
+                    d = 2*d1*d2/den;
+                }
+            }else if(similarityMeasureString.endsWith("LogProd")){
+                d = Math.signum(d1)*lb(1d+Math.abs(d1))*Math.signum(d2)*lb(1d+Math.abs(d2));
+            }else{
+                d = d1*d2;
+            }
+
+        }else if(cosModPattern.matcher(similarityMeasureString).matches() || pearsModPattern.matcher(similarityMeasureString).matches() || 
+                adjCosModPattern.matcher(similarityMeasureString).matches() || pfModPattern.matcher(similarityMeasureString).matches()){
+
+            int type;
+            if(similarityMeasureString.startsWith("C")){
+                type = Integer.parseInt(similarityMeasureString.substring(similarityMeasureString.length()-1));
+            }else if(similarityMeasureString.startsWith("A")){
+                type = Integer.parseInt(similarityMeasureString.substring(similarityMeasureString.length()-1));
+            }else if(similarityMeasureString.startsWith("Pe")){
+                type = Integer.parseInt(similarityMeasureString.substring(similarityMeasureString.length()-1));
+            }else{
+                type = Integer.parseInt(similarityMeasureString.substring(similarityMeasureString.length()-1));
+            }
+
+            if(similarityMeasureString.matches("((((Adj)?Cos)|(PF))Mod_1.*)")){
+                d = numerator/(Math.sqrt(vectorLengthSquares.get(word1))*Math.sqrt(vectorLengthSquares.get(word2)));
+            }else if(similarityMeasureString.matches("((((Adj)?Cos)|(PF))Mod_2_.)|(PearsMod_(1|2)_.)")){
                 d = numerator/(Math.sqrt(denominator1)*Math.sqrt(denominator2));
-                if(d>=adjCosLambda){
-                    d=1d;
-                }else{
-                    d=d/adjCosLambda;
-                }
-            }else if(similarityMeasure==SimilarityMeasure.PearsPFMod){
-                Double wf1 = wordFrequencies.get(word1);
-                Double log1;
-                if(wf1==null || wf1==0l){
-                    log1 = 0d;
-                }else{
-                    log1 = lb(allWordCount/wf1);
-                }
-                Double wf2 = wordFrequencies.get(word2);
-                Double log2;
-                if(wf2==null || wf2==0l){
-                    log2 = 0d;
-                }else{
-                    log2 = lb(allWordCount/wf2);
-                }
-                d = numerator/(Math.sqrt(denominator1)*Math.sqrt(denominator2))*(log1+log2)/2;
-            }else if(similarityMeasure==SimilarityMeasure.PearsMbAdjCos){
-                d = 0.5d*(numerator/denominator1+numerator/denominator2);
-                if(d>=adjCosLambda){
-                    d=1d;
-                }else{
-                    d=d/adjCosLambda;
-                }
-            }else if(similarityMeasure==SimilarityMeasure.PearsMbPFMod){
-                Double wf1 = wordFrequencies.get(word1);
-                Double log1;
-                if(wf1==null || wf1==0l){
-                    log1 = 0d;
-                }else{
-                    log1 = lb(allWordCount/wf1);
-                }
-                Double wf2 = wordFrequencies.get(word2);
-                Double log2;
-                if(wf2==null || wf2==0l){
-                    log2 = 0d;
-                }else{
-                    log2 = lb(allWordCount/wf2);
-                }
-                d = 0.5d*(numerator/denominator1+numerator/denominator2)*(log1+log2)/2;
-            }else if(similarityMeasure==SimilarityMeasure.PearsAdjCosPFMod){
-                Double wf1 = wordFrequencies.get(word1);
-                Double log1;
-                if(wf1==null || wf1==0l){
-                    log1 = 0d;
-                }else{
-                    log1 = lb(allWordCount/wf1);
-                }
-                Double wf2 = wordFrequencies.get(word2);
-                Double log2;
-                if(wf2==null || wf2==0l){
-                    log2 = 0d;
-                }else{
-                    log2 = lb(allWordCount/wf2);
-                }
-                d = numerator/(Math.sqrt(denominator1)*Math.sqrt(denominator2))*(log1+log2)/2;
-                if(d>=adjCosPFModLambda){
-                    d=1d;
-                }else{
-                    d=d/adjCosPFModLambda;
-                }
-            }else if(similarityMeasure==SimilarityMeasure.PearsMbAdjCosPFMod){
-                Double wf1 = wordFrequencies.get(word1);
-                Double log1;
-                if(wf1==null || wf1==0l){
-                    log1 = 0d;
-                }else{
-                    log1 = lb(allWordCount/wf1);
-                }
-                Double wf2 = wordFrequencies.get(word2);
-                Double log2;
-                if(wf2==null || wf2==0l){
-                    log2 = 0d;
-                }else{
-                    log2 = lb(allWordCount/wf2);
-                }
-                d = 0.5d*(numerator/denominator1+numerator/denominator2)*(log1+log2)/2;
-                if(d>=adjCosPFModLambda){
-                    d=1d;
-                }else{
-                    d=d/adjCosPFModLambda;
-                }
-            }else if(similarityMeasure==SimilarityMeasure.MbAdjCos){
-                d = 0.5d*(numerator/vectorLengthSquares.get(word1)+numerator/vectorLengthSquares.get(word2));
-                if(d>=adjCosLambda){
-                    d=1d;
-                }else{
-                    d=d/adjCosLambda;
-                }
-            }else if(similarityMeasure==SimilarityMeasure.MbPFMod){
-                Double wf1 = wordFrequencies.get(word1);
-                Double log1;
-                if(wf1==null || wf1==0l){
-                    log1 = 0d;
-                }else{
-                    log1 = lb(allWordCount/wf1);
-                }
-                Double wf2 = wordFrequencies.get(word2);
-                Double log2;
-                if(wf2==null || wf2==0l){
-                    log2 = 0d;
-                }else{
-                    log2 = lb(allWordCount/wf2);
-                }
-                d = 0.5d*(numerator/vectorLengthSquares.get(word1)+numerator/vectorLengthSquares.get(word2))*(log1+log2)/2;
-            }else if(similarityMeasure==SimilarityMeasure.MbAdjCosPFMod){
-                Double wf1 = wordFrequencies.get(word1);
-                Double log1;
-                if(wf1==null || wf1==0l){
-                    log1 = 0d;
-                }else{
-                    log1 = lb(allWordCount/wf1);
-                }
-                Double wf2 = wordFrequencies.get(word2);
-                Double log2;
-                if(wf2==null || wf2==0l){
-                    log2 = 0d;
-                }else{
-                    log2 = lb(allWordCount/wf2);
-                }
-                d = 0.5d*(numerator/vectorLengthSquares.get(word1)+numerator/vectorLengthSquares.get(word2))*(log1+log2)/2;
-                if(d>=adjCosPFModLambda){
-                    d=1d;
-                }else{
-                    d=d/adjCosPFModLambda;
-                }
-            }else if(similarityMeasure==SimilarityMeasure.AdjCosPFMod){
-                Double wf1 = wordFrequencies.get(word1);
-                Double log1;
-                if(wf1==null || wf1==0l){
-                    log1 = 0d;
-                }else{
-                    log1 = lb(allWordCount/wf1);
-                }
-                Double wf2 = wordFrequencies.get(word2);
-                Double log2;
-                if(wf2==null || wf2==0l){
-                    log2 = 0d;
-                }else{
-                    log2 = lb(allWordCount/wf2);
-                }
-                d = numerator/(Math.sqrt(vectorLengthSquares.get(word1))*Math.sqrt(vectorLengthSquares.get(word2)))*(log1+log2)/2;
-                if(d>=adjCosPFModLambda){
-                    d=1d;
-                }else{
-                    d=d/adjCosPFModLambda;
-                }
+            }else if(similarityMeasureString.matches("(((Adj)?Cos)|(Pears)|(PF))Mod_3_.")){
+                d = numerator/(Math.sqrt(similarityMeasureFInverseFunction(type, denominator1, numberOfAllFeatures))*Math.sqrt(similarityMeasureFInverseFunction(type, denominator2, numberOfAllFeatures)));
+            }else if(similarityMeasureString.matches("(((Adj)?Cos)|(PF))Mod_4_.")){
+                d = similarityMeasureFInverseFunction(type, numerator, numberOfAllFeatures)/(Math.sqrt(vectorLengthSquares.get(word1))*Math.sqrt(vectorLengthSquares.get(word2)));
+            }else if(similarityMeasureString.matches("((((Adj)?Cos)|(PF))Mod_5_.)|(PearsMod_(4|5)_.)")){
+                d = similarityMeasureFInverseFunction(type, numerator, numberOfAllFeatures)/(Math.sqrt(denominator1)*Math.sqrt(denominator2));
+           }else if(similarityMeasureString.matches("(((Adj)?Cos)|(Pears)|(PF))Mod_6_.")){
+                d = similarityMeasureFInverseFunction(type, numerator, numberOfAllFeatures)/(Math.sqrt(similarityMeasureFInverseFunction(type, denominator1, numberOfAllFeatures))*Math.sqrt(similarityMeasureFInverseFunction(type, denominator2, numberOfAllFeatures)));
             }else{
                 System.out.println("No such SimilarityMeasure: " + similarityMeasure);
                 throw new RuntimeException();
             }
 
+            if(similarityMeasureString.startsWith("A")){
+                if(d>=adjCosLambda){
+                    d=1d;
+                }else{
+                    d=d/adjCosLambda;
+                }
+            }else if(similarityMeasureString.startsWith("PF")){
+                Double wf1 = wordFrequencies.get(word1);
+                Double log1;
+                if(wf1==null || wf1==0l){
+                    log1 = 0d;
+                }else{
+                    log1 = lb(allWordCount/wf1);
+                }
+                Double wf2 = wordFrequencies.get(word2);
+                Double log2;
+                if(wf2==null || wf2==0l){
+                    log2 = 0d;
+                }else{
+                    log2 = lb(allWordCount/wf2);
+                }
+                d = d*(log1+log2)/2;
+            }
+
+        }else if(mbModPattern.matcher(similarityMeasureString).matches()){
+            if(similarityMeasureString.matches("MbMod_1_.")){
+                d = 0.5d*(numerator/vectorLengthSquares.get(word1)+numerator/vectorLengthSquares.get(word2));
+            }else if(similarityMeasureString.matches("MbMod_2_.")){
+                d = 0.5d*(numerator/denominator1+numerator/denominator2);
+            }else if(similarityMeasureString.matches("MbMod_3_.")){
+                int type = Integer.parseInt(similarityMeasureString.substring(similarityMeasureString.length()-1));
+                d = 0.5d*(numerator/similarityMeasureFInverseFunction(type, denominator1, numberOfAllFeatures)+numerator/similarityMeasureFInverseFunction(type, denominator2, numberOfAllFeatures));
+            }else if(similarityMeasureString.matches("MbMod_4_.")){
+                int type = Integer.parseInt(similarityMeasureString.substring(similarityMeasureString.length()-1));
+                d = 0.5d*(similarityMeasureFInverseFunction(type, numerator, numberOfAllFeatures)/vectorLengthSquares.get(word1)+similarityMeasureFInverseFunction(type, numerator, numberOfAllFeatures)/vectorLengthSquares.get(word2));
+            }else if(similarityMeasureString.matches("MbMod_5_.")){
+                int type = Integer.parseInt(similarityMeasureString.substring(similarityMeasureString.length()-1));
+                d = 0.5d*(similarityMeasureFInverseFunction(type, numerator, numberOfAllFeatures)/denominator1+similarityMeasureFInverseFunction(type, numerator, numberOfAllFeatures)/denominator2);
+            }else if(similarityMeasureString.matches("MbMod_6_.")){
+                int type = Integer.parseInt(similarityMeasureString.substring(similarityMeasureString.length()-1));
+                d = 0.5d*(similarityMeasureFInverseFunction(type, numerator, numberOfAllFeatures)/similarityMeasureFInverseFunction(type, denominator1, numberOfAllFeatures)+similarityMeasureFInverseFunction(type, numerator, numberOfAllFeatures)/similarityMeasureFInverseFunction(type, denominator2, numberOfAllFeatures));
+            }else{
+                System.out.println("No such SimilarityMeasure: " + similarityMeasure);
+                throw new RuntimeException();
+            }
+        }else if(pearsMbAdjCosModPattern.matcher(similarityMeasureString).matches() || pearsMbAdjCosPfModPattern.matcher(similarityMeasureString).matches() || 
+                pearsMbModPattern.matcher(similarityMeasureString).matches()){
+
+            int type = Integer.parseInt(similarityMeasureString.substring(similarityMeasureString.length()-1));
+
+            if(similarityMeasureString.matches("PearsMb(AdjCos(PF)?)?Mod_(1|2)_.")){
+                d = 0.5d*(numerator/denominator1+numerator/denominator2);
+            }else if(similarityMeasureString.matches("PearsMb(AdjCos(PF)?)?Mod_3_.")){
+                d = 0.5d*(numerator/similarityMeasureFInverseFunction(type, denominator1, numberOfAllFeatures)+numerator/similarityMeasureFInverseFunction(type, denominator2, numberOfAllFeatures));
+            }else if(similarityMeasureString.matches("PearsMb(AdjCos(PF)?)?Mod_(4|5)_.")){
+                d = 0.5d*(similarityMeasureFInverseFunction(type, numerator, numberOfAllFeatures)/denominator1+similarityMeasureFInverseFunction(type, numerator, numberOfAllFeatures)/denominator2);
+            }else if(similarityMeasureString.matches("PearsMb(AdjCos(PF)?)?Mod_6_.")){
+                d = 0.5d*(similarityMeasureFInverseFunction(type, numerator, numberOfAllFeatures)/similarityMeasureFInverseFunction(type, denominator1, numberOfAllFeatures)+similarityMeasureFInverseFunction(type, numerator, numberOfAllFeatures)/similarityMeasureFInverseFunction(type, denominator2, numberOfAllFeatures));
+            }else{
+                System.out.println("No such SimilarityMeasure: " + similarityMeasure);
+                throw new RuntimeException();
+            }
+
+            if(similarityMeasureString.matches("PearsMbAdjCosPFMod.*")){
+
+                Double wf1 = wordFrequencies.get(word1);
+                Double log1;
+                if(wf1==null || wf1==0l){
+                    log1 = 0d;
+                }else{
+                    log1 = lb(allWordCount/wf1);
+                }
+                Double wf2 = wordFrequencies.get(word2);
+                Double log2;
+                if(wf2==null || wf2==0l){
+                    log2 = 0d;
+                }else{
+                    log2 = lb(allWordCount/wf2);
+                }
+                d = d*(log1+log2)/2;
+
+                if(d>=adjCosPFModLambda){
+                    d=1d;
+                }else{
+                    d=d/adjCosPFModLambda;
+                }
+
+            }else if(similarityMeasureString.matches("PearsMbAdjCosMod.*")){
+
+                if(d>=adjCosLambda){
+                    d=1d;
+                }else{
+                    d=d/adjCosLambda;
+                }
+
+            }
+
+        }else if(innerProdWPattern.matcher(similarityMeasureString).matches()){
+            if(similarityMeasureString.matches("InnerProdW_(1|2)_.")){
+                d = numerator;
+            }else if(similarityMeasureString.matches("InnerProdW_(3|4)_.")){
+                int type = Integer.parseInt(similarityMeasureString.substring(similarityMeasureString.length()-1));
+                d = similarityMeasureFInverseFunction(type, numerator, numberOfAllFeatures);
+             }else{
+                System.out.println("No such SimilarityMeasure: " + similarityMeasure);
+                throw new RuntimeException();
+            }
+        }else if(penroseShapeModPattern.matcher(similarityMeasureString).matches()){
+
+            if(similarityMeasureString.matches("PenroseShapeMod_(1|2)_.")){
+                d = distanceToSimilarity(numerator);
+            }else if(similarityMeasureString.matches("PenroseShapeMod_(3|4)_.")){
+                int type = Integer.parseInt(similarityMeasureString.substring(similarityMeasureString.length()-1));
+                d = distanceToSimilarity(similarityMeasureFInverseFunction(type, numerator, numberOfAllFeatures));
+            }
+
+        }else if(similarityMeasureString.matches("Multiplicative.*")){
+            d = distanceToSimilarity(-1+numerator);
+        }else if(similarityMeasureString.matches("StdLike_.") || similarityMeasure==SimilarityMeasure.Dfvmb){
+            d = distanceToSimilarity(Math.sqrt(numerator/(2*numberOfAllFeatures)));
+        }else if(similarityMeasure==SimilarityMeasure.PearsMb){
+            d = 0.5d*(numerator/denominator1+numerator/denominator2);
+        }else if(similarityMeasure==SimilarityMeasure.PearsAdjCos){
+            d = numerator/(Math.sqrt(denominator1)*Math.sqrt(denominator2));
+            if(d>=adjCosLambda){
+                d=1d;
+            }else{
+                d=d/adjCosLambda;
+            }
+        }else if(similarityMeasure==SimilarityMeasure.PearsPFMod){
+            Double wf1 = wordFrequencies.get(word1);
+            Double log1;
+            if(wf1==null || wf1==0l){
+                log1 = 0d;
+            }else{
+                log1 = lb(allWordCount/wf1);
+            }
+            Double wf2 = wordFrequencies.get(word2);
+            Double log2;
+            if(wf2==null || wf2==0l){
+                log2 = 0d;
+            }else{
+                log2 = lb(allWordCount/wf2);
+            }
+            d = numerator/(Math.sqrt(denominator1)*Math.sqrt(denominator2))*(log1+log2)/2;
+        }else if(similarityMeasure==SimilarityMeasure.PearsMbAdjCos){
+            d = 0.5d*(numerator/denominator1+numerator/denominator2);
+            if(d>=adjCosLambda){
+                d=1d;
+            }else{
+                d=d/adjCosLambda;
+            }
+        }else if(similarityMeasure==SimilarityMeasure.PearsMbPFMod){
+            Double wf1 = wordFrequencies.get(word1);
+            Double log1;
+            if(wf1==null || wf1==0l){
+                log1 = 0d;
+            }else{
+                log1 = lb(allWordCount/wf1);
+            }
+            Double wf2 = wordFrequencies.get(word2);
+            Double log2;
+            if(wf2==null || wf2==0l){
+                log2 = 0d;
+            }else{
+                log2 = lb(allWordCount/wf2);
+            }
+            d = 0.5d*(numerator/denominator1+numerator/denominator2)*(log1+log2)/2;
+        }else if(similarityMeasure==SimilarityMeasure.PearsAdjCosPFMod){
+            Double wf1 = wordFrequencies.get(word1);
+            Double log1;
+            if(wf1==null || wf1==0l){
+                log1 = 0d;
+            }else{
+                log1 = lb(allWordCount/wf1);
+            }
+            Double wf2 = wordFrequencies.get(word2);
+            Double log2;
+            if(wf2==null || wf2==0l){
+                log2 = 0d;
+            }else{
+                log2 = lb(allWordCount/wf2);
+            }
+            d = numerator/(Math.sqrt(denominator1)*Math.sqrt(denominator2))*(log1+log2)/2;
+            if(d>=adjCosPFModLambda){
+                d=1d;
+            }else{
+                d=d/adjCosPFModLambda;
+            }
+        }else if(similarityMeasure==SimilarityMeasure.PearsMbAdjCosPFMod){
+            Double wf1 = wordFrequencies.get(word1);
+            Double log1;
+            if(wf1==null || wf1==0l){
+                log1 = 0d;
+            }else{
+                log1 = lb(allWordCount/wf1);
+            }
+            Double wf2 = wordFrequencies.get(word2);
+            Double log2;
+            if(wf2==null || wf2==0l){
+                log2 = 0d;
+            }else{
+                log2 = lb(allWordCount/wf2);
+            }
+            d = 0.5d*(numerator/denominator1+numerator/denominator2)*(log1+log2)/2;
+            if(d>=adjCosPFModLambda){
+                d=1d;
+            }else{
+                d=d/adjCosPFModLambda;
+            }
+        }else if(similarityMeasure==SimilarityMeasure.MbAdjCos){
+            d = 0.5d*(numerator/vectorLengthSquares.get(word1)+numerator/vectorLengthSquares.get(word2));
+            if(d>=adjCosLambda){
+                d=1d;
+            }else{
+                d=d/adjCosLambda;
+            }
+        }else if(similarityMeasure==SimilarityMeasure.MbPFMod){
+            Double wf1 = wordFrequencies.get(word1);
+            Double log1;
+            if(wf1==null || wf1==0l){
+                log1 = 0d;
+            }else{
+                log1 = lb(allWordCount/wf1);
+            }
+            Double wf2 = wordFrequencies.get(word2);
+            Double log2;
+            if(wf2==null || wf2==0l){
+                log2 = 0d;
+            }else{
+                log2 = lb(allWordCount/wf2);
+            }
+            d = 0.5d*(numerator/vectorLengthSquares.get(word1)+numerator/vectorLengthSquares.get(word2))*(log1+log2)/2;
+        }else if(similarityMeasure==SimilarityMeasure.MbAdjCosPFMod){
+            Double wf1 = wordFrequencies.get(word1);
+            Double log1;
+            if(wf1==null || wf1==0l){
+                log1 = 0d;
+            }else{
+                log1 = lb(allWordCount/wf1);
+            }
+            Double wf2 = wordFrequencies.get(word2);
+            Double log2;
+            if(wf2==null || wf2==0l){
+                log2 = 0d;
+            }else{
+                log2 = lb(allWordCount/wf2);
+            }
+            d = 0.5d*(numerator/vectorLengthSquares.get(word1)+numerator/vectorLengthSquares.get(word2))*(log1+log2)/2;
+            if(d>=adjCosPFModLambda){
+                d=1d;
+            }else{
+                d=d/adjCosPFModLambda;
+            }
+        }else if(similarityMeasure==SimilarityMeasure.AdjCosPFMod){
+            Double wf1 = wordFrequencies.get(word1);
+            Double log1;
+            if(wf1==null || wf1==0l){
+                log1 = 0d;
+            }else{
+                log1 = lb(allWordCount/wf1);
+            }
+            Double wf2 = wordFrequencies.get(word2);
+            Double log2;
+            if(wf2==null || wf2==0l){
+                log2 = 0d;
+            }else{
+                log2 = lb(allWordCount/wf2);
+            }
+            d = numerator/(Math.sqrt(vectorLengthSquares.get(word1))*Math.sqrt(vectorLengthSquares.get(word2)))*(log1+log2)/2;
+            if(d>=adjCosPFModLambda){
+                d=1d;
+            }else{
+                d=d/adjCosPFModLambda;
+            }
+        }else{
+            System.out.println("No such SimilarityMeasure: " + similarityMeasure);
+            throw new RuntimeException();
         }
         
         return d;

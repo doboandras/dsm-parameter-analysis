@@ -4,7 +4,6 @@ import dsm.parameters.DimRed.DimensionalityReductionType;
 import static dsm.parameters.DimRed.dimensionalityReductionType;
 import dsm.parameters.FeatTransf.FeatureTransformationType;
 import static dsm.parameters.FeatTransf.featureTransformationType;
-import dsm.parameters.MiscParam.Method;
 import static dsm.parameters.MiscParam.*;
 import dsm.parameters.Smooth.SmoothingType;
 import static dsm.parameters.Smooth.smoothingType;
@@ -61,7 +60,7 @@ public class ExtractedInfoReader {
 
         try {
 
-            BufferedReader in = new BufferedReader(new FileReader(location));
+            BufferedReader in = new BufferedReader(new FileReader(inputLocation));
 
             in.readLine();
             
@@ -89,7 +88,7 @@ public class ExtractedInfoReader {
             
             readStringDouble(in, "verbWithObjectFrequencies", nounFrequencies, nounSimpleFrequencies, minimumWordSimpleFrequency, allNouns, false, i++);
             
-            if(method==Method.Num && (smoothingType!=SmoothingType.NoSmooth || featureTransformationType!=FeatureTransformationType.NoTransf || 
+            if(smoothingType!=SmoothingType.NoSmooth || featureTransformationType!=FeatureTransformationType.NoTransf || 
                     weightingScheme.toString().matches(".*Pmi.*") || weightingScheme.toString().matches("(Sq)?LogLhr") || weightingScheme.toString().matches("Rapp_.") ||
                     weightingScheme.toString().matches("((Hyp)|(Bin)|(Poisson(Stirling)?))Lh") || weightingScheme.toString().matches("(T|Z)Test.*") || 
                     weightingScheme.toString().matches("ChiSquare.*") || weightingScheme.toString().matches("CondProb.*") || 
@@ -100,14 +99,14 @@ public class ExtractedInfoReader {
                     weightingScheme.toString().matches("SimpleLl") || weightingScheme.toString().matches("Allr") || weightingScheme.toString().matches("KrippendorffAlpha") || 
                     weightingScheme.toString().matches("ScottPi") || weightingScheme.toString().matches("(Cohen)?Kappa") || weightingScheme.toString().matches("Ochiai") || 
                     weightingScheme.toString().matches("Cca") || weightingScheme.toString().matches("(A)?N(g|c)d(Mod)?") || weightingScheme.toString().matches("Simpson_.(Mod)?") || 
-                    weightingScheme.toString().matches("(Lfb)?M(d|e)(Mod)?.*") || weightingScheme.toString().matches("SalienceMod_.") || weightingScheme.toString().matches("PoissonSig") || 
+                    weightingScheme.toString().matches("(Lfb)?M(d|e).*") || weightingScheme.toString().matches("SalienceMod_.") || weightingScheme.toString().matches("PoissonSig") || 
                     weightingScheme.toString().matches("SokalMichiner") || weightingScheme.toString().matches("RogersTanimoto") || weightingScheme.toString().matches("Hamann") || 
                     weightingScheme.toString().matches("SokalSneath_.") || weightingScheme.toString().matches("Kulczynski_.") || weightingScheme.toString().matches("Yulle.") || 
                     weightingScheme.toString().matches("Pears") || weightingScheme.toString().matches("Fager") || weightingScheme.toString().matches("Unis.*") || 
                     weightingScheme.toString().matches("TCombCost") || weightingScheme.toString().matches("Phi") || weightingScheme.toString().matches("J") || 
                     weightingScheme.toString().matches("Gini") || weightingScheme.toString().matches("Confidence") || weightingScheme.toString().matches("DriverKroeber") || 
                     weightingScheme.toString().matches("Laplace") || weightingScheme.toString().matches("PiaterskyShapiro") || weightingScheme.toString().matches("Certainty") || 
-                    weightingScheme.toString().matches("AddedValue"))){
+                    weightingScheme.toString().matches("AddedValue")){
                 
                 readParaphraseDouble(in, "verbWithSubjectFrequencies", verbWithObjectFrequencies, verbWithObjectSimpleFrequencies, 
                         minimumFeatureSimpleFrequency, filterStopWords, i++);
@@ -148,7 +147,7 @@ public class ExtractedInfoReader {
             readStringStringDouble(in, "verbObjectTuples", nounNcmodTuples, nounSimpleFrequencies, 
                     ncmodWithNounSimpleFrequencies, nounNcmodSimpleTuples, allNouns, filterStopWords, i++);
             
-            if(method==Method.Lin  || (method==Method.Num && (weightingScheme==WeightingScheme.Plffi || weightingScheme==WeightingScheme.Qlflnw || 
+            if(weightingScheme==WeightingScheme.Plffi || weightingScheme==WeightingScheme.Qlflnw || 
                     weightingScheme.toString().matches("(TfIdf_(1|2|4|5|7|8|9))|(TfIcf_3)") || weightingScheme==WeightingScheme.Gref_1 || weightingScheme.toString().matches("(PmiX)?Lin_1..") || 
                     weightingScheme==WeightingScheme.Lin_2 || weightingScheme.toString().matches("Okapi_.") || weightingScheme==WeightingScheme.Ltu || 
                     weightingScheme==WeightingScheme.Atc || weightingScheme==WeightingScheme.PmiXTfIdf_1 || 
@@ -159,7 +158,7 @@ public class ExtractedInfoReader {
                     pearsModPattern.matcher(similarityMeasureString).matches() || pearsCombPattern.matcher(similarityMeasureString).matches() || 
                     pearsMbAdjCosModPattern.matcher(similarityMeasureString).matches() || pearsMbAdjCosPfModPattern.matcher(similarityMeasureString).matches() || 
                     pearsMbModPattern.matcher(similarityMeasureString).matches() || similarityMeasureString.matches("PenroseShape(Mod_.*)?") || 
-                    dimensionalityReductionType==DimensionalityReductionType.SVD))){
+                    dimensionalityReductionType==DimensionalityReductionType.SVD){
 
                 readParaphraseLong(in, "verbSubjectTuples", verbObjectTuples, verbWithObjectSimpleFrequencies, filterStopWords, i++);
                 readParaphraseLong(in, "ncmodNounTuples", verbSubjectTuples, verbWithSubjectSimpleFrequencies, filterStopWords, i++);
@@ -172,7 +171,7 @@ public class ExtractedInfoReader {
             }
             
             
-            if(method==Method.Num && smoothingType!=SmoothingType.NoSmooth){
+            if(smoothingType!=SmoothingType.NoSmooth){
             
                 readKNSNCountsForStrings(in, "verbObjectTuplesKNSNCounts", nounKNSNCounts, nounSimpleFrequencies, 
                         minimumWordSimpleFrequency, allNouns, false, i++);
@@ -221,9 +220,9 @@ public class ExtractedInfoReader {
             
             readStringDouble(in, "dobjWithVerbFrequencies", verbFrequencies, verbSimpleFrequencies, minimumWordSimpleFrequency, allVerbs, false, i++);
             
-            if(method==Method.Num && (smoothingType!=SmoothingType.NoSmooth || featureTransformationType!=FeatureTransformationType.NoTransf || 
+            if(smoothingType!=SmoothingType.NoSmooth || featureTransformationType!=FeatureTransformationType.NoTransf || 
                     weightingScheme.toString().matches(".*Pmi.*") || weightingScheme.toString().matches("(Sq)?LogLhr") || weightingScheme.toString().matches("Rapp_.") || 
-                    weightingScheme.toString().matches("((Hyp)|(Bin)|(Poisson(Stirling)?))Lh") || weightingScheme.toString().matches("(T|Z)Test.?") || 
+                    weightingScheme.toString().matches("((Hyp)|(Bin)|(Poisson(Stirling)?))Lh") || weightingScheme.toString().matches("(T|Z)Test.*") || 
                     weightingScheme.toString().matches("ChiSquare.*") || weightingScheme.toString().matches("CondProb.*") || 
                     weightingScheme==WeightingScheme.JointProb || weightingScheme.toString().matches("(TfIdf_3)|(TfIcf_(1|2))") || weightingScheme==WeightingScheme.Dice || 
                     weightingScheme==WeightingScheme.Gref_2 || weightingScheme.toString().matches("RelRisk_.") || 
@@ -232,14 +231,14 @@ public class ExtractedInfoReader {
                     weightingScheme.toString().matches("SimpleLl") || weightingScheme.toString().matches("Allr") || weightingScheme.toString().matches("KrippendorffAlpha") || 
                     weightingScheme.toString().matches("ScottPi") || weightingScheme.toString().matches("(Cohen)?Kappa") || weightingScheme.toString().matches("Ochiai") || 
                     weightingScheme.toString().matches("Cca") || weightingScheme.toString().matches("(A)?N(g|c)d(Mod)?") || weightingScheme.toString().matches("Simpson_.(Mod)?") || 
-                    weightingScheme.toString().matches("(Lfb)?M(d|e)(Mod)?.?") || weightingScheme.toString().matches("SalienceMod_.") || weightingScheme.toString().matches("PoissonSig") || 
+                    weightingScheme.toString().matches("(Lfb)?M(d|e).*") || weightingScheme.toString().matches("SalienceMod_.") || weightingScheme.toString().matches("PoissonSig") || 
                     weightingScheme.toString().matches("SokalMichiner") || weightingScheme.toString().matches("RogersTanimoto") || weightingScheme.toString().matches("Hamann") || 
                     weightingScheme.toString().matches("SokalSneath_.") || weightingScheme.toString().matches("Kulczynski_.") || weightingScheme.toString().matches("Yulle.") || 
                     weightingScheme.toString().matches("Pears") || weightingScheme.toString().matches("Fager") || weightingScheme.toString().matches("Unis.*") || 
                     weightingScheme.toString().matches("TCombCost") || weightingScheme.toString().matches("Phi") || weightingScheme.toString().matches("J") || 
                     weightingScheme.toString().matches("Gini") || weightingScheme.toString().matches("Confidence") || weightingScheme.toString().matches("DriverKroeber") || 
                     weightingScheme.toString().matches("Laplace") || weightingScheme.toString().matches("PiaterskyShapiro") || weightingScheme.toString().matches("Certainty") || 
-                    weightingScheme.toString().matches("AddedValue"))){
+                    weightingScheme.toString().matches("AddedValue")){
 
                 readStringDouble(in, "ncsubjWithVerbFrequencies", dobjWithVerbFrequencies, dobjWithVerbSimpleFrequencies, 
                         minimumFeatureSimpleFrequency, null, filterStopWords, i++);
@@ -288,7 +287,7 @@ public class ExtractedInfoReader {
             readStringStringDouble(in, "dobjVerbTuples", verbObj2Tuples, verbSimpleFrequencies, 
                     obj2WithVerbSimpleFrequencies, verbObj2SimpleTuples, allVerbs, filterStopWords, i++);
             
-            if(method==Method.Lin  || (method==Method.Num && (weightingScheme==WeightingScheme.Plffi || weightingScheme==WeightingScheme.Qlflnw || 
+            if(weightingScheme==WeightingScheme.Plffi || weightingScheme==WeightingScheme.Qlflnw || 
                     weightingScheme.toString().matches("(TfIdf_(1|2|4|5|7|8|9))|(TfIcf_3)") || weightingScheme==WeightingScheme.Gref_1 || weightingScheme.toString().matches("(PmiX)?Lin_1..") || 
                     weightingScheme==WeightingScheme.Lin_2 || weightingScheme.toString().matches("Okapi_.") || weightingScheme==WeightingScheme.Ltu || 
                     weightingScheme==WeightingScheme.Atc || weightingScheme==WeightingScheme.PmiXTfIdf_1 || 
@@ -299,7 +298,7 @@ public class ExtractedInfoReader {
                     pearsModPattern.matcher(similarityMeasureString).matches() || pearsCombPattern.matcher(similarityMeasureString).matches() || 
                     pearsMbAdjCosModPattern.matcher(similarityMeasureString).matches() || pearsMbAdjCosPfModPattern.matcher(similarityMeasureString).matches() || 
                     pearsMbModPattern.matcher(similarityMeasureString).matches() || similarityMeasureString.matches("PenroseShape(Mod_.*)?") || 
-                    dimensionalityReductionType==DimensionalityReductionType.SVD))){
+                    dimensionalityReductionType==DimensionalityReductionType.SVD){
 
                 readStringLong(in, "ncsubjVerbTuples", dobjVerbTuples, dobjWithVerbSimpleFrequencies, filterStopWords, i++);
                 readStringLong(in, "prepVerbTuples", ncsubjVerbTuples, ncsubjWithVerbSimpleFrequencies, filterStopWords, i++);
@@ -313,7 +312,7 @@ public class ExtractedInfoReader {
             }
             
             
-            if(method==Method.Num && smoothingType!=SmoothingType.NoSmooth){
+            if(smoothingType!=SmoothingType.NoSmooth){
             
                 readKNSNCountsForStrings(in, "dobjVerbTuplesKNSNCounts", verbKNSNCounts, 
                         verbSimpleFrequencies, minimumWordSimpleFrequency, allVerbs, false, i++);
@@ -362,9 +361,9 @@ public class ExtractedInfoReader {
             readStringDouble(in, "nounWithAdjFrequencies", adjectiveFrequencies, adjectiveSimpleFrequencies, minimumWordSimpleFrequency, allAdjectives, false, i++);
             
             
-            if(method==Method.Num && (smoothingType!=SmoothingType.NoSmooth || featureTransformationType!=FeatureTransformationType.NoTransf || 
+            if(smoothingType!=SmoothingType.NoSmooth || featureTransformationType!=FeatureTransformationType.NoTransf || 
                     weightingScheme.toString().matches(".*Pmi.*") || weightingScheme.toString().matches("(Sq)?LogLhr") || weightingScheme.toString().matches("Rapp_.") || 
-                    weightingScheme.toString().matches("((Hyp)|(Bin)|(Poisson(Stirling)?))Lh") || weightingScheme.toString().matches("(T|Z)Test.?") || 
+                    weightingScheme.toString().matches("((Hyp)|(Bin)|(Poisson(Stirling)?))Lh") || weightingScheme.toString().matches("(T|Z)Test.*") || 
                     weightingScheme.toString().matches("ChiSquare.*") || weightingScheme.toString().matches("CondProb.*") || 
                     weightingScheme==WeightingScheme.JointProb || weightingScheme.toString().matches("(TfIdf_3)|(TfIcf_(1|2))") || weightingScheme==WeightingScheme.Dice || 
                     weightingScheme==WeightingScheme.Gref_2 || weightingScheme.toString().matches("RelRisk_.") || 
@@ -373,14 +372,14 @@ public class ExtractedInfoReader {
                     weightingScheme.toString().matches("SimpleLl") || weightingScheme.toString().matches("Allr") || weightingScheme.toString().matches("KrippendorffAlpha") || 
                     weightingScheme.toString().matches("ScottPi") || weightingScheme.toString().matches("(Cohen)?Kappa") || weightingScheme.toString().matches("Ochiai") || 
                     weightingScheme.toString().matches("Cca") || weightingScheme.toString().matches("(A)?N(g|c)d(Mod)?") || weightingScheme.toString().matches("Simpson_.(Mod)?") || 
-                    weightingScheme.toString().matches("(Lfb)?M(d|e)(Mod)?.?") || weightingScheme.toString().matches("SalienceMod_.") || weightingScheme.toString().matches("PoissonSig") || 
+                    weightingScheme.toString().matches("(Lfb)?M(d|e).*") || weightingScheme.toString().matches("SalienceMod_.") || weightingScheme.toString().matches("PoissonSig") || 
                     weightingScheme.toString().matches("SokalMichiner") || weightingScheme.toString().matches("RogersTanimoto") || weightingScheme.toString().matches("Hamann") || 
                     weightingScheme.toString().matches("SokalSneath_.") || weightingScheme.toString().matches("Kulczynski_.") || weightingScheme.toString().matches("Yulle.") || 
                     weightingScheme.toString().matches("Pears") || weightingScheme.toString().matches("Fager") || weightingScheme.toString().matches("Unis.*") || 
                     weightingScheme.toString().matches("TCombCost") || weightingScheme.toString().matches("Phi") || weightingScheme.toString().matches("J") || 
                     weightingScheme.toString().matches("Gini") || weightingScheme.toString().matches("Confidence") || weightingScheme.toString().matches("DriverKroeber") || 
                     weightingScheme.toString().matches("Laplace") || weightingScheme.toString().matches("PiaterskyShapiro") || weightingScheme.toString().matches("Certainty") || 
-                    weightingScheme.toString().matches("AddedValue"))){
+                    weightingScheme.toString().matches("AddedValue")){
                 readStringDouble(in, "adjWithNounFrequencies", nounWithAdjFrequencies, nounWithAdjSimpleFrequencies, 
                         minimumFeatureSimpleFrequency, null, filterStopWords, i++);
                 
@@ -404,7 +403,7 @@ public class ExtractedInfoReader {
             readStringStringDouble(in, "nounAdjTuples", adjNounTuples, adjectiveSimpleFrequencies, 
                     nounWithAdjSimpleFrequencies, adjNounSimpleTuples, allAdjectives, filterStopWords, i++);
             
-            if(method==Method.Lin  || (method==Method.Num && (weightingScheme==WeightingScheme.Plffi || weightingScheme==WeightingScheme.Qlflnw || 
+            if(weightingScheme==WeightingScheme.Plffi || weightingScheme==WeightingScheme.Qlflnw || 
                     weightingScheme.toString().matches("(TfIdf_(1|2|4|5|7|8|9))|(TfIcf_3)") || weightingScheme==WeightingScheme.Gref_1 || weightingScheme.toString().matches("(PmiX)?Lin_1..") || 
                     weightingScheme==WeightingScheme.Lin_2 || weightingScheme.toString().matches("Okapi_.") || weightingScheme==WeightingScheme.Ltu || 
                     weightingScheme==WeightingScheme.Atc || weightingScheme==WeightingScheme.PmiXTfIdf_1 || 
@@ -415,14 +414,14 @@ public class ExtractedInfoReader {
                     pearsModPattern.matcher(similarityMeasureString).matches() || pearsCombPattern.matcher(similarityMeasureString).matches() || 
                     pearsMbAdjCosModPattern.matcher(similarityMeasureString).matches() || pearsMbAdjCosPfModPattern.matcher(similarityMeasureString).matches() || 
                     pearsMbModPattern.matcher(similarityMeasureString).matches() || similarityMeasureString.matches("PenroseShape(Mod_.*)?") || 
-                    dimensionalityReductionType==DimensionalityReductionType.SVD))){
+                    dimensionalityReductionType==DimensionalityReductionType.SVD){
                 readStringLong(in, "adjectiveKNSNCounts", nounAdjTuples, nounWithAdjSimpleFrequencies, filterStopWords, i++);
             }else{
                 readUntil(in, "adjectiveKNSNCounts"); 
             }
             
 
-            if(method==Method.Num && smoothingType!=SmoothingType.NoSmooth){
+            if(smoothingType!=SmoothingType.NoSmooth){
             
                 readKNSNCountsForStrings(in, "nounAdjTuplesKNSNCounts", adjectiveKNSNCounts, 
                         adjectiveSimpleFrequencies, minimumWordSimpleFrequency, allAdjectives, false, i++);
@@ -464,9 +463,9 @@ public class ExtractedInfoReader {
             readStringDouble(in, "wordWithAdvFrequencies", adverbFrequencies, adverbSimpleFrequencies, minimumWordSimpleFrequency, allAdverbs, false, i++);
             
             
-            if(method==Method.Num && (smoothingType!=SmoothingType.NoSmooth || featureTransformationType!=FeatureTransformationType.NoTransf || 
+            if(smoothingType!=SmoothingType.NoSmooth || featureTransformationType!=FeatureTransformationType.NoTransf || 
                     weightingScheme.toString().matches(".*Pmi.*") || weightingScheme.toString().matches("(Sq)?LogLhr") || weightingScheme.toString().matches("Rapp_.") || 
-                    weightingScheme.toString().matches("((Hyp)|(Bin)|(Poisson(Stirling)?))Lh") || weightingScheme.toString().matches("(T|Z)Test.?") || 
+                    weightingScheme.toString().matches("((Hyp)|(Bin)|(Poisson(Stirling)?))Lh") || weightingScheme.toString().matches("(T|Z)Test.*") || 
                     weightingScheme.toString().matches("ChiSquare.*") || weightingScheme.toString().matches("CondProb.*") || 
                     weightingScheme==WeightingScheme.JointProb || weightingScheme.toString().matches("(TfIdf_3)|(TfIcf_(1|2))") || weightingScheme==WeightingScheme.Dice || 
                     weightingScheme==WeightingScheme.Gref_2 || weightingScheme.toString().matches("RelRisk_.") || 
@@ -475,14 +474,14 @@ public class ExtractedInfoReader {
                     weightingScheme.toString().matches("SimpleLl") || weightingScheme.toString().matches("Allr") || weightingScheme.toString().matches("KrippendorffAlpha") || 
                     weightingScheme.toString().matches("ScottPi") || weightingScheme.toString().matches("(Cohen)?Kappa") || weightingScheme.toString().matches("Ochiai") || 
                     weightingScheme.toString().matches("Cca") || weightingScheme.toString().matches("(A)?N(g|c)d(Mod)?") || weightingScheme.toString().matches("Simpson_.(Mod)?") || 
-                    weightingScheme.toString().matches("(Lfb)?M(d|e)(Mod)?.?") || weightingScheme.toString().matches("SalienceMod_.") || weightingScheme.toString().matches("PoissonSig") || 
+                    weightingScheme.toString().matches("(Lfb)?M(d|e).*") || weightingScheme.toString().matches("SalienceMod_.") || weightingScheme.toString().matches("PoissonSig") || 
                     weightingScheme.toString().matches("SokalMichiner") || weightingScheme.toString().matches("RogersTanimoto") || weightingScheme.toString().matches("Hamann") || 
                     weightingScheme.toString().matches("SokalSneath_.") || weightingScheme.toString().matches("Kulczynski_.") || weightingScheme.toString().matches("Yulle.") || 
                     weightingScheme.toString().matches("Pears") || weightingScheme.toString().matches("Fager") || weightingScheme.toString().matches("Unis.*") || 
                     weightingScheme.toString().matches("TCombCost") || weightingScheme.toString().matches("Phi") || weightingScheme.toString().matches("J") || 
                     weightingScheme.toString().matches("Gini") || weightingScheme.toString().matches("Confidence") || weightingScheme.toString().matches("DriverKroeber") || 
                     weightingScheme.toString().matches("Laplace") || weightingScheme.toString().matches("PiaterskyShapiro") || weightingScheme.toString().matches("Certainty") || 
-                    weightingScheme.toString().matches("AddedValue"))){
+                    weightingScheme.toString().matches("AddedValue")){
                 readStringDouble(in, "advWithWordFrequencies", wordWithAdvFrequencies, wordWithAdvSimpleFrequencies, 
                         minimumFeatureSimpleFrequency, null, filterStopWords, i++);
                 
@@ -506,7 +505,7 @@ public class ExtractedInfoReader {
             readStringStringDouble(in, "wordAdvTuples", advWordTuples, adverbSimpleFrequencies, 
                     wordWithAdvSimpleFrequencies, advWordSimpleTuples, allAdverbs, filterStopWords, i++);
             
-            if(method==Method.Lin  || (method==Method.Num && (weightingScheme==WeightingScheme.Plffi || weightingScheme==WeightingScheme.Qlflnw || 
+            if(weightingScheme==WeightingScheme.Plffi || weightingScheme==WeightingScheme.Qlflnw || 
                     weightingScheme.toString().matches("(TfIdf_(1|2|4|5|7|8|9))|(TfIcf_3)") || weightingScheme==WeightingScheme.Gref_1 || weightingScheme.toString().matches("(PmiX)?Lin_1..") || 
                     weightingScheme==WeightingScheme.Lin_2 || weightingScheme.toString().matches("Okapi_.") || weightingScheme==WeightingScheme.Ltu || 
                     weightingScheme==WeightingScheme.Atc || weightingScheme==WeightingScheme.PmiXTfIdf_1 || 
@@ -517,14 +516,14 @@ public class ExtractedInfoReader {
                     pearsModPattern.matcher(similarityMeasureString).matches() || pearsCombPattern.matcher(similarityMeasureString).matches() || 
                     pearsMbAdjCosModPattern.matcher(similarityMeasureString).matches() || pearsMbAdjCosPfModPattern.matcher(similarityMeasureString).matches() || 
                     pearsMbModPattern.matcher(similarityMeasureString).matches() || similarityMeasureString.matches("PenroseShape(Mod_.*)?") || 
-                    dimensionalityReductionType==DimensionalityReductionType.SVD))){
+                    dimensionalityReductionType==DimensionalityReductionType.SVD){
                 readStringLong(in, "adverbKNSNCounts", wordAdvTuples, wordWithAdvSimpleFrequencies, filterStopWords, i++);
             }else{
                 readUntil(in, "adverbKNSNCounts");
             }            
             
             
-            if(method==Method.Num && smoothingType!=SmoothingType.NoSmooth){
+            if(smoothingType!=SmoothingType.NoSmooth){
             
                 readKNSNCountsForStrings(in, "wordAdvTuplesKNSNCounts", adverbKNSNCounts, 
                         adverbSimpleFrequencies, minimumWordSimpleFrequency, allAdverbs, false, i++);
@@ -1013,7 +1012,7 @@ public class ExtractedInfoReader {
             int partsLength;
             int currentVectorLength;
             
-            BufferedReader in = new BufferedReader(new FileReader(location));
+            BufferedReader in = new BufferedReader(new FileReader(inputLocation));
             String line;
             
             if(wordVectors==WordVectors.GoogleNews || wordVectors==WordVectors.Salle2016 || 
