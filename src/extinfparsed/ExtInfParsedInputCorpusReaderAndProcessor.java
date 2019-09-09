@@ -17,15 +17,17 @@ import util.ComparablePair;
 import util.Paraphrase;
 
 /**
- *
+ * The class responsible for reading and processing the input corpus from which the information will be extracted using the dependency-relation-based method.
+ * 
  * @author Dobó
  */
 public class ExtInfParsedInputCorpusReaderAndProcessor {
     
     
     /**
-     * This function reads in the files of a parsed English corpus to extract information from it, when the corpus is parsed with the newer version of the C&amp;C CCG parser. In this case each file 
-     * is in a main directory.
+     * This function reads in the files of a parsed English corpus to extract information from it, when the corpus is 
+     * parsed with the C&amp;C CCG parser (https://github.com/chrzyki/candc), the POS tags of words are in 2nd position, 
+     * and the text files are in the main directory of the curpus.
      */
     public static void readFilesNewParser(){
         try{
@@ -43,8 +45,9 @@ public class ExtInfParsedInputCorpusReaderAndProcessor {
     
     
     /**
-     * This function reads in the files of a parsed English corpus to extract information from it, when the corpus is parsed with the older version of the C&amp;C CCG parser. In this case each file 
-     * is in a subdirectory of the main directory.
+     * This function reads in the files of a parsed English corpus to extract information from it, when the corpus is 
+     * parsed with the C&amp;C CCG parser (https://github.com/chrzyki/candc), the POS tags of words are in 3rd position, 
+     * and the text files are in the subdirectories of the main directory of the curpus.
      */
     public static void readFilesOldParser(){
         try{

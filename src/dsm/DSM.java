@@ -17,22 +17,104 @@ import static dsm.util.OtherInputFilesReader.*;
 
 /**
  * This class implements numerous distributional semantic models based on information extracted from corpora, and evaluates them on standard datasets.
- * <br><br><br>
- * Usage:
- * <br><br>
- * java -cp DSM.jar dsm.DSM EvaluationDataset INPUTDATA VectorNormalization SimilarityMeasure WeightingScheme minimumWordSimpleFrequency minimumFeatureSimpleFrequency minimumWordFeatureTupleSimpleFrequency filterStopWords MINIMUMWEIGHT SMOOTH FEATTRANSF DIMRED
- * <br><br>
- * INPUTDATA = ("Corpus" Corpus bagOfWords corpusStringSuffix) | ("Vectors" WordVectors wordVectorsDimension)
- * <br><br>
- * MINIMUMWEIGHT = "null" | (Limit minimumWordFeatureTupleWeightParameter) | (Zero minimumWordFeatureTupleWeightParameter)
- * <br><br>
- * SMOOTH = "NoSmooth" | (("FreqKNS" | "WeightKNS") KNSParameter) | (("FreqMKNS" | "FreqMDKNSPOMD") KNSParameter1 KNSParameter2 KNSParameter3)
- * <br><br>
- * FEATTRANSF = "NoTransf" | (FeatureTransformationType FeatureTransformationFunction)
- * <br><br>
- * DIMRED = "NoDimRed" | (DimensionalityReductionType dimensionalityReductionParameter)
  * 
- * @author Andras
+ * <br><br><br>
+ * 
+ * Usage:
+ * 
+ * <br><br>
+ * 
+ * java -cp DSM.jar dsm.DSM EvaluationDataset InputData VectorNormalization SimilarityMeasure WeightingScheme 
+ * minimumWordSimpleFrequency minimumFeatureSimpleFrequency minimumWordFeatureTupleSimpleFrequency 
+ * filterStopWords MinimumWeight Smooth FeatTransf DimRed
+ * 
+ * <br><br>
+ * 
+ * String EvaluationDataset: the test dataset, on which the DSM is evaluated ({@link dsm.util.EvalDatasetReader}). Some datasets are available for multiple languages.
+ * The language of the test dataset used depends on the language of the InputData used.
+ * <ul>
+ * <li>MenDev: the development part of the MEN dataset
+ * <li>MenDevPart1: the first half of the development part of the MEN dataset
+ * <li>MenDevPart2: the second half of the development part of the MEN dataset
+ * <li>MenTest: the test part of the MEN dataset
+ * <li>MenFull: the full MEN dataset
+ * <li>RubensteinGoodenough65: the Rubenstein-Goodenough-65 dataset
+ * <li>MillerCharles28: the Miller-Charles-28 dataset
+ * <li>WordSim353: the WordSim-353 dataset
+ * <li>SimLex999: the SimLex-999 dataset
+ * <li>Toefl: the TOEFL dataset
+ * <li>ToeflPart1: the first part of the TOEFL dataset
+ * <li>ToeflPart2: the second part of the TOEFL dataset
+ * <li>Moldovan: the Moldovan dataset
+ * </ul>
+ * 
+ * <br>
+ * 
+ * String InputData: the type of extracted information or word vectors used as input for the DSM. For more info see ({@link dsm.util.ExtractedInfoReader}).
+ * 
+ * <br><br>
+ * 
+ * String VectorNormalization: the type of vector normalization used before the comparison of word vectors ({@link dsm.parameters.VecNorm}).
+ * <ul>
+ * <li>NN: no normalization
+ * <li>L1: L1 norm
+ * <li>L2: L2 norm
+ * </ul>
+ * 
+ * <br>
+ * 
+ * String SimilarityMeasure: the type of vector similarity measure used in the DSM. For more info see ({@link dsm.parameters.VecSim}).
+ * 
+ * <br><br>
+ * 
+ * String WeightingScheme: the type of weighting scheme used in the DSM. For more info see ({@link dsm.parameters.Weight}).
+ * 
+ * <br><br>
+ * 
+ * Integer minimumWordSimpleFrequency: minimum limit on word frequencies ({@link dsm.parameters.MiscParam})
+ * 
+ * <br><br>
+ * 
+ * Integer minimumFeatureSimpleFrequency: minimum limit on feature frequencies ({@link dsm.parameters.MiscParam})
+ * 
+ * <br><br>
+ * 
+ * Integer minimumWordFeatureTupleSimpleFrequency: minimum limit on word-feature tuple frequencies ({@link dsm.parameters.MiscParam})
+ * 
+ * <br><br>
+ * 
+ * Boolean filterStopWords: the option to filter stop-words or not ({@link dsm.parameters.MiscParam})
+ * 
+ * <br><br>
+ * 
+ * String MinimumWeight: minimum limit on word-feature tuple weights ({@link dsm.parameters.MiscParam}). For more info see the Section 4.2.9 of the dissertation.
+ * <ul>
+ * <li>"null": no limit
+ * <li>"Limit" minimumWordFeatureTupleWeightParameter: Limit type of limit, with a Double as the value of the limit
+ * <li>"Zero" minimumWordFeatureTupleWeightParameter: Zero type of limit, with a Double as the value of the limit
+ * </ul>
+ * 
+ * <br>
+ * 
+ * String Smooth: the type of smoothing used on the word vectors ({@link dsm.parameters.Smooth}).
+ * <ul>
+ * <li>"NoSmooth": no smoothing
+ * <li>"WeightKNS" KNSParameter: Kneser-Ney smoothing on weights, with a Double parameter
+ * <li>"FreqKNS" KNSParameter: Kneser-Ney smoothing on raw counts, with a Double parameter
+ * <li>"FreqMKNS" KNSParameter1 KNSParameter2 KNSParameter3: Modified Kneser-Ney smoothing on raw counts, with 3 Double parameters
+ * <li>"FreqMDKNSPOMD" KNSParameter1 KNSParameter2 KNSParameter3: Multi-D Kneser-Ney Smoothing Preserving the Original Marginal Distributions 
+ * on raw counts, with 3 Double parameters
+ * </ul>
+ * 
+ * <br>
+ * 
+ * String FeatTransf: the type of feature transformation used. For more info see ({@link dsm.parameters.FeatTransf}).
+ * 
+ * <br><br>
+ * 
+ * String DimRed: the type of dimensionality reduction used on the word vectors. For more info see ({@link dsm.parameters.DimRed}).
+ * 
+ * @author Dobó
  */
 public class DSM {
 

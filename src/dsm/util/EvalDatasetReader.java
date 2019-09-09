@@ -19,7 +19,8 @@ import szte.nlp.pos.MorAna;
 import util.ComparablePair;
 
 /**
- *
+ * The class for reading in the evaluation dataset.
+ * 
  * @author Dobó
  */
 public class EvalDatasetReader {

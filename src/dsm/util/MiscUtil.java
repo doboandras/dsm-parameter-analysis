@@ -8,7 +8,8 @@ import net.didion.jwnl.dictionary.Dictionary;
 import util.ComparablePair;
 
 /**
- *
+ * A class containing miscellaneous utility functions.
+ * 
  * @author Dobó
  */
 public class MiscUtil {

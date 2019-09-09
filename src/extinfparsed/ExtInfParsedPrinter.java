@@ -7,7 +7,8 @@ import java.util.HashSet;
 import util.Paraphrase;
 
 /**
- *
+ * The class printing out the extracted information produced by the dependency-relation-based method to a file.
+ * 
  * @author Dobó
  */
 public class ExtInfParsedPrinter {

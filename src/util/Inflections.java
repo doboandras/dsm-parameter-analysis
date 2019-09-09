@@ -12,7 +12,8 @@ import java.util.HashMap;
 
 /**
  * This class handles the generation and storage of all the inflections for the nouns and verbs.
- * @author Andras
+ * 
+ * @author Dobó
  */
 public class Inflections {
 

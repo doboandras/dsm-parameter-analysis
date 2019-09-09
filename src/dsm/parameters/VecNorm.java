@@ -7,7 +7,9 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- *
+ * The class representing the vector normalization (VecNorm) parameter of the DSM.
+ * For info about the usage of this parameter see {@link dsm.DSM}.
+ * 
  * @author Dobó
  */
 public class VecNorm {

@@ -13,7 +13,8 @@ import util.ComparablePair;
 import util.SimilarityScoreParts;
 
 /**
- *
+ * The class responsible for the evaluation of the DSM on a test dataset.
+ * 
  * @author Dobó
  */
 public class Evaluation {

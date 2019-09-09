@@ -40,7 +40,8 @@ import net.didion.jwnl.JWNL;
 import net.didion.jwnl.dictionary.Dictionary;
 
 /**
- *
+ * The class responsible for the initialization of the DSM based on the command line arguments.
+ * 
  * @author Dobó
  */
 public class Initializer {
@@ -103,6 +104,8 @@ public class Initializer {
                     wordVectorsString = args[index++];
                     
                     wordVectors=WordVectors.valueOf(wordVectorsString);
+                    
+                    wordVectorsFileName = args[index++];
                     
                     wordVectorsDimension = Integer.parseInt(args[index++]);
                     
@@ -329,36 +332,7 @@ public class Initializer {
                 
             }else if(inputDataType==InputDataType.Vectors){
                 
-                
-                if(wordVectors==WordVectors.GoogleNews){
-
-                    inputLocation="/home/doboandras/corpora/GoogleNews-vectors-negative300/word vectors/extracted (txt)/GoogleNews-vectors-negative300.txt";
-
-                }else if(wordVectors==WordVectors.Baroni2014){
-
-                    inputLocation="/home/doboandras/corpora/Baroni2014Vectors/" + wordVectorsFileName;
-
-                }else if(wordVectors==WordVectors.Levy2015){
-
-                    inputLocation="/home/doboandras/corpora/Levy2015Vectors/" + wordVectorsFileName;
-
-                }else if(wordVectors==WordVectors.Pennington2014){
-
-                    inputLocation="/home/doboandras/corpora/Pennington2014Vectors/" + wordVectorsFileName;
-
-                }else if(wordVectors==WordVectors.Salle2016){
-
-                    inputLocation="/home/doboandras/corpora/Salle2016Vectors/" + wordVectorsFileName;
-
-                }else if(wordVectors==WordVectors.Speer2017){
-
-                    inputLocation="/home/doboandras/corpora/Speer2017Vectors/" + wordVectorsFileName;
-
-                }else if(wordVectors==WordVectors.Yin2016){
-
-                    inputLocation="/home/doboandras/corpora/Yin2016Vectors/" + wordVectorsFileName;
-
-                }
+                inputLocation="WordVectors/" + wordVectorsFileName;
                 
             }else{
                 

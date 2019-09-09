@@ -13,12 +13,58 @@ import static extinfbow.ExtInfBowInitializer.initialize;
 
 /**
  * This is a class for extracting information from a corpus, using the bag-of-words approach.
+ * 
  * <br><br><br>
+ * 
  * Usage:
+ * 
  * <br><br>
+ * 
  * java -cp DSM.jar extinfbow.ExtractInformationBagOfWords SourceType windowSize WeightingScheme extractInformaionJustForInputWords corpusLocation outputFileName
  * 
- * @author Andras
+ * <br><br>
+ * 
+ * String SourceType: the type of corpus used as input ({@link extinfbow.ExtInfBowParam})
+ * <ul>
+ * <li>EnParserV1: English text parsed with the C&amp;C CCG parser (https://github.com/chrzyki/candc), the POS tags of words are in 3rd position, 
+ * text files are in the subdirectories of the main directory of the curpus
+ * <li>EnParserV2: English text parsed with the C&amp;C CCG parser (https://github.com/chrzyki/candc), the POS tags of words are in 2nd position, 
+ * text files are in the main directory of the curpus
+ * <li>EnParserV2WithSentenceCounts: English text parsed with the C&amp;C CCG parser (https://github.com/chrzyki/candc), the POS tags of words are in 2nd position, 
+ * there are also frequency counts included for each sentence, text files are in the main directory of the curpus
+ * <li>HuParser: Hungarian text parsed with the Magyar lánc (HunPOSChain) parser, text files are in the main directory of the curpus
+ * <li>EsTagger: Spanish text POS-tagged with the Ahmet Aker Spanish POS Tagger and Lemmatizer, text files are in the main directory of the curpus
+ * </ul>
+ * 
+ * <br>
+ * 
+ * Ingeger windowSize: the size of the window (number of words in each direction) used in the bag-of-words information extraction ({@link extinfbow.ExtInfBowParam})
+ * 
+ * <br><br>
+ * 
+ * String WeightingScheme: the weighting scheme used in the bag-of-words information extraction ({@link extinfbow.ExtInfBowParam})
+ * <ul>
+ * <li>Uniform: uniform weighting for all words (distance of x -&gt; weight of 1)
+ * <li>Linear: weighting increasing linearly by the distance from the examined word (distance of x -&gt; weight of (windowSize-x)+1)
+ * <li>Quadratic: weighting increasing quandratically by the distance from the examined word (distance of x -&gt; weight of ((windowSize-x)+1)^2)
+ * </ul>
+ * 
+ * <br>
+ * 
+ * Boolean extractInformaionJustForInputWords: for most configurations of {@link dsm.DSM}, it is enought to only extract information for the
+ * words in the evaluation datasets. With this parameter the user can set, whether information for all words or just for the words in the 
+ * evaluation datasets are extracted (thus producing a significantly smaller extracted information file, which is perfectly enough for almost
+ * all configurations of {@link dsm.DSM}) ({@link extinfbow.ExtInfBowParam}).
+ * 
+ * <br><br>
+ * 
+ * String corpusLocation: the location, at where the main directory of the corpus is located ({@link extinfbow.ExtInfBowParam})
+ * 
+ * <br><br>
+ * 
+ * Sting outputFileName: the name of the output extrected information file to be created ({@link extinfbow.ExtInfBowParam})
+ * 
+ * @author Dobó
  */
 public class ExtractInformationBagOfWords {
 

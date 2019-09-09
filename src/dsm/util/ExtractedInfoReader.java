@@ -26,7 +26,50 @@ import static dsm.parameters.VecSim.pearsMbAdjCosPfModPattern;
 import static dsm.parameters.VecSim.pearsMbModPattern;
 
 /**
- *
+ * The class for reading in the extracted information or word vectors used as input for the DSM.
+ * 
+ * <br><br>
+ * 
+ * Usage of this parameter:
+ * 
+ * <br><br>
+ * 
+ * String InputData: the type of extracted information or word vectors used as input for the DSM
+ * <ul>
+ * <li>"Corpus" Corpus bagOfWords corpusStringSuffix: extracted information from a corpus used as input
+ * <li>"Vectors" WordVectors wordVectorsDimension: word vectors used as input
+ * </ul>
+ * 
+ * <br>
+ * 
+ * String Corpus: the corpus used in the informaiton extraction phase. It is only used in the determination of the input extracted information file name, 
+ * and for determining the language of the test dataset used and of the other input files.
+ * <ul>
+ * <li>BNC: the British National Corpus
+ * <li>EnWiki: the text of the 26.05.2011 dump of the English Wikipedia
+ * <li>UkWaC: the ukWaC corpus
+ * <li>HuWiki: the text of the 23.01.2012 dump of the Hungarian Wikipedia
+ * <li>EsWki: the Spanish Wikicorpus
+ * </ul>
+ * 
+ * <br>
+ * 
+ * Boolean bagOfWords: it determines whether the input extracted information was created using a bag-of-words method, 
+ * or from a parsed text using a dependency-relation-based method. It is only used in the determination of the input extracted information file name.
+ * 
+ * <br><br>
+ * 
+ * String corpusStringSuffix: a suffix for the extracted information file name (e.g. the Weighting scheme used in case of 
+ * bag-of-words information extraction methods). It is only used in the determination of the input extracted information file name.
+ * 
+ * <br><br>
+ * 
+ * String WordVectors: the word vectors used as input for the DSM. It is only used for determining the structure of the input file.
+ * 
+ * <br><br>
+ * 
+ * Integer wordVectorsDimension: the number of dimensions of the input word vectors.
+ * 
  * @author Dobó
  */
 public class ExtractedInfoReader {

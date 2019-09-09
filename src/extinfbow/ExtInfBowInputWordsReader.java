@@ -11,7 +11,8 @@ import szte.nlp.pos.HunLemMor;
 import szte.nlp.pos.MorAna;
 
 /**
- *
+ * The class responsible for reading the input words used during the bag-of-words information extraction.
+ * 
  * @author Dobó
  */
 public class ExtInfBowInputWordsReader {

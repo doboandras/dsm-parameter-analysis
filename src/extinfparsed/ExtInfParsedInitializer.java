@@ -12,7 +12,8 @@ import net.didion.jwnl.JWNL;
 import net.didion.jwnl.dictionary.Dictionary;
 
 /**
- *
+ * The class responsible for initializing the dependency-relation-based information extraction based on the command line arguments.
+ * 
  * @author Dobó
  */
 public class ExtInfParsedInitializer {

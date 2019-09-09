@@ -8,7 +8,8 @@ import java.util.HashSet;
 import java.util.Map;
 
 /**
- *
+ * A class containing methods for aggregating word vectors.
+ * 
  * @author Dobó
  */
 public class Aggregation {
@@ -43,7 +44,7 @@ public class Aggregation {
                 similarityMeasure == SimilarityMeasure.ASkewModSym || similarityMeasure == SimilarityMeasure.JensenShannonMod || similarityMeasure == SimilarityMeasure.JensenMod || 
                 similarityMeasure == SimilarityMeasure.HellingerMod || similarityMeasure == SimilarityMeasure.ChiSquareMod || similarityMeasure == SimilarityMeasure.PsChiSquareMod || 
                 similarityMeasure == SimilarityMeasure.ClarkMod || similarityMeasure == SimilarityMeasure.RenyiDivMod2 || similarityMeasure == SimilarityMeasure.RenyiDivModInf || 
-                similarityMeasure == SimilarityMeasure.Lsmq || similarityMeasureString.matches("CosMod_(1|4)_.") || lModPattern.matcher(similarityMeasureString).matches() || 
+                similarityMeasure == SimilarityMeasure.Lsmq || similarityMeasureString.matches("CosMod_(1|4)_.*") || lModPattern.matcher(similarityMeasureString).matches() || 
                 lWPattern.matcher(similarityMeasureString).matches() || dtvPattern.matcher(similarityMeasureString).matches() || 
                 dtvWPattern.matcher(similarityMeasureString).matches() || similarityMeasure == SimilarityMeasure.TanejaMod || 
                 similarityMeasure == SimilarityMeasure.KumarJohnsonMod || similarityMeasure == SimilarityMeasure.AvgL1LInf || similarityMeasure == SimilarityMeasure.VicWhMod || 
@@ -53,7 +54,7 @@ public class Aggregation {
                 similarityMeasure == SimilarityMeasure.SmoothCos || similarityMeasure == SimilarityMeasure.AdjCos || similarityMeasureString.matches("NcdMod_.") || 
                 similarityMeasure == SimilarityMeasure.NgdMod || similarityMeasure == SimilarityMeasure.Spearm || similarityMeasure == SimilarityMeasure.Jaccard_3 || 
                 similarityMeasure == SimilarityMeasure.HarmMeanMod || similarityMeasure == SimilarityMeasure.InnerProd || similarityMeasure == SimilarityMeasure.FidelityMod || 
-                similarityMeasureString.matches("Mb(Adj)?Cos((Am)|(Gm)|(Hm)|(Prod)|(LogProd))") || similarityMeasureString.matches("CosMod_(2|3|5|6)_.") || 
+                similarityMeasureString.matches("Mb(Adj)?Cos((Am)|(Gm)|(Hm)|(Prod)|(LogProd))") || similarityMeasureString.matches("CosMod_(2|3|5|6)_.*") || 
                 innerProdWPattern.matcher(similarityMeasureString).matches() || similarityMeasure == SimilarityMeasure.Srsn || similarityMeasure == SimilarityMeasure.Rsssn || 
                 similarityMeasure == SimilarityMeasure.Sdsn || similarityMeasure == SimilarityMeasure.Srsmv || similarityMeasure == SimilarityMeasure.Srsm || 
                 similarityMeasureString.matches("Lin(HindleR)?Mod_(1|2|3|4|5|8|9)_(1|2).*") || similarityMeasure == SimilarityMeasure.Rms || 

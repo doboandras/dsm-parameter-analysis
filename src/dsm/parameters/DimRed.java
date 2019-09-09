@@ -15,7 +15,29 @@ import java.util.Map;
 import util.ComparablePair;
 
 /**
- *
+ * The class representing the dimensionality reduction (DimRed) parameter of the DSM.
+ * 
+ * <br><br>
+ * 
+ * Usage of this parameter:
+ * 
+ * <br><br>
+ * 
+ * String DimRed: the feature transformation used
+ * <ul>
+ * <li> "NoDimRed": no dimensionality reduction
+ * <li> DimensionalityReductionType dimensionalityReductionParameter: the type of dimensionality reduction, with a Double parameter
+ * </ul>
+ * 
+ * <br>
+ * 
+ * String DimensionalityReductionType: the type of dimensionality reduction
+ * <ul>
+ * <li> "IslamInkpen": the dimensionality reduction technique introduced by Islam and Inkpen (2008)
+ * <li> "TopNFeat": in each vector retaining only the features with the n highest weight
+ * <li> "SVD": singular value decomposition
+ * </ul>
+ * 
  * @author Dobó
  */
 public class DimRed {

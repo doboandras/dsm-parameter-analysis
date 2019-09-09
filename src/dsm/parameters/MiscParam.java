@@ -7,7 +7,9 @@ import util.ComparablePair;
 import util.Paraphrase;
 
 /**
- *
+ * A class containing other, miscellaneous parameters for the DSM.
+ * For info about the usage of these parameters see {@link dsm.DSM}.
+ * 
  * @author Dobó
  */
 public class MiscParam {
@@ -21,7 +23,6 @@ public class MiscParam {
     public static MinimumWordFeatureTupleWeightType minimumWordFeatureTupleWeightType=MinimumWordFeatureTupleWeightType.NoLimit;
     public static Double minimumWordFeatureTupleWeightParameter=null;
     public static Integer minimumFeatureSimpleFrequency=null;
-    
     public static Integer minimumWordSimpleFrequency=null;
     public static boolean readExtractedInformationJustForInputWords = true;
     

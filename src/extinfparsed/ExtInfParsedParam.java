@@ -7,7 +7,9 @@ import util.ComparablePair;
 import util.Paraphrase;
 
 /**
- *
+ * The class containing the parameters for the dependency-relation-based extracted information.
+ * For info about the usage of these parameters see {@link extinfparsed.ExtractInformationFromParsedText}.
+ * 
  * @author Dobó
  */
 public class ExtInfParsedParam {
@@ -16,8 +18,8 @@ public class ExtInfParsedParam {
     static enum SourceType {EnParserV1, EnParserV2, EnParserV2WithSentenceCounts};
     static SourceType sourceType = SourceType.EnParserV2;
     static boolean extractInformaionJustForInputWords = true;
-    static String corpusLocation="/data/corpora/Wikipedia/WikipediaParsed";
-    static String outputFileName="extractedInformationFromEnWikiWordsInWN.txt";
+    static String corpusLocation="Corpus";
+    static String outputFileName="extractedInformationFromBNC.txt";
 
     //These variables are used to store the information extracted from the corpus.
     static HashMap<String, HashMap<Paraphrase,Long>> objVerbTuples = new HashMap<String, HashMap<Paraphrase,Long>>();

@@ -2,7 +2,8 @@ package util;
 
 /**
  * This is a class for holding parts of a similarity score.
- * @author Andras
+ * 
+ * @author Dobó
  */
 public class SimilarityScoreParts {
     

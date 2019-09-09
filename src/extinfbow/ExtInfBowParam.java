@@ -4,7 +4,9 @@ import java.util.HashMap;
 import java.util.HashSet;
 
 /**
- *
+ * The class containing the parameters for the bag-of-words extracted information.
+ * For info about the usage of these parameters see {@link extinfbow.ExtractInformationBagOfWords}.
+ * 
  * @author Dobó
  */
 public class ExtInfBowParam {
@@ -16,8 +18,8 @@ public class ExtInfBowParam {
     static enum WeightingScheme {Uniform, Linear, Quadratic};
     static WeightingScheme weightingScheme = WeightingScheme.Uniform;
     static boolean extractInformaionJustForInputWords = true;
-    static String corpusLocation="1";
-    static String outputFileName="extractedInformationFromHuWikiBagOfWordsWeightedSquareWindow3.txt";
+    static String corpusLocation="Corpus";
+    static String outputFileName="extractedInformationFromBNCBagOfWordsWindow3QuadraticWeight.txt";
 
     /*
      * These variables are used to store the information extracted from the corpus. Although their names suggest differently, they all simply store bag-of-words type information. The names are

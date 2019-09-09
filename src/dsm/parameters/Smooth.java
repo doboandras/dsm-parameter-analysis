@@ -5,7 +5,9 @@ import java.util.HashMap;
 import java.util.HashSet;
 
 /**
- *
+ * The class representing the dimensionality smoothing (Smooth) parameter of the DSM.
+ * For info about the usage of this parameter see {@link dsm.DSM}.
+ * 
  * @author Dobó
  */
 public class Smooth {

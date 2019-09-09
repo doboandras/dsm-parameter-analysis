@@ -10,7 +10,46 @@ import java.util.Map;
 import util.ComparablePair;
 
 /**
- *
+ * The class representing the feature transformation (FeatTransf) parameter of the DSM.
+ * 
+ * <br><br>
+ * 
+ * Usage of this parameter:
+ * 
+ * <br><br>
+ * 
+ * String FeatTransf: the feature transformation used
+ * <ul>
+ * <li> "NoTransf": no feature transformation
+ * <li> FeatureTransformationType FeatureTransformationFunction: the type of feature transformation, with a feature transformation function
+ * </ul>
+ * 
+ * <br>
+ * 
+ * String FeatureTransformationType: the type of feature transformation
+ * <ul>
+ * <li> "Freq": transformation of feature counts
+ * <li> "WeightBefNorm": transformation of feature weights before possible smoothing and normalization
+ * <li> "WeightAftNorm": transformation of feature weights after possible smoothing and normalization
+ * </ul>
+ * 
+ * <br>
+ * 
+ * String FeatureTransformationFunction: the type of feature transformation
+ * <ul>
+ * <li> "Lb": modified logarithm function
+ * <li> "Sqrt": modified square root function
+ * <li> "Sq": modified square function
+ * <li> "Cu": modified cubic function
+ * <li> "Sigm": sigmoid function
+ * <li> "P1D2": plus 1 divided by 2 function
+ * <li> "Rank": rank function
+ * </ul>
+ * 
+ * <br>
+ * 
+ * For more information about the transformation functions, see Section 4.2.3 of the dissertation.
+ * 
  * @author Dobó
  */
 public class FeatTransf {

@@ -8,7 +8,8 @@ import net.didion.jwnl.data.IndexWord;
 import net.didion.jwnl.data.POS;
 
 /**
- *
+ * The class responsible for reading the input words used during the dependency-relation-based information extraction.
+ * 
  * @author Dobó
  */
 public class ExtInfParsedInputWordsReader {

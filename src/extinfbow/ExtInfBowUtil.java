@@ -5,7 +5,8 @@ import java.util.Map;
 import net.didion.jwnl.dictionary.Dictionary;
 
 /**
- *
+ * A class containing utility fileds for the bag-of-words information extraction method.
+ * 
  * @author Dobó
  */
 public class ExtInfBowUtil {

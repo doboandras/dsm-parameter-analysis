@@ -7,7 +7,8 @@ import java.util.HashSet;
 import util.Paraphrase;
 
 /**
- *
+ * The class printing out the extracted information produced by the bag-of-words method to a file.
+ * 
  * @author Dobó
  */
 public class ExtInfBowPrinter {

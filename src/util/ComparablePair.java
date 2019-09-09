@@ -3,7 +3,8 @@ package util;
 
 /**
  * This class represents a generic pair of values, whose instances can be compared to each other based on their second elements.
- * @author Andras
+ * 
+ * @author Dobó
  */
 public class ComparablePair<T1, T2 extends Comparable<T2>> implements Comparable<ComparablePair<T1, T2>> {
 

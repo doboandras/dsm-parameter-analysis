@@ -16,7 +16,8 @@ import szte.nlp.pos.HunLemMor;
 import szte.nlp.pos.MorAna;
 
 /**
- *
+ * The class responsible for reading in othe input files.
+ * 
  * @author Dobó
  */
 public class OtherInputFilesReader {

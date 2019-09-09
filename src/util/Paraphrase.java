@@ -3,7 +3,8 @@ package util;
 
 /**
  * This class represents a paraphtase.
- * @author Andras
+ * 
+ * @author Dobó
  */
 public class Paraphrase {
 
