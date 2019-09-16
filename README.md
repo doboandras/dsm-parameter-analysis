@@ -59,7 +59,7 @@ Used test datasets:
 
 <ul>
 
-<li><a href="http://clic.cimec.unitn.it/~elia.bruni/MEN" target="_blank">MEN dataset</a><br>
+<li><a href="https://staff.fnwi.uva.nl/e.bruni/MEN" target="_blank">MEN dataset</a><br>
 Elia Bruni, Nam Khan Tran, and Marco Baroni. Multimodal distributional semantics. Journal of Articifial Intelligence Research, 48:1–47, 2013.
 </li>
 
@@ -117,3 +117,10 @@ Dobó A., Csirik J.: <a href="Publications/Comparison of the best parameter sett
 
 Dobó A., Csirik J.: <a href="https://doi.org/10.1080/09296174.2019.1570897" target="_blank">A Comprehensive Study of the Parameters in the Creation and Comparison of Feature Vectors in Distributional Semantic Models</a>. Journal of Quantitative Linguistics (2019)
 
+
+<br><br>
+
+
+Questions and comments:
+
+If you have questions or comments, please email me at: dobo at inf dot u-szeged dot hu.

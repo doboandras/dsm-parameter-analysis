@@ -211,7 +211,7 @@ import java.util.Map;
  * 
  * <br><br>
  * 
- * For more information about the formulas of the different weighting schemes see Appendix B of the dissertation.
+ * For more information about the formulas of the different weighting schemes see Section 4.2.2 and Appendix B of the dissertation.
  * 
  * @author Dobó
  */
@@ -1484,9 +1484,9 @@ public class Weight {
     
     /**
      * This is the logL function used inside the logLikelihood function as described in "Manning and Schütze, 2000, Foundations of Statistical Natural Language Processing, p. 173"
-     * @param k
-     * @param n
-     * @param x
+     * @param k k
+     * @param n n
+     * @param x x
      * @return the logL value
      */
     public static double logLFunctionInsideLogLikelihood(double k, double n, double x){

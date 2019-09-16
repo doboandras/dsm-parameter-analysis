@@ -71,6 +71,7 @@ public class MiscUtil {
      * @param <V> the type of keys in @param concatenatedMap
      * @param list the list to be converted
      * @param n the number of elements to be used from the beginning of a list
+     * @return the resulting map
      */
     public static <V> HashMap<String, Double> convertFirstNElementsOfListToMap(ArrayList<ComparablePair<String, Double>> list, Integer n){
         

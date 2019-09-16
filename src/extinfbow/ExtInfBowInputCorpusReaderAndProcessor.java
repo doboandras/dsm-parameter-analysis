@@ -22,8 +22,9 @@ public class ExtInfBowInputCorpusReaderAndProcessor {
     
     /**
      * This function reads in the files of an English corpus to extract information from it, when the corpus is 
-     * parsed with the C&amp;C CCG parser (https://github.com/chrzyki/candc), the POS tags of words are in 2nd position, 
-     * and the text files are in the main directory of the curpus.
+     * parsed with the C&amp;C CCG parser (Stephen Clark and James R Curran (2007): Wide-Coverage Efficient Statistical 
+     * Parsing with CCG and Log-Linear Models. Computational Linguistics, 33(4), 2007, https://github.com/chrzyki/candc), 
+     * the POS tags of words are in 2nd position, and the text files are in the main directory of the curpus.
      */
     public static void readFilesEnNewParser(){
         try{
@@ -41,8 +42,9 @@ public class ExtInfBowInputCorpusReaderAndProcessor {
     
     /**
      * This function reads in the files of an English corpus to extract information from it, when the corpus is 
-     * parsed with the C&amp;C CCG parser (https://github.com/chrzyki/candc), the POS tags of words are in 3rd position, 
-     * and the text files are in the subdirectories of the main directory of the curpus.
+     * parsed with the C&amp;C CCG parser (Stephen Clark and James R. Curran (2007): Wide-Coverage Efficient Statistical 
+     * Parsing with CCG and Log-Linear Models. Computational Linguistics, 33(4), 2007, https://github.com/chrzyki/candc), 
+     * the POS tags of words are in 3rd position, and the text files are in the subdirectories of the main directory of the curpus.
      */
     public static void readFilesEnOldParser(){
         try{
@@ -598,10 +600,10 @@ public class ExtInfBowInputCorpusReaderAndProcessor {
     
     /**
      * This method stores two strings and a long in a HashMap&lt;String, HashMap&lt;String, Long&gt;&gt;.
-     * @param word1
-     * @param word2
-     * @param numberOfSentences
-     * @param tuplesMap 
+     * @param word1 word1
+     * @param word2 word2
+     * @param numberOfSentences number of sentences
+     * @param tuplesMap the map in which the information is stored
      */
     public static void saveStringStringLong(String word1, String word2, long numberOfSentences, HashMap<String, HashMap<String, Long>> tuplesMap){
                 
@@ -624,9 +626,9 @@ public class ExtInfBowInputCorpusReaderAndProcessor {
     
     /**
      * This method stores a strings and a long in a HashMap&lt;String, Long&gt;.
-     * @param word1
-     * @param numberOfSentences
-     * @param tuplesMap 
+     * @param word1 word1
+     * @param numberOfSentences number of sentences
+     * @param tuplesMap the map in which the information is stored
      */
     public static void saveStringLong(String word1, long numberOfSentences, HashMap<String, Long> tuplesMap){
         

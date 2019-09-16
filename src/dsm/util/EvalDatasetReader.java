@@ -208,6 +208,7 @@ public class EvalDatasetReader {
     /**
      * This function reads in the file containing the input synonym question dataset. It reads every line 4 times, every time as if the line containded words of one of the possible part-of-speeches.
      * This is needed, since some words can take more than one POS, and it will be decided later which POS is assigned to which question.
+     * @param inputFile the input file containing the evaluation dataset
      */
     public static void readSynonymQuestions(String inputFile){
         try{
@@ -243,7 +244,7 @@ public class EvalDatasetReader {
      * @param allWordSet the set, to which the all the words with part-of-speech==@param pos are saved
      * @param lemmaMap a map, that maps the original question words to their lemmas
      * @param allQuestionsWithAllAnswersMap a map, in which the question words are stored with all the possible answers
-     * @throws Exception 
+     * @throws Exception possible exception
      */
     public static void readSynonymQuestions(String line, POS pos, HashSet<String> allWordSet, HashMap<String, String> lemmaMap, HashMap<String, ArrayList<ArrayList<String>>> allQuestionsWithAllAnswersMap) throws Exception{
         
@@ -322,6 +323,7 @@ public class EvalDatasetReader {
     /**
      * This function reads in the file containing the input word pair similarity dataset. It reads every line 4 times, every time as if the line contained words of one of the possible part-of-speeches.
      * This is needed, since some words can take more than one POS, and it will be decided later which POS is assigned to which word pair.
+     * @param inputFile the input file containing the evaluation dataset
      */
     public static void readWordPairSimilarities(String inputFile){
         try{
@@ -359,7 +361,7 @@ public class EvalDatasetReader {
      * @param lemmaMap a map, that maps the original words to their lemmas
      * @param allQuestionsWithAllAnswersMap a map, in which the question words are stored with all the possible answers
      * @param allQuestionsWithCorrectScores a map, in which the word pairs are stored with their correct score
-     * @throws Exception 
+     * @throws Exception possible exception
      */
     public static void readWordPairSimilarities(String line, POS pos, HashSet<String> allWordSet, HashMap<String, String> lemmaMap, HashMap<String, ArrayList<ArrayList<String>>> allQuestionsWithAllAnswersMap, HashMap<ComparablePair<String, String>, Double> allQuestionsWithCorrectScores) throws Exception{
                 

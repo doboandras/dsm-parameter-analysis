@@ -181,8 +181,8 @@ public class ExtInfParsedPrinter {
     
     /**
      * This method prints out the information stored in a HashMap&lt;String, HashMap&lt;Paraphrase, Long&gt;&gt;.
-     * @param name
-     * @param tuplesMap 
+     * @param name type of information
+     * @param tuplesMap the map in which the information is stored
      */
     public static void printOutStringParaphraseLong(String name, HashMap<String, HashMap<Paraphrase, Long>> tuplesMap){
         
@@ -204,8 +204,8 @@ public class ExtInfParsedPrinter {
     
     /**
      * This method prints out the information stored in a HashMap&lt;String, HashMap&lt;String, Long&gt;&gt;.
-     * @param name
-     * @param tuplesMap 
+     * @param name type of information
+     * @param tuplesMap the map in which the information is stored
      */
     public static void printOutStringStringLong(String name, HashMap<String, HashMap<String, Long>> tuplesMap){
         
@@ -227,8 +227,8 @@ public class ExtInfParsedPrinter {
     
     /**
      * This method prints out the size of HashMap&lt;String, Long&gt; stored in a HashMap&lt;Paraphrase, HashMap&lt;String, Long&gt;&gt;.
-     * @param name
-     * @param tuplesMap 
+     * @param name type of information
+     * @param tuplesMap the map in which the information is stored
      */
     public static void printOutParaphraseSize(String name, HashMap<Paraphrase, HashMap<String, Long>> tuplesMap){
         
@@ -245,8 +245,8 @@ public class ExtInfParsedPrinter {
     
     /**
      * This method prints out the size of HashMap&lt;String, Long&gt; stored in HashMap&lt;String, HashMap&lt;String, Long&gt;&gt;.
-     * @param name
-     * @param tuplesMap 
+     * @param name type of information
+     * @param tuplesMap the map in which the information is stored
      */
     public static void printOutStringSize(String name, HashMap<String, HashMap<String, Long>> tuplesMap){
         
@@ -264,8 +264,8 @@ public class ExtInfParsedPrinter {
     
     /**
      * This method prints out the information stored in a HashMap&lt;Paraphrase, Long&gt;.
-     * @param name
-     * @param tuplesMap 
+     * @param name type of information
+     * @param tuplesMap the map in which the information is stored
      */
     public static void printOutParaphraseLong(String name, HashMap<Paraphrase, Long> tuplesMap){
         
@@ -282,8 +282,8 @@ public class ExtInfParsedPrinter {
     
     /**
      * This method prints out the information stored in a HashMap&lt;String, Long&gt;.
-     * @param name
-     * @param tuplesMap 
+     * @param name type of information
+     * @param tuplesMap the map in which the information is stored
      */
     public static void printOutStringLong(String name, HashMap<String, Long> tuplesMap){
         

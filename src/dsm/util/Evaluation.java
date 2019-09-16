@@ -481,6 +481,7 @@ public class Evaluation {
     
     /**
      * This function converts the scores stored in @param scoreMap into ranks.
+     * @param <V> the type of keys in @param scoreMap
      * @param scoreMap a map, which contains instances of V with scores
      * @return a map, which contains the instances of V with ranks
      */
@@ -539,6 +540,7 @@ public class Evaluation {
     /**
      * This function computes the Pearson correlation of two maps containing instances of V with scores. First the expected values are calculated, then the standard deviations and the covariance,
      * finally the Pearson correlation is calculated from the other values.
+     * @param <V> the type of keys in @param scoreMap
      * @param scoreMap1 the first map containing instances of V with scores
      * @param scoreMap2 the second map containing instances of V with scores
      * @return the Pearson correlation of the two maps

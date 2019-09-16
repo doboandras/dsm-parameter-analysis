@@ -56,7 +56,6 @@ public class Initializer {
         
         try {
             
-            String methodString=null;
             String evaluationDatasetString=null;
             String inputDataTypeString=null;
             String wordVectorsString=null;
@@ -366,7 +365,7 @@ public class Initializer {
             String completeMinimumWeightString = (minimumWordFeatureTupleWeightType==MinimumWordFeatureTupleWeightType.NoLimit ? 
                     "null" : minimumWeightTypeString + " " + minimumWeightParameterString);
                         
-            outputFileName="DSM " + evaluationDatasetString + " " + completeInputDataString + " " + methodString + " " + 
+            outputFileName="DSM " + evaluationDatasetString + " " + completeInputDataString + " " + 
                     normalizationString + " " + similarityMeasureString + " " + weightingSchemeString + " " + 
                     minimumWordSimpleFrequencyString + " " + minimumFeatureSimpleFrequencyString + " " + minimumWordFeaturePairSimpleFrequencyString + " " + 
                     filterStopWordsString + " " + completeMinimumWeightString + " " + completeSmoothingString + " " + 
@@ -388,7 +387,7 @@ public class Initializer {
                 
             }
             
-            System.out.print(evaluationDatasetString + " " + completeInputDataString + " " + methodString + " " + normalizationString + " " + similarityMeasureString + " " + 
+            System.out.print(evaluationDatasetString + " " + completeInputDataString + " " + normalizationString + " " + similarityMeasureString + " " + 
                     weightingSchemeString + " " + minimumWordSimpleFrequencyString + " " + minimumFeatureSimpleFrequencyString + " " + 
                     minimumWordFeaturePairSimpleFrequencyString + " " + filterStopWordsString + " " + completeMinimumWeightString + " " + 
                     completeSmoothingString + " " + completeFeatureTransformationString + " " + completeDimensionalityReductionString + "\t");

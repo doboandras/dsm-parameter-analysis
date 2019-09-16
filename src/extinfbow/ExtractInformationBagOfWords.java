@@ -12,7 +12,7 @@ import static extinfbow.ExtInfBowInitializer.initialize;
 
 
 /**
- * This is a class for extracting information from a corpus, using the bag-of-words approach.
+ * This is a class for extracting information from a corpus, using a bag-of-words approach.
  * 
  * <br><br><br>
  * 
@@ -26,11 +26,14 @@ import static extinfbow.ExtInfBowInitializer.initialize;
  * 
  * String SourceType: the type of corpus used as input ({@link extinfbow.ExtInfBowParam})
  * <ul>
- * <li>EnParserV1: English text parsed with the C&amp;C CCG parser (https://github.com/chrzyki/candc), the POS tags of words are in 3rd position, 
+ * <li>EnParserV1: English text parsed with the C&amp;C CCG parser (Stephen Clark and James R. Curran (2007): Wide-Coverage Efficient Statistical 
+ * Parsing with CCG and Log-Linear Models. Computational Linguistics, 33(4), 2007, https://github.com/chrzyki/candc), the POS tags of words are in 3rd position, 
  * text files are in the subdirectories of the main directory of the curpus
- * <li>EnParserV2: English text parsed with the C&amp;C CCG parser (https://github.com/chrzyki/candc), the POS tags of words are in 2nd position, 
+ * <li>EnParserV2: English text parsed with the C&amp;C CCG parser (Stephen Clark and James R. Curran (2007): Wide-Coverage Efficient Statistical 
+ * Parsing with CCG and Log-Linear Models. Computational Linguistics, 33(4), 2007, https://github.com/chrzyki/candc), the POS tags of words are in 2nd position, 
  * text files are in the main directory of the curpus
- * <li>EnParserV2WithSentenceCounts: English text parsed with the C&amp;C CCG parser (https://github.com/chrzyki/candc), the POS tags of words are in 2nd position, 
+ * <li>EnParserV2WithSentenceCounts: English text parsed with the C&amp;C CCG parser (Stephen Clark and James R. Curran (2007): Wide-Coverage Efficient Statistical 
+ * Parsing with CCG and Log-Linear Models. Computational Linguistics, 33(4), 2007, https://github.com/chrzyki/candc), the POS tags of words are in 2nd position, 
  * there are also frequency counts included for each sentence, text files are in the main directory of the curpus
  * <li>HuParser: Hungarian text parsed with the Magyar lánc (HunPOSChain) parser, text files are in the main directory of the curpus
  * <li>EsTagger: Spanish text POS-tagged with the Ahmet Aker Spanish POS Tagger and Lemmatizer, text files are in the main directory of the curpus

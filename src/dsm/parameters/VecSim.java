@@ -223,8 +223,8 @@ import util.SimilarityScoreParts;
  * 
  * <br>
  * 
- * For more information about the transformation functions, see Section 4.2.3 of the dissertation, while for mor info about the formulas of the different measures,
- * see Appendix A of the dissertation.
+ * For more information about the formulas of the different measures, see Section 4.2.1 and Appendix A of the dissertation, 
+ * while for mor info about the used transformation functions, see Section 4.2.3 of the dissertation.
  * 
  * @author Dobó
  */

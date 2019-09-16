@@ -59,7 +59,7 @@ import static dsm.parameters.VecSim.pearsMbModPattern;
  * 
  * <br><br>
  * 
- * String corpusStringSuffix: a suffix for the extracted information file name (e.g. the Weighting scheme used in case of 
+ * String corpusStringSuffix: a suffix for the extracted information file name (e.g. the Window size and the Weighting scheme used in case of 
  * bag-of-words information extraction methods). It is only used in the determination of the input extracted information file name.
  * 
  * <br><br>
@@ -612,7 +612,7 @@ public class ExtractedInfoReader {
      * @param allWordSet the set containing all the input words of the given POS
      * @param useStopWordFiltering determines whether to use stop word filtering
      * @param i the number of the previously called readXXX functions
-     * @throws IOException 
+     * @throws IOException possible exception
      */
     public static void readStringParaphraseDouble(BufferedReader in, String readUntilThis, HashMap<String, HashMap<Paraphrase, Double>> tuplesMap, 
             HashMap<String, Double> frequency1SimpleMap, HashMap<Paraphrase, Double> frequency2SimpleMap, 
@@ -675,7 +675,7 @@ public class ExtractedInfoReader {
      * @param allWordSet the set containing all the input words of the given POS
      * @param useStopWordFiltering determines whether to use stop word filtering
      * @param i the number of the previously called readXXX functions
-     * @throws IOException 
+     * @throws IOException possible exception
      */
     public static void readStringStringDouble(BufferedReader in, String readUntilThis, HashMap<String, HashMap<String, Double>> tuplesMap, 
             HashMap<String, Double> frequency1SimpleMap, HashMap<String, Double> frequency2SimpleMap, 
@@ -732,7 +732,7 @@ public class ExtractedInfoReader {
      * @param tuplesSimpleMap the map in which the tuplesSimpleCounts are stored for mininum simple frequency check
      * @param useStopWordFiltering determines whether to use stop word filtering
      * @param i the number of the previously called readXXX functions
-     * @throws IOException 
+     * @throws IOException possible exception
      */
     public static void readParaphraseLong(BufferedReader in, String readUntilThis, HashMap<Paraphrase, Long> tuplesMap, 
             HashMap<Paraphrase, Double> tuplesSimpleMap, boolean useStopWordFiltering, int i) throws IOException{
@@ -769,7 +769,7 @@ public class ExtractedInfoReader {
      * @param tuplesSimpleMap the map in which the tuplesSimpleCounts are stored for mininum simple frequency check
      * @param useStopWordFiltering determines whether to use stop word filtering
      * @param i the number of the previously called readXXX functions
-     * @throws IOException 
+     * @throws IOException possible exception
      */
     public static void readStringLong(BufferedReader in, String readUntilThis, HashMap<String, Long> tuplesMap, 
             HashMap<String, Double> tuplesSimpleMap, boolean useStopWordFiltering, int i) throws IOException{
@@ -803,7 +803,7 @@ public class ExtractedInfoReader {
      * @param minSimpleFreq the mininum simple frequency a word/feature should have to be considered
      * @param useStopWordFiltering determines whether to use stop word filtering
      * @param i the number of the previously called readXXX functions
-     * @throws IOException 
+     * @throws IOException possible exception
      */
     public static void readParaphraseDouble(BufferedReader in, String readUntilThis, HashMap<Paraphrase, Double> tuplesMap, 
             HashMap<Paraphrase, Double> tuplesSimpleMap, Integer minSimpleFreq, boolean useStopWordFiltering, int i) throws IOException{
@@ -841,7 +841,7 @@ public class ExtractedInfoReader {
      * @param allWordSet the set containing all the input words of the given POS
      * @param useStopWordFiltering determines whether to use stop word filtering
      * @param i the number of the previously called readXXX functions
-     * @throws IOException 
+     * @throws IOException possible exception
      */
     public static void readStringDouble(BufferedReader in, String readUntilThis, HashMap<String, Double> tuplesMap, 
             HashMap<String, Double> tuplesSimpleMap, Integer minSimpleFreq, HashSet<String> allWordSet, boolean useStopWordFiltering, int i) throws IOException{
@@ -871,7 +871,7 @@ public class ExtractedInfoReader {
      * This method reads the input until the line containing the @param readUntilThis string is reached.
      * @param in the BufferedReader from which this function reads
      * @param readUntilThis the first line in the input that does not belong to the information to be stored in the current map
-     * @throws IOException 
+     * @throws IOException possible exception
      */
     public static void readUntil(BufferedReader in, String readUntilThis) throws IOException{
         
@@ -894,7 +894,7 @@ public class ExtractedInfoReader {
      * @param minSimpleFreq the mininum simple frequency a word/feature should have to be considered
      * @param useStopWordFiltering determines whether to use stop word filtering
      * @param i the number of the previously called readXXX functions
-     * @throws IOException 
+     * @throws IOException possible exception
      */
     public static void readKNSNCountsForParaphrases(BufferedReader in, String readUntilThis, HashMap<Paraphrase, Long[]> tuplesMap, 
             HashMap<Paraphrase, Double> tuplesSimpleMap, Integer minSimpleFreq, boolean useStopWordFiltering, int i) throws IOException{
@@ -941,7 +941,7 @@ public class ExtractedInfoReader {
      * @param allWordSet the set containing all the input words of the given POS
      * @param useStopWordFiltering determines whether to use stop word filtering
      * @param i the number of the previously called readXXX functions
-     * @throws IOException 
+     * @throws IOException possible exception
      */
     public static void readKNSNCountsForStrings(BufferedReader in, String readUntilThis, HashMap<String, Long[]> tuplesMap, 
             HashMap<String, Double> tuplesSimpleMap, Integer minSimpleFreq, HashSet<String> allWordSet, boolean useStopWordFiltering, int i) throws IOException{
@@ -983,7 +983,7 @@ public class ExtractedInfoReader {
      * @param readUntilThis the first line in the input that does not belong to the information to be stored in the current map
      * @param allKNSNCounts the array in which the read in information will be stored
      * @param i the number of the previously called readXXX functions
-     * @throws IOException 
+     * @throws IOException possible exception
      */
     public static void readAllKNSNCounts(BufferedReader in, String readUntilThis, Long[] allKNSNCounts, int i) throws IOException{
         
@@ -1012,7 +1012,7 @@ public class ExtractedInfoReader {
      * This method reads in the information to be stored in the allXXXCount variables.
      * @param in the BufferedReader from which this function reads
      * @param i the number of the previously called readXXX functions
-     * @throws IOException 
+     * @throws IOException possible exception
      */
     public static void readAllCounts(BufferedReader in, int i) throws IOException{
         
