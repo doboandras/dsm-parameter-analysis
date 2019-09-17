@@ -39,7 +39,7 @@ public class EvalDatasetReader {
         if(evaluationDataset==EvaluationDataset.Toefl){
             if(inputDataType==InputDataType.Corpus && corpus==Corpus.HuWiki){
                 readSynonymQuestions("input/TOEFLDatasetHu.txt");
-            }else if(inputDataType==InputDataType.Corpus && corpus==Corpus.EsWki){
+            }else if(inputDataType==InputDataType.Corpus && corpus==Corpus.EsWiki){
                 readSynonymQuestions("input/TOEFLDatasetEs.txt");
             }else{
                 readSynonymQuestions("input/TOEFLDataset.txt");
@@ -47,7 +47,7 @@ public class EvalDatasetReader {
         }else if(evaluationDataset==EvaluationDataset.ToeflPart1){
             if(inputDataType==InputDataType.Corpus && corpus==Corpus.HuWiki){
                 readSynonymQuestions("input/TOEFLDatasetPart1Hu.txt");
-            }else if(inputDataType==InputDataType.Corpus && corpus==Corpus.EsWki){
+            }else if(inputDataType==InputDataType.Corpus && corpus==Corpus.EsWiki){
                 readSynonymQuestions("input/TOEFLDatasetPart1Es.txt");
             }else{
                 readSynonymQuestions("input/TOEFLDatasetPart1.txt");
@@ -55,7 +55,7 @@ public class EvalDatasetReader {
         }else if(evaluationDataset==EvaluationDataset.ToeflPart2){
             if(inputDataType==InputDataType.Corpus && corpus==Corpus.HuWiki){
                 readSynonymQuestions("input/TOEFLDatasetPart2Hu.txt");
-            }else if(inputDataType==InputDataType.Corpus && corpus==Corpus.EsWki){
+            }else if(inputDataType==InputDataType.Corpus && corpus==Corpus.EsWiki){
                 readSynonymQuestions("input/TOEFLDatasetPart2Es.txt");
             }else{
                 readSynonymQuestions("input/TOEFLDatasetPart2.txt");
@@ -63,7 +63,7 @@ public class EvalDatasetReader {
         }else if(evaluationDataset==EvaluationDataset.MillerCharles28){
             if(inputDataType==InputDataType.Corpus && corpus==Corpus.HuWiki){
                 readWordPairSimilarities("input/millerCharles28DatasetHu.txt");
-            }else if(inputDataType==InputDataType.Corpus && corpus==Corpus.EsWki){
+            }else if(inputDataType==InputDataType.Corpus && corpus==Corpus.EsWiki){
                 readWordPairSimilarities("input/millerCharles28DatasetEs.txt");
             }else{
                 readWordPairSimilarities("input/millerCharles28Dataset.txt");
@@ -71,7 +71,7 @@ public class EvalDatasetReader {
         }else if(evaluationDataset==EvaluationDataset.MillerCharles30){
             if(inputDataType==InputDataType.Corpus && corpus==Corpus.HuWiki){
                 readWordPairSimilarities("input/millerCharles30DatasetHu.txt");
-            }else if(inputDataType==InputDataType.Corpus && corpus==Corpus.EsWki){
+            }else if(inputDataType==InputDataType.Corpus && corpus==Corpus.EsWiki){
                 readWordPairSimilarities("input/millerCharles30DatasetEs.txt");
             }else{
                 readWordPairSimilarities("input/millerCharles30Dataset.txt");
@@ -79,7 +79,7 @@ public class EvalDatasetReader {
         }else if(evaluationDataset==EvaluationDataset.RubensteinGoodenough65){
             if(inputDataType==InputDataType.Corpus && corpus==Corpus.HuWiki){
                 readWordPairSimilarities("input/rubensteinGoodenoughDatasetHu.txt");
-            }else if(inputDataType==InputDataType.Corpus && corpus==Corpus.EsWki){
+            }else if(inputDataType==InputDataType.Corpus && corpus==Corpus.EsWiki){
                 readWordPairSimilarities("input/rubensteinGoodenoughDatasetEs.txt");
             }else{
                 readWordPairSimilarities("input/rubensteinGoodenoughDataset.txt");
@@ -87,7 +87,7 @@ public class EvalDatasetReader {
         }else if(evaluationDataset==EvaluationDataset.Rg65WithoutMc28){
             if(inputDataType==InputDataType.Corpus && corpus==Corpus.HuWiki){
                 readWordPairSimilarities("input/rubensteinGoodenoughMinusMillerCharles28DatasetHu.txt");
-            }else if(inputDataType==InputDataType.Corpus && corpus==Corpus.EsWki){
+            }else if(inputDataType==InputDataType.Corpus && corpus==Corpus.EsWiki){
                 readWordPairSimilarities("input/rubensteinGoodenoughMinusMillerCharles28DatasetEs.txt");
             }else{
                 readWordPairSimilarities("input/rubensteinGoodenoughMinusMillerCharles28Dataset.txt");
@@ -95,7 +95,7 @@ public class EvalDatasetReader {
         }else if(evaluationDataset==EvaluationDataset.WordSim353){
             if(inputDataType==InputDataType.Corpus && corpus==Corpus.HuWiki){
                 readWordPairSimilarities("input/wordSim353DatasetHu.txt");
-            }else if(inputDataType==InputDataType.Corpus && corpus==Corpus.EsWki){
+            }else if(inputDataType==InputDataType.Corpus && corpus==Corpus.EsWiki){
                 readWordPairSimilarities("input/wordSim353DatasetEs.txt");
             }else{
                 readWordPairSimilarities("input/wordSim353Dataset.txt");
@@ -103,7 +103,7 @@ public class EvalDatasetReader {
         }else if(evaluationDataset==EvaluationDataset.ReadersDigestClean){
             if(inputDataType==InputDataType.Corpus && corpus==Corpus.HuWiki){
                 readSynonymQuestions("input/readersDigestCleanedDatasetHu.txt");
-            }else if(inputDataType==InputDataType.Corpus && corpus==Corpus.EsWki){
+            }else if(inputDataType==InputDataType.Corpus && corpus==Corpus.EsWiki){
                 readSynonymQuestions("input/readersDigestCleanedDatasetEs.txt");
             }else{
                 readSynonymQuestions("input/readersDigestCleanedDataset.txt");
@@ -111,7 +111,7 @@ public class EvalDatasetReader {
         }else if(evaluationDataset==EvaluationDataset.Esl){
             if(inputDataType==InputDataType.Corpus && corpus==Corpus.HuWiki){
                 readSynonymQuestions("input/ESLDatasetHu.txt");
-            }else if(inputDataType==InputDataType.Corpus && corpus==Corpus.EsWki){
+            }else if(inputDataType==InputDataType.Corpus && corpus==Corpus.EsWiki){
                 readSynonymQuestions("input/ESLDatasetEs.txt");
             }else{
                 readSynonymQuestions("input/ESLDataset.txt");
@@ -119,7 +119,7 @@ public class EvalDatasetReader {
         }else if(evaluationDataset==EvaluationDataset.MenDev){
             if(inputDataType==InputDataType.Corpus && corpus==Corpus.HuWiki){
                 readWordPairSimilarities("input/MENDatasetDevHu.txt");
-            }else if(inputDataType==InputDataType.Corpus && corpus==Corpus.EsWki){
+            }else if(inputDataType==InputDataType.Corpus && corpus==Corpus.EsWiki){
                 readWordPairSimilarities("input/MENDatasetDevEs.txt");
             }else{
                 readWordPairSimilarities("input/MENDatasetDev.txt");
@@ -127,7 +127,7 @@ public class EvalDatasetReader {
         }else if(evaluationDataset==EvaluationDataset.MenDevPart1){
             if(inputDataType==InputDataType.Corpus && corpus==Corpus.HuWiki){
                 readWordPairSimilarities("input/MENDatasetDevPart1Hu.txt");
-            }else if(inputDataType==InputDataType.Corpus && corpus==Corpus.EsWki){
+            }else if(inputDataType==InputDataType.Corpus && corpus==Corpus.EsWiki){
                 readWordPairSimilarities("input/MENDatasetDevPart1Es.txt");
             }else{
                 readWordPairSimilarities("input/MENDatasetDevPart1.txt");
@@ -135,7 +135,7 @@ public class EvalDatasetReader {
         }else if(evaluationDataset==EvaluationDataset.MenDevPart2){
             if(inputDataType==InputDataType.Corpus && corpus==Corpus.HuWiki){
                 readWordPairSimilarities("input/MENDatasetDevPart2Hu.txt");
-            }else if(inputDataType==InputDataType.Corpus && corpus==Corpus.EsWki){
+            }else if(inputDataType==InputDataType.Corpus && corpus==Corpus.EsWiki){
                 readWordPairSimilarities("input/MENDatasetDevPart2Es.txt");
             }else{
                 readWordPairSimilarities("input/MENDatasetDevPart2.txt");
@@ -143,7 +143,7 @@ public class EvalDatasetReader {
         }else if(evaluationDataset==EvaluationDataset.MenTest){
             if(inputDataType==InputDataType.Corpus && corpus==Corpus.HuWiki){
                 readWordPairSimilarities("input/MENDatasetTestHu.txt");
-            }else if(inputDataType==InputDataType.Corpus && corpus==Corpus.EsWki){
+            }else if(inputDataType==InputDataType.Corpus && corpus==Corpus.EsWiki){
                 readWordPairSimilarities("input/MENDatasetTestEs.txt");
             }else{
                 readWordPairSimilarities("input/MENDatasetTest.txt");
@@ -151,7 +151,7 @@ public class EvalDatasetReader {
         }else if(evaluationDataset==EvaluationDataset.MenFull){
             if(inputDataType==InputDataType.Corpus && corpus==Corpus.HuWiki){
                 readWordPairSimilarities("input/MENDatasetFullHu.txt");
-            }else if(inputDataType==InputDataType.Corpus && corpus==Corpus.EsWki){
+            }else if(inputDataType==InputDataType.Corpus && corpus==Corpus.EsWiki){
                 readWordPairSimilarities("input/MENDatasetFullEs.txt");
             }else{
                 readWordPairSimilarities("input/MENDatasetFull.txt");
@@ -159,7 +159,7 @@ public class EvalDatasetReader {
         }else if(evaluationDataset==EvaluationDataset.SimLex999){
             if(inputDataType==InputDataType.Corpus && corpus==Corpus.HuWiki){
                 readWordPairSimilarities("input/simLex999DatasetHu.txt");
-            }else if(inputDataType==InputDataType.Corpus && corpus==Corpus.EsWki){
+            }else if(inputDataType==InputDataType.Corpus && corpus==Corpus.EsWiki){
                 readWordPairSimilarities("input/simLex999DatasetEs.txt");
             }else{
                 readWordPairSimilarities("input/simLex999Dataset.txt");
@@ -167,7 +167,7 @@ public class EvalDatasetReader {
         }else if(evaluationDataset==EvaluationDataset.MTurk771Halawi){
             if(inputDataType==InputDataType.Corpus && corpus==Corpus.HuWiki){
                 readWordPairSimilarities("input/MTurk771HalawiDatasetHu.txt");
-            }else if(inputDataType==InputDataType.Corpus && corpus==Corpus.EsWki){
+            }else if(inputDataType==InputDataType.Corpus && corpus==Corpus.EsWiki){
                 readWordPairSimilarities("input/MTurk771HalawiDatasetEs.txt");
             }else{
                 readWordPairSimilarities("input/MTurk771HalawiDataset.txt");
@@ -175,7 +175,7 @@ public class EvalDatasetReader {
         }else if(evaluationDataset==EvaluationDataset.MTurk287Radinsky){
             if(inputDataType==InputDataType.Corpus && corpus==Corpus.HuWiki){
                 readWordPairSimilarities("input/MTurk287RadinskyDatasetHu.txt");
-            }else if(inputDataType==InputDataType.Corpus && corpus==Corpus.EsWki){
+            }else if(inputDataType==InputDataType.Corpus && corpus==Corpus.EsWiki){
                 readWordPairSimilarities("input/MTurk287RadinskyDatasetEs.txt");
             }else{
                 readWordPairSimilarities("input/MTurk287RadinskyDataset.txt");
@@ -183,7 +183,7 @@ public class EvalDatasetReader {
         }else if(evaluationDataset==EvaluationDataset.SemEval2017Task2){
             if(inputDataType==InputDataType.Corpus && corpus==Corpus.HuWiki){
                 readWordPairSimilarities("input/semEval2017Task2CleanedDatasetHu.txt");
-            }else if(inputDataType==InputDataType.Corpus && corpus==Corpus.EsWki){
+            }else if(inputDataType==InputDataType.Corpus && corpus==Corpus.EsWiki){
                 readWordPairSimilarities("input/semEval2017Task2CleanedDatasetEs.txt");
             }else{
                 readWordPairSimilarities("input/semEval2017Task2CleanedDataset.txt");
@@ -191,7 +191,7 @@ public class EvalDatasetReader {
         }else if(evaluationDataset==EvaluationDataset.Moldovan){
             if(inputDataType==InputDataType.Corpus && corpus==Corpus.HuWiki){
                 readWordPairSimilarities("input/moldovanDatasetHu.txt");
-            }else if(inputDataType==InputDataType.Corpus && corpus==Corpus.EsWki){
+            }else if(inputDataType==InputDataType.Corpus && corpus==Corpus.EsWiki){
                 readWordPairSimilarities("input/moldovanDatasetEs.txt");
             }else{
                 readWordPairSimilarities("input/moldovanDataset.txt");
@@ -269,7 +269,7 @@ public class EvalDatasetReader {
                         break;
                     }
                 }
-            }else if(inputDataType==InputDataType.Corpus && corpus==Corpus.EsWki){
+            }else if(inputDataType==InputDataType.Corpus && corpus==Corpus.EsWiki){
                 String lemma;
                 if(pos==POS.NOUN){
                     if((lemma=nounDic.get(parts[i]))!=null){
@@ -384,7 +384,7 @@ public class EvalDatasetReader {
                         break;
                     }
                 }
-            }else if(inputDataType==InputDataType.Corpus && corpus==Corpus.EsWki){
+            }else if(inputDataType==InputDataType.Corpus && corpus==Corpus.EsWiki){
                 String lemma;
                 if(pos==POS.NOUN){
                     if((lemma=nounDic.get(parts[i]))!=null){

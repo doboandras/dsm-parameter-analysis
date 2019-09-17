@@ -49,8 +49,8 @@ import static dsm.parameters.VecSim.pearsMbModPattern;
  * <li>EnWiki: the text of the 26.05.2011 dump of the English Wikipedia
  * <li>UkWaC: the ukWaC corpus
  * <li>HuWiki: the text of the 23.01.2012 dump of the Hungarian Wikipedia
- * <li>EsWki: the Spanish Wikicorpus
- * </ul>
+ * <li>EsWiki: the Spanish Wikicorpus
+ </ul>
  * 
  * <br>
  * 
@@ -80,7 +80,7 @@ public class ExtractedInfoReader {
     public static WordVectors wordVectors=WordVectors.GoogleNews;
     public static String wordVectorsFileName = null;
     public static Integer wordVectorsDimension = null;
-    public static enum Corpus {PA61K, P9000, BNC, TaggedWeb1T5Gram, ParsedWeb1T5Gram, P170K, PubMedAbstractsAndTitles, EnWiki, EnWiki20151201, UkWaC, HuWiki, EsWki};
+    public static enum Corpus {PA61K, P9000, BNC, TaggedWeb1T5Gram, ParsedWeb1T5Gram, P170K, PubMedAbstractsAndTitles, EnWiki, EnWiki20151201, UkWaC, HuWiki, EsWiki};
     public static Corpus corpus=Corpus.PA61K;
     public static boolean bagOfWords=false;
     

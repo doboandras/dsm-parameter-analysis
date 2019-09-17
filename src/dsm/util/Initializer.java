@@ -373,7 +373,7 @@ public class Initializer {
             
             if(createOutputFile) out = new PrintWriter(new FileWriter(outputFileName));
             
-            if(inputDataType==InputDataType.Corpus && corpus==Corpus.EsWki){
+            if(inputDataType==InputDataType.Corpus && corpus==Corpus.EsWiki){
             
                 nounDic = Util.loadDictionary("AhmetAkerDictEs/nounDic.txt");
                 adjDic = Util.loadDictionary("AhmetAkerDictEs/adjDic.txt");

@@ -37,7 +37,7 @@ public class OtherInputFilesReader {
             
             if(inputDataType==InputDataType.Corpus && corpus==Corpus.HuWiki){
                 in = new BufferedReader(new FileReader("input/stopwords-hu.txt"));
-            }else if(inputDataType==InputDataType.Corpus && corpus==Corpus.EsWki){
+            }else if(inputDataType==InputDataType.Corpus && corpus==Corpus.EsWiki){
                 in = new BufferedReader(new FileReader("input/stopwords-es.txt"));
             }else{
                 in = new BufferedReader(new FileReader("input/stopwords-en.txt"));
@@ -75,7 +75,7 @@ public class OtherInputFilesReader {
             
             if(inputDataType==InputDataType.Corpus && corpus==Corpus.HuWiki){
                 in = new BufferedReader(new FileReader("input/inputWordsHu.txt"));
-            }else if(inputDataType==InputDataType.Corpus && corpus==Corpus.EsWki){
+            }else if(inputDataType==InputDataType.Corpus && corpus==Corpus.EsWiki){
                 in = new BufferedReader(new FileReader("input/inputWordsEs.txt"));
             }else{
                 in = new BufferedReader(new FileReader("input/inputWords.txt"));
@@ -96,7 +96,7 @@ public class OtherInputFilesReader {
                         allInputWords.add(morAna.getLemma());
                     }
                     
-                }else if(inputDataType==InputDataType.Corpus && corpus==Corpus.EsWki){
+                }else if(inputDataType==InputDataType.Corpus && corpus==Corpus.EsWiki){
                     
                     String lemma = nounDic.get(line);
                     if (lemma != null && !lemma.equals("")) {
