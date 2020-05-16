@@ -111,6 +111,8 @@ András Dobó. A comprehensive analysis of the parameters in the creation and co
 
 For more information please see the below publications:
 
+Dobó, A.: <a href="http://journal.sepln.org/index.php/pln/article/viewFile/6205/3656" target="_blank">A comprehensive analysis of the parameters in the creation and comparison of feature vectors in distributional semantic models for multiple languages</a>. Procesamiento del Lenguaje Natural. 64, 127-130. (2020)
+
 Dobó, A.: <a href="http://doktori.bibl.u-szeged.hu/10120/1/AndrasDoboThesis2019.pdf" target="_blank">A comprehensive analysis of the parameters in the creation and comparison of feature vectors in distributional semantic models for multiple languages</a>. University of Szeged (2019)
 
 Dobó A., Csirik J.: <a href="Publications/Comparison of the best parameter settings of DSMs across languages.pdf" target="_blank">Comparison of the Best Parameter Settings in the Creation and Comparison of Feature Vectors in Distributional Semantic Models Across Multiple Languages</a>. In: MacIntyre J., Maglogiannis I., Iliadis L., Pimenidis E. (eds) Artificial Intelligence Applications and Innovations. AIAI 2019. IFIP Advances in Information and Communication Technology, vol 559. 487-499. Springer, Cham. (2019)
